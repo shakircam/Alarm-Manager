@@ -3,8 +3,8 @@ package com.itmedicus.randomuser.model
 data class User(
     val info: Info,
     val results: List<Result>
-){
-    data class Result(
+)
+   /* data class Result(
         val cell: String,
         val dob: Dob,
         val email: String,
@@ -17,5 +17,4 @@ data class User(
         val phone: String,
         val picture: Picture,
         val registered: Registered
-    )
-}
+    )*/
