@@ -12,7 +12,9 @@ import com.itmedicus.randomuser.databinding.FragmentListBinding
 
 
 class DetailsFragment : Fragment() {
-    private val args by navArgs<DetailsFragmentArgs>()
+
+  //  private val args by navArgs<DetailsFragmentArgs>()
+
     private var _binding : FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -22,14 +24,14 @@ class DetailsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        val data = args
+       /* val data = args
         val nat = data.result.nat
         val gender =  data.result.gender
         val email = data.result.email
 
         binding.nationality.text= nat
         binding.email.text = email
-        binding.gender.text=gender
+        binding.gender.text=gender*/
 
         return binding.root
     }

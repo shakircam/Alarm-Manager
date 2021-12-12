@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/family"
+        android:title="family"
+        android:icon="@drawable/family" />
+
+    <item android:id="@+id/office"
+        android:title="Office"
+        android:icon="@drawable/office" />
+
+    <item android:id="@+id/shop"
+        android:title="Shop"
+        android:icon="@drawable/shop" />
+</menu>
