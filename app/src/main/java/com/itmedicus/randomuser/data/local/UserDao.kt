@@ -3,6 +3,7 @@ package com.itmedicus.randomuser.data.local
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.itmedicus.randomuser.model.Dami
+import com.itmedicus.randomuser.model.Name
 import com.itmedicus.randomuser.model.Result
 
 @Dao
@@ -29,4 +30,10 @@ interface UserDao {
 
     @Query("SELECT * FROM user_table WHERE name LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): MutableList<Result>
+
+    @Query("SELECT id FROM user_table WHERE name = :name LIMIT 1")
+    fun getUserId(name: String): Int?
+
+    @Query("SELECT name FROM user_table ")
+    fun allUserNameList(): List<Name>
 }

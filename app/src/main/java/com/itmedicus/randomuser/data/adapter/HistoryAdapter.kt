@@ -1,5 +1,6 @@
 package com.itmedicus.randomuser.data.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +16,12 @@ class HistoryAdapter(private val itemClickListener: ItemClickListener) : Recycle
     private var userList = mutableListOf<Result>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        return HistoryAdapter.UserViewHolder(
+        return UserViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.user_item, parent, false)
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentItem = userList[position]
 

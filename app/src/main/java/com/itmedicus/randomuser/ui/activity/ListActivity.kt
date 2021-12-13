@@ -13,6 +13,7 @@ import com.itmedicus.randomuser.data.network.ApiInterface
 import com.itmedicus.randomuser.data.network.RetrofitClient
 import com.itmedicus.randomuser.databinding.ActivityListBinding
 import com.itmedicus.randomuser.model.Dami
+import com.itmedicus.randomuser.model.Name
 import com.itmedicus.randomuser.model.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -26,7 +27,7 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
     private lateinit var binding: ActivityListBinding
     private val adapter by lazy { UserAdapter(this) }
     var list = mutableListOf<Dami.Results>()
-
+    var flag = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,29 +81,36 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
         intent.putExtra("location",item.location.city)
         intent.putExtra("state",item.location.state)
         intent.putExtra("name",item.name.first+item.name.last)
+        val name = item.name.first+item.name.last
 
         lifecycleScope.launch(Dispatchers.IO) {
             val db = UserDatabase.getDatabase(this@ListActivity).userDao()
             val user = Result(item.name.first+item.name.last,item.phone,item.gender,item.email,item.nat,item.picture.medium,item.location.city)
             val listSize = db.getAllUser().size
-
-            if (listSize == 10){
-                val p = db.getAllUser()
-                val id = p.first().id!!
-                db.deleteItem(id)
-                db.insertData(user)
-            }else{
-                db.insertData(user)
+            val userName = db.allUserNameList()
+            val userId = db.getUserId(name)
+            val nameList = mutableListOf<Name>()
+            nameList.addAll(userName)
+            for (i in nameList){
+                if (name == i.name){
+                    flag = 2
+                    break
+                }
             }
 
-            /*else{
-                val p = db.getAllUser()
-                val id = p.first().id!!
-                Log.d("id",id.toString())
-             db.updateQuantity(item.name.first+item.name.last,item.phone,item.gender,item.email,item.nat,item.picture.medium,item.location.city,id
-             )
-            }*/
-
+            if (flag == 2){
+                db.deleteItem(userId!!)
+                db.insertData(user)
+            }else{
+                if (listSize == 10){
+                    val userList = db.getAllUser()
+                    val id = userList.first().id!!
+                    db.deleteItem(id)
+                    db.insertData(user)
+                }else{
+                    db.insertData(user)
+                }
+            }
 
         }
         startActivity(intent)
