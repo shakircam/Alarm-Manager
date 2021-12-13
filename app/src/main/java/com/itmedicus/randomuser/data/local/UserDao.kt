@@ -1,9 +1,7 @@
 package com.itmedicus.randomuser.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.itmedicus.randomuser.model.Dami
 import com.itmedicus.randomuser.model.Result
 
@@ -11,8 +9,24 @@ import com.itmedicus.randomuser.model.Result
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertData(userData: ArrayList<Result>)
+    suspend fun insertData(userData: Result)
 
-    @Query("SELECT * FROM user_table ORDER BY id ASC")
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateDate(userData: Result)
+
+   @Query("SELECT * FROM user_table ORDER BY id DESC LIMIT 10 ")
     fun getAllUserData(): List<Result>
+
+    @Query("SELECT * FROM user_table ORDER BY id ASC  ")
+    fun getAllUser(): List<Result>
+
+   @Query("DELETE FROM user_table WHERE id=:id")
+    suspend fun deleteItem(id: Int)
+
+    @Query("UPDATE user_table SET name  = :name, phone = :phone,gender =:gender," +
+            "email =:email,nat=:nat,picture=:picture,location=:location  WHERE id = :id")
+    fun updateQuantity(name: String,phone : String,gender : String,email : String,nat : String,picture: String,location: String,id:Int)
+
+    @Query("SELECT * FROM user_table WHERE name LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String): MutableList<Result>
 }

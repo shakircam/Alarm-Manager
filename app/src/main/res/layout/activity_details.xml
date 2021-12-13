@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.DetailsActivity">
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/cons"
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="#FF4D4D"
+    android:layout_width="match_parent"
+    android:layout_height="250dp">
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,12 +25,14 @@
         android:layout_width="230dp"
         android:layout_height="200dp"/>
 
+</androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/name"
         android:text="Ibrahim Khalil"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintTop_toBottomOf="@id/cons"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"

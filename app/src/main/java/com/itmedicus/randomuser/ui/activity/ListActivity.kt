@@ -14,6 +14,7 @@ import com.itmedicus.randomuser.data.network.RetrofitClient
 import com.itmedicus.randomuser.databinding.ActivityListBinding
 import com.itmedicus.randomuser.model.Dami
 import com.itmedicus.randomuser.model.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -34,13 +35,7 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
         getData()
         initRecyclerView()
 
-        lifecycleScope.launch {
-            val db = UserDatabase.getDatabase(this@ListActivity).userDao()
 
-           // val userList = ArrayList<Dami.Results>()
-           // userList.addAll(list)
-            //db.insertData(userList)
-        }
     }
 
     private fun initRecyclerView() {
@@ -48,6 +43,7 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
         mRecyclerView.adapter = adapter
         mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
     }
+
     private fun getData(){
         val apiInterface = RetrofitClient.getClient().create(ApiInterface::class.java)
         val call = apiInterface.getRandomUserr()
@@ -59,7 +55,6 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
                 response: Response<Dami>
             ) {
                 response.body()?.let {
-                    Log.d("tag",it.toString())
                     list.addAll(it.results)
                     adapter.setData(list)
 
@@ -86,7 +81,30 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
         intent.putExtra("state",item.location.state)
         intent.putExtra("name",item.name.first+item.name.last)
 
-        startActivity(intent)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val db = UserDatabase.getDatabase(this@ListActivity).userDao()
+            val user = Result(item.name.first+item.name.last,item.phone,item.gender,item.email,item.nat,item.picture.medium,item.location.city)
+            val listSize = db.getAllUser().size
 
+            if (listSize == 10){
+                val p = db.getAllUser()
+                val id = p.first().id!!
+                db.deleteItem(id)
+                db.insertData(user)
+            }else{
+                db.insertData(user)
+            }
+
+            /*else{
+                val p = db.getAllUser()
+                val id = p.first().id!!
+                Log.d("id",id.toString())
+             db.updateQuantity(item.name.first+item.name.last,item.phone,item.gender,item.email,item.nat,item.picture.medium,item.location.city,id
+             )
+            }*/
+
+
+        }
+        startActivity(intent)
     }
 }

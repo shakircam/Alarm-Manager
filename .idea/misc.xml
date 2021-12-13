@@ -7,7 +7,9 @@
         <entry key="app/src/main/res/drawable/favorite.xml" value="0.269140625" />
         <entry key="app/src/main/res/drawable/gradent_bg.xml" value="0.3388888888888889" />
         <entry key="app/src/main/res/drawable/note.xml" value="0.269140625" />
+        <entry key="app/src/main/res/drawable/searchview_background.xml" value="0.269140625" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.1437841530054645" />
+        <entry key="app/src/main/res/layout/activity_history.xml" value="0.13968579234972678" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.1437841530054645" />
         <entry key="app/src/main/res/layout/activity_list.xml" value="0.1437841530054645" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16397578203834512" />

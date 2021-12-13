@@ -18,10 +18,13 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         binding.card2.setOnClickListener{
             val intent = Intent(this,ListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.card3.setOnClickListener {
+            val intent = Intent(this,HistoryActivity::class.java)
             startActivity(intent)
         }
     }

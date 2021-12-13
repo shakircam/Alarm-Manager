@@ -11,7 +11,6 @@ data class Dami(
     val results: List<Results>
 ){
 
-
     data class Results(
         val email: String,
         val gender: String,
