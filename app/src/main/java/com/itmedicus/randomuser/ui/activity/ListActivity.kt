@@ -27,6 +27,7 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
     private lateinit var binding: ActivityListBinding
     private val adapter by lazy { UserAdapter(this) }
     var list = mutableListOf<Dami.Results>()
+    var allUser = mutableListOf<Result>()
     var flag = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +64,7 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
                 }
             }
             override fun onFailure(call: Call<Dami>, t: Throwable) {
-                Log.d("tag",t.localizedMessage)
+                Log.d("dd",t.localizedMessage)
             }
         })
     }
@@ -86,11 +87,18 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
         lifecycleScope.launch(Dispatchers.IO) {
             val db = UserDatabase.getDatabase(this@ListActivity).userDao()
             val user = Result(item.name.first+item.name.last,item.phone,item.gender,item.email,item.nat,item.picture.medium,item.location.city)
+
+            val allRandomUser = db.getAllRandomUser()
+            allUser.addAll(allRandomUser)
+            allUser[position].id
+
+
             val listSize = db.getAllUser().size
             val userName = db.allUserNameList()
             val userId = db.getUserId(name)
             val nameList = mutableListOf<Name>()
             nameList.addAll(userName)
+
             for (i in nameList){
                 if (name == i.name){
                     flag = 2
@@ -99,16 +107,26 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
             }
 
             if (flag == 2){
-                db.deleteItem(userId!!)
+
+                db.deleteItem(userId)
+               // Log.d("tag","delete item when match:: $name,list size-> $listSize")
                 db.insertData(user)
+                Log.d("tag","Item match go to up-> $name ::: list size-> $listSize")
+                flag = 1
             }else{
                 if (listSize == 10){
                     val userList = db.getAllUser()
                     val id = userList.first().id!!
+
                     db.deleteItem(id)
+                   // Log.d("tag","delete-> $name ::: list size-> $listSize")
                     db.insertData(user)
+                    Log.d("tag","list size-> $listSize already, insert -> $name ::: move to up ")
+
                 }else{
+                    if(listSize<10)
                     db.insertData(user)
+                    Log.d("tag","insert-> $name ::: list size->  $listSize")
                 }
             }
 

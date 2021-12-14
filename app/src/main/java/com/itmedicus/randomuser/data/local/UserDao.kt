@@ -21,8 +21,11 @@ interface UserDao {
     @Query("SELECT * FROM user_table ORDER BY id ASC  ")
     fun getAllUser(): List<Result>
 
+    @Query("SELECT * FROM user_table ORDER BY id ASC  ")
+    fun getAllRandomUser(): MutableList<Result>
+
    @Query("DELETE FROM user_table WHERE id=:id")
-    suspend fun deleteItem(id: Int)
+    suspend fun deleteItem(id: Int?)
 
     @Query("UPDATE user_table SET name  = :name, phone = :phone,gender =:gender," +
             "email =:email,nat=:nat,picture=:picture,location=:location  WHERE id = :id")

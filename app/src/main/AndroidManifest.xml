@@ -3,6 +3,7 @@
     package="com.itmedicus.randomuser">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RandomUser">
+        <activity
+            android:name=".ui.activity.ShowAlarmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.AlarmActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activity.HistoryActivity"
             android:exported="false" />
@@ -32,6 +39,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+     <receiver android:name=".ui.activity.AlarmReceiver"
+         android:enabled="false"
+         android:exported="false">
+         <intent-filter>
+             <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+         </intent-filter>
+      </receiver>
+
     </application>
 
 </manifest>
