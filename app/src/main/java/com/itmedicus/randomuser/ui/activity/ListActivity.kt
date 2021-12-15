@@ -88,9 +88,9 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
             val db = UserDatabase.getDatabase(this@ListActivity).userDao()
             val user = Result(item.name.first+item.name.last,item.phone,item.gender,item.email,item.nat,item.picture.medium,item.location.city)
 
-            val allRandomUser = db.getAllRandomUser()
+          /*  val allRandomUser = db.getAllRandomUser()
             allUser.addAll(allRandomUser)
-            allUser[position].id
+            allUser[position].id*/
 
 
             val listSize = db.getAllUser().size

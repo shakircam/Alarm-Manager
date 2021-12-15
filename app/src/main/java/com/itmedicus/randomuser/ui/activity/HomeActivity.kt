@@ -28,8 +28,13 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.card5.setOnClickListener {
+        binding.card4.setOnClickListener {
             val intent = Intent(this,AlarmActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.card5.setOnClickListener {
+            val intent = Intent(this,ShowAlarmActivity::class.java)
             startActivity(intent)
         }
     }
