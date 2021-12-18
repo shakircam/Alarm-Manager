@@ -18,7 +18,7 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.hide()
         val intent = intent
 
         val name = intent.getStringExtra("name")
@@ -29,12 +29,19 @@ class DetailsActivity : AppCompatActivity() {
         val image = intent.getStringExtra("pic")
         val location = intent.getStringExtra("location")
         val state = intent.getStringExtra("state")
+        binding.backButton.setOnClickListener {
+            onBackPressed()
+        }
+        binding.fabButton.setOnClickListener {
+            binding.fabButton.setImageResource(R.drawable.colorstar)
+
+        }
 
         binding.gender.text = "Gender: "+gender
-        binding.email.text = "Email: "+email
+        binding.email.text = email
         binding.nationality.text = "Nationality: "+nat
-        binding.name.text = "Name: "+name
-        binding.location.text = "City: "+location
+        binding.name.text = name
+        binding.location.text = location
         binding.phone.text = "Phone: "+phone
         binding.state.text = "State: "+state
 
@@ -42,5 +49,6 @@ class DetailsActivity : AppCompatActivity() {
             .load(image)
             .into(binding.imageView)
     }
+
 
 }

@@ -2,4 +2,11 @@
     <string name="app_name">RandomUser</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text"> One of the world\'s most marketable and famous athletes,
+    Ronaldo was ranked the world\'s highest-paid athlete by Forbes in 2016 and 2017.
+    </string>
+    <string name="state">state</string>
+    <string name="name">Ibrahim Khalil</string>
+
+
 </resources>

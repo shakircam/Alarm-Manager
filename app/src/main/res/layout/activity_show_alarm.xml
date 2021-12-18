@@ -12,8 +12,16 @@
         android:id="@+id/timeEd"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:hint="enter time"
+        android:layout_marginTop="50dp"
+        android:layout_width="200dp"
+        android:layout_height="60dp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/timeEd2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="enter 2nd time"
         android:layout_marginTop="50dp"
         android:layout_width="200dp"
         android:layout_height="60dp"/>

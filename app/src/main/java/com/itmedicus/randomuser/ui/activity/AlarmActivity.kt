@@ -97,7 +97,7 @@ class AlarmActivity : AppCompatActivity() {
           val name : CharSequence = "go for"
           val description = "alarm set"
           val importance = NotificationManager.IMPORTANCE_HIGH
-          val channel = NotificationChannel("notification",name,importance)
+          val channel = NotificationChannel("1000",name,importance)
           channel.description = description
           val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
           notificationManager.createNotificationChannel(channel)
