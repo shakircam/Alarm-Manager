@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="state">state</string>
+    <string name="title_alarm">Alarm repeat times</string>
 </resources>

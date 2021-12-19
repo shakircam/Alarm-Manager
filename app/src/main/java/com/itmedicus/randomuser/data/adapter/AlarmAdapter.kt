@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ import com.itmedicus.randomuser.model.AlarmTime
 import com.itmedicus.randomuser.model.Result
 import com.itmedicus.randomuser.ui.activity.AlarmCreateActivity
 
-class AlarmAdapter(private val context: Context,private val itemClickListener: ItemClickListener): RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> () {
+class AlarmAdapter(private val context: Context): RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> () {
     var list = mutableListOf<AlarmTime>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
@@ -32,13 +33,14 @@ class AlarmAdapter(private val context: Context,private val itemClickListener: I
         val currentItem = list[position]
         holder.title.text = currentItem.title
         holder.time.text = currentItem.time
-        holder.button.setOnClickListener {
-            itemClickListener.onItemSend(position)
-           val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-                val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
-                val pendingIntent = PendingIntent.getBroadcast(context,0,intent,0)
-                alarmManager.cancel(pendingIntent)
 
+        holder.button.setOnClickListener {
+                val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+                val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
+                val pendingIntent = PendingIntent.getBroadcast(context,currentItem.requestCode,intent,0)
+                alarmManager.cancel(pendingIntent)
+            Log.d("tag", currentItem.requestCode.toString())
+            Toast.makeText(context,"Alarm off",Toast.LENGTH_SHORT).show()
         }
     }
 

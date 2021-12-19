@@ -19,6 +19,10 @@ interface UserDao {
     @Query("SELECT * FROM alarm_table ORDER BY id ASC  ")
     fun getAllAlarmTime(): MutableList<AlarmTime>
 
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertToLocal(userData: MutableList<Result>)
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateDate(userData: Result)
 

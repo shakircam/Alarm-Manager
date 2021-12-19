@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "alarm_table")
 data class AlarmTime(
     val time: String,
-    val title : String
+    val title : String,
+    val requestCode : Int
 )  {
     @PrimaryKey(autoGenerate = true)
     var id : Int? = null

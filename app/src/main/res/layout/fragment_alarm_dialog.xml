@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activity.AlarmCreateActivity">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.AlarmDialogFragment">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/titleTv"
-        android:text="Title "
-        android:textSize="20sp"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/oneTv"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:text="One Times"
+        android:textSize="18sp"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/showTime"
-        app:layout_constraintTop_toBottomOf="@id/titleTv"
+        android:id="@+id/twoTv"
+       app:layout_constraintTop_toBottomOf="@id/oneTv"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="12:05 PM"
-        android:textSize="22sp"
+        android:text="Two Times"
+        android:textSize="18sp"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/timeTv"
-        android:text="One Time"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/showTime"
+        android:id="@+id/threeTv"
+        app:layout_constraintTop_toBottomOf="@id/twoTv"
         app:layout_constraintStart_toStartOf="parent"
+        android:text="Three Times"
+        android:textSize="18sp"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveBt"
-        app:layout_constraintTop_toBottomOf="@id/timeTv"
+    <View
+        android:id="@+id/view"
+        app:layout_constraintTop_toBottomOf="@id/threeTv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:text="Save"
-        android:textSize="20sp"
-        android:textAllCaps="false"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="50dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

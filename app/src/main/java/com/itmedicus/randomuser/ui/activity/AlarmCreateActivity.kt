@@ -17,6 +17,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -26,6 +27,7 @@ import com.itmedicus.randomuser.databinding.ActivityAlarmBinding
 import com.itmedicus.randomuser.databinding.ActivityAlarmCreateBinding
 import com.itmedicus.randomuser.databinding.ActivityShowAlarmBinding
 import com.itmedicus.randomuser.model.AlarmTime
+import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -35,10 +37,10 @@ class AlarmCreateActivity : AppCompatActivity() {
     lateinit var context: Context
     lateinit var alarmManager: AlarmManager
     private val CHANNEL_ID = "1000"
-    private var request_code= 0
+    var request_code= 0
     private lateinit var picker : MaterialTimePicker
     private lateinit var calender : Calendar
-    var time = ""
+    private var time = ""
     var alarmList = mutableListOf<AlarmTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +50,12 @@ class AlarmCreateActivity : AppCompatActivity() {
         context = this
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        binding.timeTv.setOnClickListener {
+            showAlarmDialog()
+        }
+
         createNotificationChannel()
-        val title = binding.titleTv.text.toString()
+
         binding.showTime.setOnClickListener {
             showTimePicker()
         }
@@ -65,8 +71,8 @@ class AlarmCreateActivity : AppCompatActivity() {
             )
             Log.d("request",request_code.toString())
             Toast.makeText(this,"alarm set successfully", Toast.LENGTH_SHORT).show()
-
-            val alarmTime= AlarmTime(time,title)
+            val title = binding.titleTv.text.toString()
+            val alarmTime= AlarmTime(time,title,request_code)
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
@@ -75,13 +81,12 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         }
     }
+    private fun showAlarmDialog() {
 
-     fun cancelAlarm() {
-        val intent = Intent(this, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(this,0,intent,0)
-        alarmManager.cancel(pendingIntent)
-        Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
+        val dialogFragment = AlarmDialogFragment()
+        dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
 
+        dialogFragment.show(supportFragmentManager, "create_note")
     }
 
     private fun showTimePicker() {
@@ -96,9 +101,11 @@ class AlarmCreateActivity : AppCompatActivity() {
 
                 binding.showTime.text = String.format("%02d",picker.hour -12)+ " : "+String.format("%02d",picker.minute) + "PM"
                  time = String.format("%02d",picker.hour -12)+ " : "+String.format("%02d",picker.minute) + "PM"
+                Log.d("tag",time)
 
             }else{
-                String.format("%02d",picker.hour )+ " : "+String.format("%02d",picker.minute) + "AM"
+                binding.showTime.text =  String.format("%02d",picker.hour )+ " : "+String.format("%02d",picker.minute) + "AM"
+                time = String.format("%02d",picker.hour )+ " : "+String.format("%02d",picker.minute) + "AM"
             }
             calender = Calendar.getInstance()
             calender[Calendar.HOUR_OF_DAY] =  picker.hour

@@ -88,12 +88,46 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
             val db = UserDatabase.getDatabase(this@ListActivity).userDao()
             val user = Result(item.name.first+item.name.last,item.phone,item.gender,item.email,item.nat,item.picture.medium,item.location.city)
 
-          /*  val allRandomUser = db.getAllRandomUser()
-            allUser.addAll(allRandomUser)
-            allUser[position].id*/
+             val allRandomUser = db.getAllRandomUser()
+             allUser.addAll(allRandomUser)
+
+             val id = allUser.filter { it.name == name }.map { it.id }
+             val remove = allUser.removeIf { it.name == name }
+             Log.d("filter", " $id ::: $remove")
+             Log.d("filter",allUser.size.toString())
+             allUser.add(user)
+
+            for (i in allUser){
+                if (name == i.name){
+                    flag = 2
+                    break
+                }
+            }
+
+            if (flag == 2){
+
+                 allUser.removeIf { it.name == name }
+                 allUser.add(user)
+                 db.insertToLocal(allUser)
+                 flag = 1
+
+            }else{
+                if (allUser.size == 10){
+                    allUser.removeFirst()
+                    allUser.add(user)
+                    db.insertToLocal(allUser)
+
+                }else{
+                    if(allUser.size<10)
+                        allUser.add(user)
+                     db.insertToLocal(allUser)
+                }
+            }
 
 
-            val listSize = db.getAllUser().size
+
+
+          /*  val listSize = db.getAllUser().size
             val userName = db.allUserNameList()
             val userId = db.getUserId(name)
             val nameList = mutableListOf<Name>()
@@ -128,7 +162,7 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
                     db.insertData(user)
                     Log.d("tag","insert-> $name ::: list size->  $listSize")
                 }
-            }
+            }*/
 
         }
         startActivity(intent)
