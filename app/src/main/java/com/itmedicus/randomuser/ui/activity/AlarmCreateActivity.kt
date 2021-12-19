@@ -76,6 +76,14 @@ class AlarmCreateActivity : AppCompatActivity() {
         }
     }
 
+     fun cancelAlarm() {
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this,0,intent,0)
+        alarmManager.cancel(pendingIntent)
+        Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
+
+    }
+
     private fun showTimePicker() {
         picker = MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_12H)

@@ -31,6 +31,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.itmedicus.randomuser.data.adapter.AlarmAdapter
 import com.itmedicus.randomuser.data.adapter.HistoryAdapter
+import com.itmedicus.randomuser.data.adapter.ItemClickListener
 import com.itmedicus.randomuser.data.local.UserDatabase
 import com.itmedicus.randomuser.model.AlarmTime
 import com.itmedicus.randomuser.model.Result
@@ -38,7 +39,7 @@ import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 
-class ShowAlarmActivity : AppCompatActivity() {
+class ShowAlarmActivity : AppCompatActivity(), ItemClickListener {
     private lateinit var binding: ActivityShowAlarmBinding
     lateinit var context: Context
     lateinit var alarmManager: AlarmManager
@@ -47,7 +48,7 @@ class ShowAlarmActivity : AppCompatActivity() {
     private lateinit var picker : MaterialTimePicker
     private lateinit var calender : Calendar
 
-    private val adapter by lazy { AlarmAdapter() }
+    private val adapter by lazy { AlarmAdapter(context,this) }
     var list = mutableListOf<AlarmTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,8 +81,9 @@ class ShowAlarmActivity : AppCompatActivity() {
     }
 
 
+    override fun onItemSend(position: Int) {
 
-
+    }
 
     class Receiver : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
