@@ -25,6 +25,16 @@ import android.media.Ringtone
 
 import android.net.Uri
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
+import com.itmedicus.randomuser.data.adapter.AlarmAdapter
+import com.itmedicus.randomuser.data.adapter.HistoryAdapter
+import com.itmedicus.randomuser.data.local.UserDatabase
+import com.itmedicus.randomuser.model.AlarmTime
+import com.itmedicus.randomuser.model.Result
+import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 
@@ -33,6 +43,12 @@ class ShowAlarmActivity : AppCompatActivity() {
     lateinit var context: Context
     lateinit var alarmManager: AlarmManager
     private val CHANNEL_ID = "1000"
+    private var request_code= 0
+    private lateinit var picker : MaterialTimePicker
+    private lateinit var calender : Calendar
+
+    private val adapter by lazy { AlarmAdapter() }
+    var list = mutableListOf<AlarmTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,93 +57,31 @@ class ShowAlarmActivity : AppCompatActivity() {
         context = this
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        createNotificationChannel()
+        initRecyclerView()
 
-        binding.selectTime.setOnClickListener {
-
-            val alarmList = ArrayList<PendingIntent>()
-            val time =  binding.timeEd.text.toString().toInt() * 1000
-
-
-            for ( i in 1..2){
-                val intent = Intent(context,Receiver::class.java)
-                val pendingIntent = PendingIntent.getBroadcast(context,i,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-                Log.d("this","create alarm: "+Date().toString())
-                alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    System.currentTimeMillis() + time * i,
-                    pendingIntent
-                )
-                alarmList.add(pendingIntent)
-            }
-
-
-
-           // val secondTime = binding.timeEd2.text.toString().toInt() * 1000
-           // setAlarm(time,secondTime)
-            Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
-           /* // taking time
-            val time =  binding.timeEd.text.toString().toInt() * 1000
-
-            // connect with broadcast receiver by intent
-            val intent = Intent(context,Receiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-            Log.d("this","create alarm: "+Date().toString())
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis() + time,
-                myTime,
-                pendingIntent
-            )*/
+        binding.fab.setOnClickListener {
+            val intent = Intent(this,AlarmCreateActivity::class.java)
+            startActivity(intent)
         }
 
-        binding.updateAlarm.setOnClickListener {
-
-            val time =  binding.timeEd.text.toString().toInt() * 1000
-            val intent = Intent(context,Receiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-            Log.d("this","update alarm: "+Date().toString())
-            alarmManager.set(
-                AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis() + time,
-                pendingIntent
-            )
-        }
-
-        binding.cancelTime.setOnClickListener {
-
-            val intent = Intent(context,Receiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-            Log.d("this","cancel alarm: "+Date().toString())
-            alarmManager.cancel(pendingIntent)
+        lifecycleScope.launch {
+            val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
+            val timeList = db.getAllAlarmTime()
+            list.addAll(timeList)
+            adapter.setData(list)
         }
 
     }
 
-    private fun setAlarm( time : Int,pk : Int){
-       // val time =  binding.timeEd.text.toString().toInt() * 1000
-        val intent = Intent(context,Receiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context,pk,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis() + time,
-            pendingIntent
-        )
+    private fun initRecyclerView() {
+        val mRecyclerView = binding.recyclerview
+        mRecyclerView.adapter = adapter
+        mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
     }
 
-    private fun createNotificationChannel() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val name : CharSequence = "Alarm manager"
-            val descriptionText = "Alarm is set now."
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID,name,importance).apply {
-                description = descriptionText
-            }
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
+
+
 
     class Receiver : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -161,10 +115,7 @@ class ShowAlarmActivity : AppCompatActivity() {
                 val notificationManager = NotificationManagerCompat.from(context)
                 notificationManager.notify(111, builder.build())
 
-
-
         }
-
     }
 
 }

@@ -2,6 +2,7 @@ package com.itmedicus.randomuser.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.itmedicus.randomuser.model.AlarmTime
 import com.itmedicus.randomuser.model.Dami
 import com.itmedicus.randomuser.model.Name
 import com.itmedicus.randomuser.model.Result
@@ -11,6 +12,12 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertData(userData: Result)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAlarmTime(alarmTime: AlarmTime)
+
+    @Query("SELECT * FROM alarm_table ORDER BY id ASC  ")
+    fun getAllAlarmTime(): MutableList<AlarmTime>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateDate(userData: Result)

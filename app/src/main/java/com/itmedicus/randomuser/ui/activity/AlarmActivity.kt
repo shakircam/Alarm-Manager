@@ -22,11 +22,13 @@ class AlarmActivity : AppCompatActivity() {
     private lateinit var picker : MaterialTimePicker
     private lateinit var calender : Calendar
     private lateinit var alarmManager: AlarmManager
+    lateinit var context: Context
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAlarmBinding.inflate(layoutInflater)
+        context = this
         alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         setContentView(binding.root)
 
@@ -36,10 +38,21 @@ class AlarmActivity : AppCompatActivity() {
             showTimePicker()
         }
         binding.setAlarm.setOnClickListener {
-            setAlarm()
+            createAlarm()
+           // setAlarm()
         }
         binding.cancelTime.setOnClickListener {
             cancelAlarm()
+        }
+
+    }
+
+
+    private fun createAlarm(){
+        if (binding.startBn.isChecked){
+            setRepetedAlarm()
+        }else{
+            setAlarm()
         }
     }
 
@@ -51,17 +64,39 @@ class AlarmActivity : AppCompatActivity() {
         Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
     }
 
-    private fun setAlarm() {
+    private fun setRepetedAlarm() {
 
-        val intent = Intent(this, ShowAlarmActivity.Receiver::class.java)
-        val  pendingIntent = PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val alarmList = ArrayList<PendingIntent>()
 
-        alarmManager.set(
+        for ( i in 1..2){
+            val intent = Intent(context, ShowAlarmActivity.Receiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context,i,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+            Log.d("this","create alarm: "+Date().toString())
+            alarmManager.set(
+                AlarmManager.RTC_WAKEUP,
+                calender.timeInMillis ,
+                pendingIntent
+            )
+            Log.d("this", (calender.timeInMillis).toString())
+            Log.d("this",i.toString())
+            alarmList.add(pendingIntent)
+            Log.d("thisalarm", alarmList.size.toString())
+        }
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setAlarm(){
+         val intent = Intent(this, ShowAlarmActivity.Receiver::class.java)
+         val  pendingIntent = PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calender.timeInMillis,
-           // AlarmManager.INTERVAL_DAY,
+           // Interval 6 hour
+            21600000,
             pendingIntent
         )
+        Log.d("this", (calender.timeInMillis ).toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
 
@@ -75,9 +110,7 @@ class AlarmActivity : AppCompatActivity() {
         picker.addOnPositiveButtonClickListener {
             if (picker.hour > 12){
 
-                  val time = String.format("%02d",picker.hour -12)+ " : "+String.format("%02d",picker.minute) + "PM"
-                binding.timeView.text = time
-                Log.d("time",time)
+                binding.showTime.text = String.format("%02d",picker.hour -12)+ " : "+String.format("%02d",picker.minute) + "PM"
 
             }else{
                 String.format("%02d",picker.hour )+ " : "+String.format("%02d",picker.minute) + "AM"

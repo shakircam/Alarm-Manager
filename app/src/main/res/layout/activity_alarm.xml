@@ -8,20 +8,37 @@
     tools:context=".ui.activity.AlarmActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/timeView"
+        android:id="@+id/showTime"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:text="12:05 PM"
+        android:textSize="22sp"
+        android:layout_margin="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/startBn"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"
-        android:text="12:10 PM"
-        android:textColor="@color/black"
-        android:textSize="40sp"
-        android:layout_width="200dp"
-        android:layout_height="80dp"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/titleTv"
+        app:layout_constraintTop_toBottomOf="@id/showTime"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Alarm"
+        android:textSize="20sp"
+        android:layout_marginStart="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
 
 <androidx.appcompat.widget.AppCompatButton
     android:id="@+id/selectTime"
-    app:layout_constraintTop_toBottomOf="@id/timeView"
+    app:layout_constraintTop_toBottomOf="@id/titleTv"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     android:text="Select Time"
@@ -29,8 +46,8 @@
     android:layout_marginTop="30dp"
     android:textSize="30sp"
     android:textAllCaps="false"
-    android:layout_width="300dp"
-    android:layout_height="65dp"/>
+    android:layout_width="200dp"
+    android:layout_height="50dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/setAlarm"
@@ -42,8 +59,8 @@
         android:layout_marginTop="20dp"
         android:textSize="30sp"
         android:textAllCaps="false"
-        android:layout_width="300dp"
-        android:layout_height="65dp"/>
+        android:layout_width="200dp"
+        android:layout_height="50dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cancelTime"
@@ -55,7 +72,8 @@
         android:layout_marginTop="20dp"
         android:textSize="30sp"
         android:textAllCaps="false"
-        android:layout_width="300dp"
-        android:layout_height="65dp"/>
+        android:layout_width="200dp"
+        android:layout_height="50dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

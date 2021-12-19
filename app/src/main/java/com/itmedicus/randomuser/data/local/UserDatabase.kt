@@ -5,12 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.itmedicus.randomuser.model.AlarmTime
 import com.itmedicus.randomuser.model.Dami
 import com.itmedicus.randomuser.model.Result
 
 
 
-@Database(entities = [Result::class], version = 1, exportSchema = false)
+@Database(entities = [Result::class,AlarmTime::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class UserDatabase : RoomDatabase(){
 
