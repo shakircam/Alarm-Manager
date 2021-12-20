@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.AlarmCreateActivity">
+    tools:context=".ui.activity.TwoTimesAlarmActivity">
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/titleTv"
@@ -17,11 +17,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/showTime"
+        android:id="@+id/firstAlarm"
         app:layout_constraintTop_toBottomOf="@id/titleTv"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="12:05 PM"
+        android:text="08:00 AM"
+        android:textSize="22sp"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/secondAlarm"
+        app:layout_constraintTop_toBottomOf="@id/firstAlarm"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="2:00 PM"
         android:textSize="22sp"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
@@ -29,13 +42,14 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/timeTv"
-        android:text="One Time"
+        android:text="Two Time"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/showTime"
+        app:layout_constraintTop_toBottomOf="@id/secondAlarm"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <View
         android:id="@+id/view"
         app:layout_constraintTop_toBottomOf="@id/timeTv"
@@ -51,24 +65,12 @@
         app:layout_constraintTop_toBottomOf="@id/view"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="5dp"
-        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/weekTv"
-        android:text="Selected day"
-        app:layout_constraintTop_toBottomOf="@id/check"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="18sp"
-        android:layout_marginStart="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveBt"
-        app:layout_constraintTop_toBottomOf="@id/weekTv"
+        app:layout_constraintTop_toBottomOf="@id/check"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"

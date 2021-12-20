@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.databinding.FragmentAlarmDialogBinding
 import com.itmedicus.randomuser.ui.activity.AlarmCreateActivity
+import com.itmedicus.randomuser.ui.activity.TwoTimesAlarmActivity
 
 
 class AlarmDialogFragment : DialogFragment() {
@@ -27,7 +28,7 @@ class AlarmDialogFragment : DialogFragment() {
             startActivity(intent)
         }
         binding.twoTv.setOnClickListener {
-            val intent = Intent(activity,AlarmCreateActivity::class.java)
+            val intent = Intent(activity, TwoTimesAlarmActivity::class.java)
             startActivity(intent)
         }
         binding.threeTv.setOnClickListener {

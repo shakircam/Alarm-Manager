@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 data class AlarmTime(
     val time: String,
     val title : String,
-    val requestCode : Int
+    val requestCode : Int,
+    val status : String
 )  {
     @PrimaryKey(autoGenerate = true)
     var id : Int? = null

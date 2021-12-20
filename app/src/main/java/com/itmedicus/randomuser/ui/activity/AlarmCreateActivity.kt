@@ -28,6 +28,7 @@ import com.itmedicus.randomuser.databinding.ActivityAlarmCreateBinding
 import com.itmedicus.randomuser.databinding.ActivityShowAlarmBinding
 import com.itmedicus.randomuser.model.AlarmTime
 import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
+import com.itmedicus.randomuser.ui.fragment.WeekDialogFragment
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -41,6 +42,7 @@ class AlarmCreateActivity : AppCompatActivity() {
     private lateinit var picker : MaterialTimePicker
     private lateinit var calender : Calendar
     private var time = ""
+    private var status = ""
     var alarmList = mutableListOf<AlarmTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,39 +56,146 @@ class AlarmCreateActivity : AppCompatActivity() {
             showAlarmDialog()
         }
 
+        binding.weekTv.setOnClickListener {
+            showAlarmWeekDialog()
+        }
+
         createNotificationChannel()
 
         binding.showTime.setOnClickListener {
             showTimePicker()
         }
+
+
+            val intent = intent
+            val sat = intent.getStringExtra("saturday")
+            val sun = intent.getStringExtra("sunday")
+            val mon = intent.getStringExtra("monday")
+            val tue = intent.getStringExtra("tuesday")
+            val wed = intent.getStringExtra("wednesday")
+            val thu = intent.getStringExtra("thursday")
+            val fri = intent.getStringExtra("friday")
+            Log.d("day",sat.toString())
+
+
         binding.saveBt.setOnClickListener {
-            request_code ++
-            val intent = Intent(context, AlarmReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context,request_code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-            Log.d("this","create alarm: "+Date().toString())
-            alarmManager.set(
-                AlarmManager.RTC_WAKEUP,
-                calender.timeInMillis ,
-                pendingIntent
-            )
-            Log.d("request",request_code.toString())
+            //setRepeatingAlarm(Calendar.MONDAY)
+            if (sat == "1"){
+                status = "Saturday"
+                setRepeatingAlarm(Calendar.SATURDAY)
+            }
+            if (sun == "2"){
+                status = "Sunday"
+                setRepeatingAlarm(Calendar.SUNDAY)
+            }
+            if (mon == "3"){
+                status = "Monday"
+                setRepeatingAlarm(Calendar.MONDAY)
+            }
+            if (tue == "4"){
+                status = "Tuesday"
+                setRepeatingAlarm(Calendar.TUESDAY)
+            }
+            if (wed == "5"){
+                status = "Wednesday"
+                setRepeatingAlarm(Calendar.WEDNESDAY)
+            }
+            if (thu == "6"){
+                status = "Thursday"
+                setRepeatingAlarm(Calendar.THURSDAY)
+            }
+            if (fri == "7"){
+                status = "Friday"
+                setRepeatingAlarm(Calendar.FRIDAY)
+            }
+
+            if (binding.check.isChecked){
+                repeatingAlarm()
+                status = "The Alarm will continue"
+
+            }else{
+                setSingleAlarm()
+                status = ""
+            }
+
             Toast.makeText(this,"alarm set successfully", Toast.LENGTH_SHORT).show()
             val title = binding.titleTv.text.toString()
-            val alarmTime= AlarmTime(time,title,request_code)
+            val alarmTime= AlarmTime(time,title,0,status)
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
                 db.insertAlarmTime(alarmTime)
             }
-
         }
+
     }
+
+
+
+    private fun setSingleAlarm(){
+          val intent = Intent(context, AlarmReceiver::class.java)
+           val pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+           Log.d("this","create alarm: "+Date().toString())
+           alarmManager.set(
+               AlarmManager.RTC_WAKEUP,
+               calender.timeInMillis ,
+               pendingIntent
+           )
+    }
+
+    private fun setRepeatingAlarm(dayOfWeek: Int){
+
+        calender = Calendar.getInstance()
+        calender.set(Calendar.DAY_OF_WEEK,dayOfWeek)
+
+        if(calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val intent = Intent(this,AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+             //AlarmManager.INTERVAL_DAY * 7,
+            24*60*60*1000 * 7,
+            pendingIntent
+        )
+        Log.d("this", (calender.timeInMillis ).toString())
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+
+    private fun repeatingAlarm(){
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,4,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+            // Interval one day
+            24*60*60*1000,
+            pendingIntent
+        )
+        Log.d("this", (calender.timeInMillis ).toString())
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
     private fun showAlarmDialog() {
 
         val dialogFragment = AlarmDialogFragment()
         dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
 
         dialogFragment.show(supportFragmentManager, "create_note")
+    }
+
+    private fun showAlarmWeekDialog() {
+
+        val dialogFragment = WeekDialogFragment()
+        dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
+
+        dialogFragment.show(supportFragmentManager, "create_alarm")
     }
 
     private fun showTimePicker() {
@@ -101,8 +210,6 @@ class AlarmCreateActivity : AppCompatActivity() {
 
                 binding.showTime.text = String.format("%02d",picker.hour -12)+ " : "+String.format("%02d",picker.minute) + "PM"
                  time = String.format("%02d",picker.hour -12)+ " : "+String.format("%02d",picker.minute) + "PM"
-                Log.d("tag",time)
-
             }else{
                 binding.showTime.text =  String.format("%02d",picker.hour )+ " : "+String.format("%02d",picker.minute) + "AM"
                 time = String.format("%02d",picker.hour )+ " : "+String.format("%02d",picker.minute) + "AM"
@@ -112,6 +219,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             calender[Calendar.MINUTE] =  picker.minute
             calender[Calendar.SECOND] = 0
             calender[Calendar.MILLISECOND] =  0
+
 
         }
 
@@ -154,7 +262,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             val builder = NotificationCompat.Builder(context!!, "1000")
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("Alarm Clock")
-                .setContentText("Alarm manager running")
+                .setContentText("Time to take your medicine")
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setContentIntent(pendingIntent)

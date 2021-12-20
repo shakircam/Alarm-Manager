@@ -33,6 +33,7 @@ class AlarmAdapter(private val context: Context): RecyclerView.Adapter<AlarmAdap
         val currentItem = list[position]
         holder.title.text = currentItem.title
         holder.time.text = currentItem.time
+        holder.status.text = currentItem.status
 
         holder.button.setOnClickListener {
                 val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
@@ -51,6 +52,7 @@ class AlarmAdapter(private val context: Context): RecyclerView.Adapter<AlarmAdap
     class AlarmViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
         val time = itemView.findViewById(R.id.showTime) as TextView
         val title = itemView.findViewById(R.id.titleTv) as TextView
+        val status = itemView.findViewById(R.id.statusTv) as TextView
         val button = itemView.findViewById(R.id.startBn) as SwitchCompat
     }
 
