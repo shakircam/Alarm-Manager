@@ -45,30 +45,31 @@
         android:layout_width="match_parent"
         />
 
-    <CheckBox
-        android:id="@+id/check"
-        android:text="Continue"
-        app:layout_constraintTop_toBottomOf="@id/view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="5dp"
-        android:textSize="16sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/weekTv"
-        android:text="Selected day"
-        app:layout_constraintTop_toBottomOf="@id/check"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        android:text="Select day"
+        android:layout_marginStart="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:id="@+id/selectBt"
+        android:text="Want alarm in the selected day"
+        app:layout_constraintTop_toBottomOf="@id/weekTv"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="18sp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveBt"
-        app:layout_constraintTop_toBottomOf="@id/weekTv"
+        app:layout_constraintTop_toBottomOf="@id/selectBt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"

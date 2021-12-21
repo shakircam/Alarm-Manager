@@ -2,6 +2,7 @@ package com.itmedicus.randomuser.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.databinding.FragmentAlarmDialogBinding
 import com.itmedicus.randomuser.databinding.FragmentWeekDialogBinding
 import com.itmedicus.randomuser.ui.activity.AlarmCreateActivity
+import java.util.*
 
 
 class WeekDialogFragment : DialogFragment() {
@@ -31,6 +33,9 @@ class WeekDialogFragment : DialogFragment() {
 
             if (binding.saturday.isChecked){
                 val saturday = "1"
+
+                val calendar : Long = Calendar.getInstance().timeInMillis
+                Log.d("req", calendar.toString())
                 intent.putExtra("saturday",saturday)
             }
             if (binding.sunday.isChecked){
@@ -52,6 +57,7 @@ class WeekDialogFragment : DialogFragment() {
 
             if (binding.thursday.isChecked){
                 val thursday = "6"
+
                 intent.putExtra("thursday",thursday)
             }
 
@@ -60,6 +66,7 @@ class WeekDialogFragment : DialogFragment() {
                 intent.putExtra("friday",friday)
             }
             startActivity(intent)
+            dismiss()
         }
 
 

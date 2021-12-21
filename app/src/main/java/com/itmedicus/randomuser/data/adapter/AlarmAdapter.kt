@@ -31,6 +31,7 @@ class AlarmAdapter(private val context: Context): RecyclerView.Adapter<AlarmAdap
 
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
         val currentItem = list[position]
+
         holder.title.text = currentItem.title
         holder.time.text = currentItem.time
         holder.status.text = currentItem.status
@@ -38,9 +39,9 @@ class AlarmAdapter(private val context: Context): RecyclerView.Adapter<AlarmAdap
         holder.button.setOnClickListener {
                 val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
-                val pendingIntent = PendingIntent.getBroadcast(context,currentItem.requestCode,intent,0)
+                val pendingIntent = PendingIntent.getService(context,currentItem.requestCode,intent,0)
                 alarmManager.cancel(pendingIntent)
-            Log.d("tag", currentItem.requestCode.toString())
+            Log.d("code", currentItem.requestCode.toString())
             Toast.makeText(context,"Alarm off",Toast.LENGTH_SHORT).show()
         }
     }

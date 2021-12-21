@@ -15,7 +15,9 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.data.adapter.AlarmAdapter
@@ -24,6 +26,7 @@ import com.itmedicus.randomuser.data.local.UserDatabase
 import com.itmedicus.randomuser.databinding.ActivityAlarmBinding
 import com.itmedicus.randomuser.databinding.ActivityShowAlarmBinding
 import com.itmedicus.randomuser.model.AlarmTime
+import com.itmedicus.randomuser.utils.SwipeToDelete
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -62,8 +65,26 @@ class ShowAlarmActivity : AppCompatActivity() {
         val mRecyclerView = binding.recyclerview
         mRecyclerView.adapter = adapter
         mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        swipeToDelete(mRecyclerView)
     }
 
+    private fun swipeToDelete(recyclerView: RecyclerView) {
+        val swipeToDeleteCallback = object : SwipeToDelete() {
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val deletedItem = adapter.list[viewHolder.adapterPosition]
+                // Delete Item
+                lifecycleScope.launch {
+                    val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
+                    db.deleteAlarm(deletedItem)
+                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                    Toast.makeText(this@ShowAlarmActivity,"alarm deleted",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
 
     class Receiver : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {

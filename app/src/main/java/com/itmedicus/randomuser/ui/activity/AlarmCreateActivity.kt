@@ -38,13 +38,13 @@ class AlarmCreateActivity : AppCompatActivity() {
     lateinit var context: Context
     lateinit var alarmManager: AlarmManager
     private val CHANNEL_ID = "1000"
-    var request_code= 0
+    var repReqCode = 0
     private lateinit var picker : MaterialTimePicker
     private lateinit var calender : Calendar
     private var time = ""
     private var status = ""
     var alarmList = mutableListOf<AlarmTime>()
-
+    val stringBuilder = StringBuilder()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAlarmCreateBinding.inflate(layoutInflater)
@@ -66,7 +66,6 @@ class AlarmCreateActivity : AppCompatActivity() {
             showTimePicker()
         }
 
-
             val intent = intent
             val sat = intent.getStringExtra("saturday")
             val sun = intent.getStringExtra("sunday")
@@ -75,52 +74,75 @@ class AlarmCreateActivity : AppCompatActivity() {
             val wed = intent.getStringExtra("wednesday")
             val thu = intent.getStringExtra("thursday")
             val fri = intent.getStringExtra("friday")
-            Log.d("day",sat.toString())
 
+
+            Log.d("day",sat.toString())
+            Log.d("day",sun.toString())
+            Log.d("day",mon.toString())
+            Log.d("day",tue.toString())
+            Log.d("day",wed.toString())
+            Log.d("day",thu.toString())
+            Log.d("day",fri.toString())
+        //.....
 
         binding.saveBt.setOnClickListener {
-            //setRepeatingAlarm(Calendar.MONDAY)
-            if (sat == "1"){
-                status = "Saturday"
-                setRepeatingAlarm(Calendar.SATURDAY)
-            }
-            if (sun == "2"){
-                status = "Sunday"
-                setRepeatingAlarm(Calendar.SUNDAY)
-            }
-            if (mon == "3"){
-                status = "Monday"
-                setRepeatingAlarm(Calendar.MONDAY)
-            }
-            if (tue == "4"){
-                status = "Tuesday"
-                setRepeatingAlarm(Calendar.TUESDAY)
-            }
-            if (wed == "5"){
-                status = "Wednesday"
-                setRepeatingAlarm(Calendar.WEDNESDAY)
-            }
-            if (thu == "6"){
-                status = "Thursday"
-                setRepeatingAlarm(Calendar.THURSDAY)
-            }
-            if (fri == "7"){
-                status = "Friday"
-                setRepeatingAlarm(Calendar.FRIDAY)
-            }
 
-            if (binding.check.isChecked){
+
+            if (binding.selectBt.isChecked){
+
+                if (sat == "1"){
+                    setRepeatingSaturdayAlarm()
+                    status = "Saturday"
+                    stringBuilder.append(status+" ")
+                    Log.d("tag","saturday")
+                }
+                if (sun == "2"){
+                    setRepeatingSundayAlarm()
+                    status = "Sunday"
+                    stringBuilder.append(status+" ")
+                    Log.d("tag","sunday")
+                }
+                if (mon == "3"){
+                    setRepeatingMondayAlarm()
+                    status = "Monday"
+                    stringBuilder.append(status+" ")
+                    Log.d("tag","monday")
+                }
+                if (tue == "4"){
+                    setRepeatingTuesdayAlarm()
+                    status = "Tuesday"
+                    stringBuilder.append(" $status")
+                    Log.d("tag","tuesday")
+                }
+                if (wed == "5"){
+                    setRepeatingWednesdayAlarm()
+                    status = "Wednesday"
+                    stringBuilder.append(status+" ")
+                    Log.d("tag","wednesday")
+                }
+                if (thu == "6"){
+                    setRepeatingThursdayAlarm()
+                    status = "Thursday"
+                    stringBuilder.append(status+" ")
+                    Log.d("tag","thursday")
+                }
+                if (fri == "7"){
+                    setRepeatingFridayAlarm()
+                    status = "Friday"
+                    stringBuilder.append(status)
+                    Log.d("tag","friday")
+                }
+            }else{
+
                 repeatingAlarm()
                 status = "The Alarm will continue"
-
-            }else{
-                setSingleAlarm()
-                status = ""
+                stringBuilder.append(status+"")
+                Log.d("tag","repeating alarm")
             }
 
             Toast.makeText(this,"alarm set successfully", Toast.LENGTH_SHORT).show()
             val title = binding.titleTv.text.toString()
-            val alarmTime= AlarmTime(time,title,0,status)
+            val alarmTime= AlarmTime(time,title,repReqCode,stringBuilder.toString())
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
@@ -130,46 +152,11 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     }
 
-
-
-    private fun setSingleAlarm(){
-          val intent = Intent(context, AlarmReceiver::class.java)
-           val pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-           Log.d("this","create alarm: "+Date().toString())
-           alarmManager.set(
-               AlarmManager.RTC_WAKEUP,
-               calender.timeInMillis ,
-               pendingIntent
-           )
-    }
-
-    private fun setRepeatingAlarm(dayOfWeek: Int){
-
-        calender = Calendar.getInstance()
-        calender.set(Calendar.DAY_OF_WEEK,dayOfWeek)
-
-        if(calender.timeInMillis < System.currentTimeMillis()) {
-            calender.add(Calendar.DAY_OF_YEAR, 7)
-        }
-
-        val intent = Intent(this,AlarmReceiver::class.java)
-        val  pendingIntent = PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calender.timeInMillis,
-             //AlarmManager.INTERVAL_DAY * 7,
-            24*60*60*1000 * 7,
-            pendingIntent
-        )
-        Log.d("this", (calender.timeInMillis ).toString())
-        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
-    }
-
-
     private fun repeatingAlarm(){
+        val thuReq : Long = Calendar.getInstance().timeInMillis +1
+         repReqCode = thuReq.toInt()
         val intent = Intent(this, AlarmReceiver::class.java)
-        val  pendingIntent = PendingIntent.getBroadcast(this,4,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -178,9 +165,205 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000,
             pendingIntent
         )
-        Log.d("this", (calender.timeInMillis ).toString())
+        Log.d("code", repReqCode.toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
+
+    // saturday
+    private fun setRepeatingSaturdayAlarm(){
+        val thuReq : Long = Calendar.getInstance().timeInMillis +1
+         repReqCode = thuReq.toInt()
+        calender = Calendar.getInstance()
+        calender.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY)
+
+        if(calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val intent = Intent(this,AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+             //AlarmManager.INTERVAL_DAY * 7,
+            24*60*60*1000 * 7,
+            pendingIntent
+        )
+
+        Log.d("code", repReqCode.toString())
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    // sunday
+    private fun setRepeatingSundayAlarm(){
+        val thuReq : Long = Calendar.getInstance().timeInMillis +2
+         repReqCode = thuReq.toInt()
+        calender = Calendar.getInstance()
+        calender.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY)
+
+        if(calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val intent = Intent(this,AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+            //AlarmManager.INTERVAL_DAY * 7,
+            24*60*60*1000 * 7,
+            pendingIntent
+        )
+
+        Log.d("code", repReqCode.toString())
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    // monday
+    private fun setRepeatingMondayAlarm(){
+        val thuReq : Long = Calendar.getInstance().timeInMillis +3
+         repReqCode = thuReq.toInt()
+        calender = Calendar.getInstance()
+        calender.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY)
+
+        if(calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val intent = Intent(this,AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+            //AlarmManager.INTERVAL_DAY * 7,
+            24*60*60*1000 * 7,
+            pendingIntent
+        )
+
+        Log.d("code", repReqCode.toString())
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    // tuesday
+    private fun setRepeatingTuesdayAlarm(){
+        val thuReq : Long = Calendar.getInstance().timeInMillis +4
+         repReqCode = thuReq.toInt()
+        calender = Calendar.getInstance()
+        calender.set(Calendar.DAY_OF_WEEK,Calendar.TUESDAY)
+
+        if(calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val intent = Intent(this,AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+            //AlarmManager.INTERVAL_DAY * 7,
+            24*60*60*1000 * 7,
+            pendingIntent
+        )
+
+        Log.d("code", repReqCode.toString())
+        Log.d("tag","Tuesday alarm create")
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    // wednesday
+    private fun setRepeatingWednesdayAlarm(){
+        val thuReq : Long = Calendar.getInstance().timeInMillis +5
+         repReqCode = thuReq.toInt()
+        calender = Calendar.getInstance()
+        calender.set(Calendar.DAY_OF_WEEK,Calendar.WEDNESDAY)
+
+        if(calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val intent = Intent(this,AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+            //AlarmManager.INTERVAL_DAY * 7,
+            24*60*60*1000 * 7,
+            pendingIntent
+        )
+        Log.d("code", repReqCode.toString())
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    // thursday
+    private fun setRepeatingThursdayAlarm(){
+        val thuReq : Long = Calendar.getInstance().timeInMillis +6
+        repReqCode = thuReq.toInt()
+
+        calender = Calendar.getInstance()
+        calender.set(Calendar.DAY_OF_WEEK,Calendar.THURSDAY)
+
+        if(calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val intent = Intent(this,AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+            //AlarmManager.INTERVAL_DAY * 7,
+            24*60*60*1000 * 7,
+            pendingIntent
+        )
+        Log.d("code", repReqCode.toString())
+        Log.d("tag","Thursday alarm create")
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    // friday
+    private fun setRepeatingFridayAlarm(){
+        val thuReq : Long = Calendar.getInstance().timeInMillis +7
+         repReqCode = thuReq.toInt()
+
+        calender = Calendar.getInstance()
+        calender.set(Calendar.DAY_OF_WEEK,Calendar.FRIDAY)
+
+        if(calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val intent = Intent(this,AlarmReceiver::class.java)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+            //AlarmManager.INTERVAL_DAY * 7,
+            24*60*60*1000 * 7,
+            pendingIntent
+        )
+        Log.d("code", repReqCode.toString())
+        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setSingleAlarm(){
+        val intent = Intent(context, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        Log.d("this","create alarm: "+Date().toString())
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis ,
+            pendingIntent
+        )
+        Log.d("tag","single alarm create")
+    }
+
 
     private fun showAlarmDialog() {
 

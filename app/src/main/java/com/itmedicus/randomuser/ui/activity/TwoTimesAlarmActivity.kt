@@ -69,9 +69,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
                 status = ""
             }
 
-
             Toast.makeText(this, "alarm set successfully", Toast.LENGTH_SHORT).show()
-
             val title = binding.titleTv.text.toString()
             val addTime= "$time,$second_time"
 
