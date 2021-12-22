@@ -50,4 +50,7 @@ interface UserDao {
 
     @Query("SELECT name FROM user_table ")
     fun allUserNameList(): List<Name>
+
+    @Delete
+    suspend fun deleteAlarm(alarmTime: AlarmTime)
 }

@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "alarm_table")
 data class AlarmTime(
     val time: String,
+    val calenderTime : Long,
     val title : String,
     val requestCode : Int,
     val status : String

@@ -5,8 +5,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -43,14 +45,16 @@ class AlarmCreateActivity : AppCompatActivity() {
     private lateinit var calender : Calendar
     private var time = ""
     private var status = ""
+    private var calenderTime = 0L
     var alarmList = mutableListOf<AlarmTime>()
     val stringBuilder = StringBuilder()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAlarmCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
         context = this
-        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         binding.timeTv.setOnClickListener {
             showAlarmDialog()
@@ -75,14 +79,6 @@ class AlarmCreateActivity : AppCompatActivity() {
             val thu = intent.getStringExtra("thursday")
             val fri = intent.getStringExtra("friday")
 
-
-            Log.d("day",sat.toString())
-            Log.d("day",sun.toString())
-            Log.d("day",mon.toString())
-            Log.d("day",tue.toString())
-            Log.d("day",wed.toString())
-            Log.d("day",thu.toString())
-            Log.d("day",fri.toString())
         //.....
 
         binding.saveBt.setOnClickListener {
@@ -142,7 +138,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
             Toast.makeText(this,"alarm set successfully", Toast.LENGTH_SHORT).show()
             val title = binding.titleTv.text.toString()
-            val alarmTime= AlarmTime(time,title,repReqCode,stringBuilder.toString())
+            val alarmTime= AlarmTime(time,calenderTime,title,repReqCode,stringBuilder.toString())
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
@@ -153,10 +149,12 @@ class AlarmCreateActivity : AppCompatActivity() {
     }
 
     private fun repeatingAlarm(){
+        calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +1
          repReqCode = thuReq.toInt()
+
         val intent = Intent(this, AlarmReceiver::class.java)
-        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -165,12 +163,13 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000,
             pendingIntent
         )
-        Log.d("code", repReqCode.toString())
+        Log.d("this", "alarm create :::$repReqCode.toString()")
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
 
     // saturday
     private fun setRepeatingSaturdayAlarm(){
+        calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +1
          repReqCode = thuReq.toInt()
         calender = Calendar.getInstance()
@@ -197,6 +196,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     // sunday
     private fun setRepeatingSundayAlarm(){
+        calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +2
          repReqCode = thuReq.toInt()
         calender = Calendar.getInstance()
@@ -223,6 +223,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     // monday
     private fun setRepeatingMondayAlarm(){
+        calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +3
          repReqCode = thuReq.toInt()
         calender = Calendar.getInstance()
@@ -249,6 +250,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     // tuesday
     private fun setRepeatingTuesdayAlarm(){
+        calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +4
          repReqCode = thuReq.toInt()
         calender = Calendar.getInstance()
@@ -276,8 +278,10 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     // wednesday
     private fun setRepeatingWednesdayAlarm(){
+        calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +5
          repReqCode = thuReq.toInt()
+         calenderTime = calender.timeInMillis
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.WEDNESDAY)
 
@@ -286,7 +290,7 @@ class AlarmCreateActivity : AppCompatActivity() {
         }
 
         val intent = Intent(this,AlarmReceiver::class.java)
-        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -301,6 +305,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     // thursday
     private fun setRepeatingThursdayAlarm(){
+        calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +6
         repReqCode = thuReq.toInt()
 
@@ -328,6 +333,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     // friday
     private fun setRepeatingFridayAlarm(){
+        calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +7
          repReqCode = thuReq.toInt()
 
@@ -339,7 +345,7 @@ class AlarmCreateActivity : AppCompatActivity() {
         }
 
         val intent = Intent(this,AlarmReceiver::class.java)
-        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -350,18 +356,6 @@ class AlarmCreateActivity : AppCompatActivity() {
         )
         Log.d("code", repReqCode.toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
-    }
-
-    private fun setSingleAlarm(){
-        val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-        Log.d("this","create alarm: "+Date().toString())
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            calender.timeInMillis ,
-            pendingIntent
-        )
-        Log.d("tag","single alarm create")
     }
 
 
@@ -424,13 +418,18 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     class AlarmReceiver : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
-            Log.d("this", "Receive alarm: " + Date().toString())
 
+            Log.d("this", "Receive alarm: " + Date().toString())
             // Set the alarm here.
             val vibrator = context?.getSystemService(VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                vibrator.vibrate(VibrationEffect.createOneShot(5000, VibrationEffect.DEFAULT_AMPLITUDE))
-            }else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(
+                        5000,
+                        VibrationEffect.DEFAULT_AMPLITUDE
+                    )
+                )
+            } else {
                 vibrator.vibrate(5000)
             }
             val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
@@ -453,6 +452,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
             val notificationManager = NotificationManagerCompat.from(context)
             notificationManager.notify(111, builder.build())
+
 
         }
     }

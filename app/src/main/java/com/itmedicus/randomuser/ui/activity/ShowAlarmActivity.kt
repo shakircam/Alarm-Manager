@@ -7,9 +7,12 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -26,16 +29,17 @@ import com.itmedicus.randomuser.data.local.UserDatabase
 import com.itmedicus.randomuser.databinding.ActivityAlarmBinding
 import com.itmedicus.randomuser.databinding.ActivityShowAlarmBinding
 import com.itmedicus.randomuser.model.AlarmTime
+import com.itmedicus.randomuser.utils.ClickListener
 import com.itmedicus.randomuser.utils.SwipeToDelete
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ShowAlarmActivity : AppCompatActivity() {
+class ShowAlarmActivity : AppCompatActivity(),ClickListener {
     private lateinit var binding: ActivityShowAlarmBinding
     lateinit var context: Context
-    lateinit var alarmManager: AlarmManager
+    private lateinit var alarmManager: AlarmManager
 
-    private val adapter by lazy { AlarmAdapter(context) }
+    private val adapter by lazy { AlarmAdapter(context,this) }
     var list = mutableListOf<AlarmTime>()
 
 
@@ -45,7 +49,7 @@ class ShowAlarmActivity : AppCompatActivity() {
         binding = ActivityShowAlarmBinding.inflate(layoutInflater)
         setContentView(binding.root)
         context = this
-        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         initRecyclerView()
         binding.fab.setOnClickListener {
@@ -60,6 +64,32 @@ class ShowAlarmActivity : AppCompatActivity() {
             adapter.setData(list)
         }
     }
+
+    override fun onItemCancel(position: Int) {
+
+        val item = list[position]
+        val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
+        alarmManager.cancel(pendingIntent)
+        Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
+        Log.d("this", "cancel alarm..")
+        Log.d("this", "${item.requestCode}")
+    }
+
+    override fun onAlarm(position: Int) {
+        val item = list[position]
+        val time = item.calenderTime
+        val intent = Intent(this,AlarmCreateActivity.AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            24*60*60*1000,
+            pendingIntent)
+        Log.d("this", "on alarm again..")
+        Toast.makeText(this,"alarm on again!!",Toast.LENGTH_SHORT).show()
+    }
+
 
     private fun initRecyclerView() {
         val mRecyclerView = binding.recyclerview
@@ -77,6 +107,7 @@ class ShowAlarmActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
                     db.deleteAlarm(deletedItem)
+
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
                     Toast.makeText(this@ShowAlarmActivity,"alarm deleted",Toast.LENGTH_SHORT).show()
                 }
@@ -86,28 +117,45 @@ class ShowAlarmActivity : AppCompatActivity() {
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    class Receiver : BroadcastReceiver(){
+    class AlarmReceiver : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
-            Log.d("this","Receive alarm: "+Date().toString())
-            val intent = Intent(context,ShowAlarmActivity::class.java).apply {
+
+            Log.d("this", "Receive alarm: " + Date().toString())
+            // Set the alarm here.
+            val vibrator = context?.getSystemService(VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(
+                        5000,
+                        VibrationEffect.DEFAULT_AMPLITUDE
+                    )
+                )
+            } else {
+                vibrator.vibrate(5000)
+            }
+            val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+            val r = RingtoneManager.getRingtone(context, notification)
+            r.play()
+
+            val intent = Intent(context, ShowAlarmActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            val pendingIntent=  PendingIntent.getActivity(context,0,intent,0)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-            val builder = NotificationCompat.Builder(context!!,"1000")
+            val builder = NotificationCompat.Builder(context!!, "1000")
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("Alarm Clock")
-                .setContentText("Alarm manager running")
+                .setContentText("Time to take your medicine")
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
 
             val notificationManager = NotificationManagerCompat.from(context)
-            notificationManager.notify(111,builder.build())
+            notificationManager.notify(111, builder.build())
+
 
         }
-
     }
 
 }

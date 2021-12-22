@@ -35,6 +35,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
     private var time = ""
     private var second_time = ""
     private var status = ""
+    private var calenderTime = 0L
     var alarmList = mutableListOf<AlarmTime>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             val title = binding.titleTv.text.toString()
             val addTime= "$time,$second_time"
 
-            val alarmTime = AlarmTime(addTime, title, 1,status)
+            val alarmTime = AlarmTime(addTime, calenderTime ,title, 1,status)
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
@@ -84,7 +85,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
     }
 
     private fun firstAlarm(){
-
+        calenderTime = calender.timeInMillis
         val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             context, 1, intent,
@@ -99,7 +100,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
     }
 
     private fun secondAlarm(){
-
+        calenderTime = calender.timeInMillis
         val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             context, 2, intent,
@@ -114,6 +115,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
     }
 
     private fun setFirstRepeatingAlarm(){
+        calenderTime = calender.timeInMillis
         val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
         val  pendingIntent = PendingIntent.getBroadcast(this,4,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -129,6 +131,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
     }
 
     private fun setSecondRepeatingAlarm(){
+        calenderTime = calender.timeInMillis
         val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
         val  pendingIntent = PendingIntent.getBroadcast(this,3,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 

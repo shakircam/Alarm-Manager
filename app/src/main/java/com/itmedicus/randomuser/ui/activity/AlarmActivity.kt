@@ -23,7 +23,7 @@ class AlarmActivity : AppCompatActivity() {
     private lateinit var calender : Calendar
     private lateinit var alarmManager: AlarmManager
     lateinit var context: Context
-
+    var repReqCode = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +38,8 @@ class AlarmActivity : AppCompatActivity() {
             showTimePicker()
         }
         binding.setAlarm.setOnClickListener {
-            createAlarm()
-           // setAlarm()
+
+            setAlarm()
         }
         binding.cancelTime.setOnClickListener {
             cancelAlarm()
@@ -48,55 +48,31 @@ class AlarmActivity : AppCompatActivity() {
     }
 
 
-    private fun createAlarm(){
-        if (binding.startBn.isChecked){
-            setRepetedAlarm()
-        }else{
-            setAlarm()
-        }
-    }
-
     private fun cancelAlarm() {
 
-        val intent = Intent(this, ShowAlarmActivity.Receiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(this,0,intent,0)
+        val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
         alarmManager.cancel(pendingIntent)
         Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
-    }
-
-    private fun setRepetedAlarm() {
-
-        val alarmList = ArrayList<PendingIntent>()
-
-        for ( i in 1..2){
-            val intent = Intent(context, ShowAlarmActivity.Receiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context,i,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-            Log.d("this","create alarm: "+Date().toString())
-            alarmManager.set(
-                AlarmManager.RTC_WAKEUP,
-                calender.timeInMillis ,
-                pendingIntent
-            )
-            Log.d("this", (calender.timeInMillis).toString())
-            Log.d("this",i.toString())
-            alarmList.add(pendingIntent)
-            Log.d("thisalarm", alarmList.size.toString())
-        }
-        Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
+        Log.d("this", "cancel alarm..")
+        Log.d("this", "$repReqCode")
     }
 
     private fun setAlarm(){
-         val intent = Intent(this, ShowAlarmActivity.Receiver::class.java)
-         val  pendingIntent = PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val thuReq : Long = Calendar.getInstance().timeInMillis +1
+        repReqCode = thuReq.toInt()
+         val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calender.timeInMillis,
-           // Interval 6 hour
-            21600000,
+           // Interval 1 day
+            24*60*60*1000 ,
             pendingIntent
         )
-        Log.d("this", (calender.timeInMillis ).toString())
+        Log.d("this", "create alarm")
+        Log.d("this", "$repReqCode")
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
 

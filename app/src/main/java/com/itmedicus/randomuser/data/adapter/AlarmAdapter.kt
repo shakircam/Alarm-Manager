@@ -9,18 +9,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat.startActivities
 import androidx.recyclerview.widget.RecyclerView
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.model.AlarmTime
-import com.itmedicus.randomuser.model.Result
 import com.itmedicus.randomuser.ui.activity.AlarmCreateActivity
+import com.itmedicus.randomuser.utils.ClickListener
 
-class AlarmAdapter(private val context: Context): RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> () {
+class AlarmAdapter(private val context: Context,private val clickListener: ClickListener): RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> () {
     var list = mutableListOf<AlarmTime>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
@@ -35,15 +37,14 @@ class AlarmAdapter(private val context: Context): RecyclerView.Adapter<AlarmAdap
         holder.title.text = currentItem.title
         holder.time.text = currentItem.time
         holder.status.text = currentItem.status
+        holder.editBt.setOnClickListener {
+            clickListener.onAlarm(position)
 
-        holder.button.setOnClickListener {
-                val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-                val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
-                val pendingIntent = PendingIntent.getService(context,currentItem.requestCode,intent,0)
-                alarmManager.cancel(pendingIntent)
-            Log.d("code", currentItem.requestCode.toString())
-            Toast.makeText(context,"Alarm off",Toast.LENGTH_SHORT).show()
         }
+          holder.button.setOnClickListener {
+              clickListener.onItemCancel(position)
+          }
+
     }
 
     override fun getItemCount(): Int {
@@ -55,6 +56,7 @@ class AlarmAdapter(private val context: Context): RecyclerView.Adapter<AlarmAdap
         val title = itemView.findViewById(R.id.titleTv) as TextView
         val status = itemView.findViewById(R.id.statusTv) as TextView
         val button = itemView.findViewById(R.id.startBn) as SwitchCompat
+        val editBt = itemView.findViewById(R.id.editBt) as ImageView
     }
 
     fun setData(userList: MutableList<AlarmTime>){
