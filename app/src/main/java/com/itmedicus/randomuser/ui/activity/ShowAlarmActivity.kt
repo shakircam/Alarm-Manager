@@ -29,6 +29,9 @@ import com.itmedicus.randomuser.data.local.UserDatabase
 import com.itmedicus.randomuser.databinding.ActivityAlarmBinding
 import com.itmedicus.randomuser.databinding.ActivityShowAlarmBinding
 import com.itmedicus.randomuser.model.AlarmTime
+import com.itmedicus.randomuser.model.AlarmTimeAndMultipleAlarm
+import com.itmedicus.randomuser.model.MultipleAlarm
+import com.itmedicus.randomuser.model.RequestCode
 import com.itmedicus.randomuser.utils.ClickListener
 import com.itmedicus.randomuser.utils.SwipeToDelete
 import kotlinx.coroutines.launch
@@ -41,6 +44,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
 
     private val adapter by lazy { AlarmAdapter(context,this) }
     var list = mutableListOf<AlarmTime>()
+    private var multipleAlarm = mutableListOf<RequestCode>()
 
 
 
@@ -68,26 +72,95 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
     override fun onItemCancel(position: Int) {
 
         val item = list[position]
+        lifecycleScope.launch {
+           val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
+           val multipleAlarmList = db.getAlarmRequestCode(item.time)
+           multipleAlarm.addAll(multipleAlarmList)
+       }
+
         val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
         alarmManager.cancel(pendingIntent)
+
         Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
         Log.d("this", "cancel alarm..")
         Log.d("this", "${item.requestCode}")
+
+   /*     if (multipleAlarm.size > 1){
+
+                multipleAlarm[0].requestCode
+                multipleAlarm[1].requestCode
+                val pending = PendingIntent.getBroadcast(this@ShowAlarmActivity,multipleAlarm[0].requestCode,intent,0)
+                alarmManager.cancel(pending)
+
+                Log.d("this", "cancel multiple"+multipleAlarm[0].requestCode.toString())
+                Log.d("this", "cancel multiple"+multipleAlarm[1].requestCode.toString())
+                val pen = PendingIntent.getBroadcast(this@ShowAlarmActivity,multipleAlarm[1].requestCode,intent,0)
+                alarmManager.cancel(pen)
+                Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
+        }else{
+
+            val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
+            alarmManager.cancel(pendingIntent)
+
+            Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
+            Log.d("this", "cancel alarm..")
+            Log.d("this", "${item.requestCode}")
+        }*/
+
     }
 
     override fun onAlarm(position: Int) {
         val item = list[position]
         val time = item.calenderTime
+        lifecycleScope.launch {
+            val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
+            val multipleAlarmList = db.getAlarmRequestCode(item.time)
+            multipleAlarm.addAll(multipleAlarmList)
+        }
+
         val intent = Intent(this,AlarmCreateActivity.AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             time,
-            24*60*60*1000,
+            24*60*60*1000 ,
             pendingIntent)
-        Log.d("this", "on alarm again..")
+        Log.d("this", "on alarm again.."+item.requestCode)
         Toast.makeText(this,"alarm on again!!",Toast.LENGTH_SHORT).show()
+
+      /*  if (multipleAlarm.size > 1){
+            multipleAlarm[0].requestCode
+            multipleAlarm[1].requestCode
+
+            val pending = PendingIntent.getBroadcast(this,multipleAlarm[0].requestCode,intent,0)
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                time,
+                24*60*60*1000 * 7,
+                pending)
+            //
+            val pen = PendingIntent.getBroadcast(this,multipleAlarm[1].requestCode,intent,0)
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                time,
+                24*60*60*1000 * 7,
+                pen)
+            Log.d("this", "on alarm again.."+multipleAlarm[0].requestCode)
+            Toast.makeText(this,"alarm on again!!",Toast.LENGTH_SHORT).show()
+        }else{
+            val intent = Intent(this,AlarmCreateActivity.AlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                time,
+                24*60*60*1000 ,
+                pendingIntent)
+            Log.d("this", "on alarm again.."+item.requestCode)
+            Toast.makeText(this,"alarm on again!!",Toast.LENGTH_SHORT).show()
+        }*/
+
     }
 
 

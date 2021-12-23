@@ -29,6 +29,7 @@ import com.itmedicus.randomuser.databinding.ActivityAlarmBinding
 import com.itmedicus.randomuser.databinding.ActivityAlarmCreateBinding
 import com.itmedicus.randomuser.databinding.ActivityShowAlarmBinding
 import com.itmedicus.randomuser.model.AlarmTime
+import com.itmedicus.randomuser.model.MultipleAlarm
 import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
 import com.itmedicus.randomuser.ui.fragment.WeekDialogFragment
 import kotlinx.coroutines.launch
@@ -45,6 +46,7 @@ class AlarmCreateActivity : AppCompatActivity() {
     private lateinit var calender : Calendar
     private var time = ""
     private var status = ""
+    private var title = ""
     private var calenderTime = 0L
     var alarmList = mutableListOf<AlarmTime>()
     val stringBuilder = StringBuilder()
@@ -137,8 +139,9 @@ class AlarmCreateActivity : AppCompatActivity() {
             }
 
             Toast.makeText(this,"alarm set successfully", Toast.LENGTH_SHORT).show()
-            val title = binding.titleTv.text.toString()
+             title = binding.titleTv.text.toString()
             val alarmTime= AlarmTime(time,calenderTime,title,repReqCode,stringBuilder.toString())
+
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
@@ -174,7 +177,7 @@ class AlarmCreateActivity : AppCompatActivity() {
          repReqCode = thuReq.toInt()
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY)
-
+        val day = "Saturday"
         if(calender.timeInMillis < System.currentTimeMillis()) {
             calender.add(Calendar.DAY_OF_YEAR, 7)
         }
@@ -190,6 +193,11 @@ class AlarmCreateActivity : AppCompatActivity() {
             pendingIntent
         )
 
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
         Log.d("code", repReqCode.toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
@@ -201,7 +209,7 @@ class AlarmCreateActivity : AppCompatActivity() {
          repReqCode = thuReq.toInt()
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY)
-
+        val day = "Sunday"
         if(calender.timeInMillis < System.currentTimeMillis()) {
             calender.add(Calendar.DAY_OF_YEAR, 7)
         }
@@ -216,7 +224,11 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
         Log.d("code", repReqCode.toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
@@ -228,7 +240,7 @@ class AlarmCreateActivity : AppCompatActivity() {
          repReqCode = thuReq.toInt()
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY)
-
+        val day = "Monday"
         if(calender.timeInMillis < System.currentTimeMillis()) {
             calender.add(Calendar.DAY_OF_YEAR, 7)
         }
@@ -243,7 +255,11 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
         Log.d("code", repReqCode.toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
@@ -255,7 +271,7 @@ class AlarmCreateActivity : AppCompatActivity() {
          repReqCode = thuReq.toInt()
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.TUESDAY)
-
+        val day = "Tuesday"
         if(calender.timeInMillis < System.currentTimeMillis()) {
             calender.add(Calendar.DAY_OF_YEAR, 7)
         }
@@ -270,7 +286,11 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
         Log.d("code", repReqCode.toString())
         Log.d("tag","Tuesday alarm create")
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
@@ -284,7 +304,7 @@ class AlarmCreateActivity : AppCompatActivity() {
          calenderTime = calender.timeInMillis
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.WEDNESDAY)
-
+        val day = "Wednesday"
         if(calender.timeInMillis < System.currentTimeMillis()) {
             calender.add(Calendar.DAY_OF_YEAR, 7)
         }
@@ -299,6 +319,11 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
         Log.d("code", repReqCode.toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
@@ -311,7 +336,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.THURSDAY)
-
+        val day = "Thursday"
         if(calender.timeInMillis < System.currentTimeMillis()) {
             calender.add(Calendar.DAY_OF_YEAR, 7)
         }
@@ -326,6 +351,11 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
         Log.d("code", repReqCode.toString())
         Log.d("tag","Thursday alarm create")
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
@@ -339,7 +369,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.FRIDAY)
-
+        val day = "Friday"
         if(calender.timeInMillis < System.currentTimeMillis()) {
             calender.add(Calendar.DAY_OF_YEAR, 7)
         }
@@ -354,6 +384,11 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
         Log.d("code", repReqCode.toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
