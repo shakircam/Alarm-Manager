@@ -9,10 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Switch
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.ContextCompat.startActivities
@@ -21,6 +17,11 @@ import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.model.AlarmTime
 import com.itmedicus.randomuser.ui.activity.AlarmCreateActivity
 import com.itmedicus.randomuser.utils.ClickListener
+import android.content.Context.MODE_PRIVATE
+
+import android.content.SharedPreferences
+import android.widget.*
+
 
 class AlarmAdapter(private val context: Context,private val clickListener: ClickListener): RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> () {
     var list = mutableListOf<AlarmTime>()
@@ -33,17 +34,46 @@ class AlarmAdapter(private val context: Context,private val clickListener: Click
 
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
         val currentItem = list[position]
+        val sharedPreferences = context.getSharedPreferences("my_sharedPreference",0)
+        val editor = sharedPreferences.edit()
 
         holder.title.text = currentItem.title
         holder.time.text = currentItem.time
         holder.status.text = currentItem.status
+
+        holder.button.isChecked = sharedPreferences.getBoolean("on",true)
+
         holder.editBt.setOnClickListener {
-            clickListener.onAlarm(position)
+            //clickListener.onAlarm(position)
 
         }
-          holder.button.setOnClickListener {
-              clickListener.onItemCancel(position)
-          }
+      /*    holder.button.setOnClickListener {
+
+              if(holder.button.isChecked){
+                  editor.putBoolean("on",true)
+                  editor.apply()
+                  clickListener.onAlarm(position)
+              }else{
+
+                  editor.putBoolean("on",false)
+                  editor.apply()
+                  clickListener.onItemCancel(position)
+
+              }
+          }*/
+
+
+        holder.button.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                editor.putBoolean("on",true)
+                editor.apply()
+                clickListener.onAlarm(position)
+            } else {
+                editor.putBoolean("on",false)
+                editor.apply()
+                clickListener.onItemCancel(position)
+            }
+        }
 
     }
 

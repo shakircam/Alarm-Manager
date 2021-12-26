@@ -3,4 +3,5 @@
     <string name="state">state</string>
     <string name="title_alarm">Alarm repeat times</string>
     <string name="week_alarm">Choose Days</string>
+    <string name="cancel">Cancel</string>
 </resources>

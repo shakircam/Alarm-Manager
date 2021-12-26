@@ -5,19 +5,19 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings.System.getString
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.EXTRA_NOTIFICATION_ID
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -25,9 +25,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.data.local.UserDatabase
-import com.itmedicus.randomuser.databinding.ActivityAlarmBinding
 import com.itmedicus.randomuser.databinding.ActivityAlarmCreateBinding
-import com.itmedicus.randomuser.databinding.ActivityShowAlarmBinding
 import com.itmedicus.randomuser.model.AlarmTime
 import com.itmedicus.randomuser.model.MultipleAlarm
 import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
@@ -80,6 +78,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             val wed = intent.getStringExtra("wednesday")
             val thu = intent.getStringExtra("thursday")
             val fri = intent.getStringExtra("friday")
+
 
         //.....
 
@@ -473,21 +472,24 @@ class AlarmCreateActivity : AppCompatActivity() {
 
             val intent = Intent(context, ShowAlarmActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                action = "Cancel"
+                putExtra(EXTRA_NOTIFICATION_ID, 0)
             }
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
             val builder = NotificationCompat.Builder(context!!, "1000")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_history)
                 .setContentTitle("Alarm Clock")
                 .setContentText("Time to take your medicine")
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .addAction(R.drawable.ic_cancel, "Cancel",
+                    pendingIntent)
 
             val notificationManager = NotificationManagerCompat.from(context)
             notificationManager.notify(111, builder.build())
-
 
         }
     }

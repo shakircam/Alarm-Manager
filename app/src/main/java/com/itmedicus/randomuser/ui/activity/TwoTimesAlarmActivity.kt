@@ -19,6 +19,7 @@ import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.data.local.UserDatabase
 import com.itmedicus.randomuser.databinding.ActivityTwoTimesAlarmBinding
 import com.itmedicus.randomuser.model.AlarmTime
+import com.itmedicus.randomuser.model.MultipleAlarm
 import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
 import kotlinx.coroutines.launch
 import java.util.*
@@ -33,6 +34,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
     private lateinit var calender: Calendar
     private lateinit var sec_calender: Calendar
     private var time = ""
+    private var title = ""
     private var second_time = ""
     private var status = ""
     private var calenderTime = 0L
@@ -74,7 +76,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             val title = binding.titleTv.text.toString()
             val addTime= "$time,$second_time"
 
-            val alarmTime = AlarmTime(addTime, calenderTime ,title, 1,status)
+            val alarmTime = AlarmTime(addTime, calenderTime ,title, request_code,status)
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
@@ -86,9 +88,11 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
 
     private fun firstAlarm(){
         calenderTime = calender.timeInMillis
+        val thuReq : Long = Calendar.getInstance().timeInMillis +1
+        request_code = thuReq.toInt()
         val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
-            context, 1, intent,
+            context, request_code, intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
         Log.d("this", "create alarm: " + Date().toString())
@@ -97,13 +101,20 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             calender.timeInMillis,
             pendingIntent
         )
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,"",request_code)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
     }
 
     private fun secondAlarm(){
         calenderTime = calender.timeInMillis
+        val thuReq : Long = Calendar.getInstance().timeInMillis +2
+        request_code = thuReq.toInt()
         val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
-            context, 2, intent,
+            context, request_code, intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
         Log.d("this", "create alarm: " + Date().toString())
@@ -112,12 +123,19 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             sec_calender.timeInMillis,
             pendingIntent
         )
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,"",request_code)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
     }
 
     private fun setFirstRepeatingAlarm(){
         calenderTime = calender.timeInMillis
+        val thuReq : Long = Calendar.getInstance().timeInMillis +3
+        request_code = thuReq.toInt()
         val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
-        val  pendingIntent = PendingIntent.getBroadcast(this,4,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val  pendingIntent = PendingIntent.getBroadcast(this,request_code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -126,14 +144,21 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             24*60*60*1000,
             pendingIntent
         )
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,"",request_code)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
         Log.d("this", (calender.timeInMillis ).toString())
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
 
     private fun setSecondRepeatingAlarm(){
         calenderTime = calender.timeInMillis
+        val thuReq : Long = Calendar.getInstance().timeInMillis +4
+        request_code = thuReq.toInt()
         val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
-        val  pendingIntent = PendingIntent.getBroadcast(this,3,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val  pendingIntent = PendingIntent.getBroadcast(this,request_code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -142,6 +167,11 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             24*60*60*1000,
             pendingIntent
         )
+        val multipleAlarm = MultipleAlarm(time,calenderTime,title,"",request_code)
+        val db = UserDatabase.getDatabase(this).userDao()
+        lifecycleScope.launch {
+            db.insertMultipleAlarm(multipleAlarm)
+        }
 
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
