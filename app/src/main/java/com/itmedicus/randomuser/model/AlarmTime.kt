@@ -1,28 +1,33 @@
 package com.itmedicus.randomuser.model
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.Relation
+import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
 
 @Entity(tableName = "alarm_table")
 data class AlarmTime(
     val time: String,
+    @PrimaryKey(autoGenerate = false)
+    val id: Long,
     val calenderTime : Long,
     val title : String,
     val requestCode : Int,
-    val status : String
-)  {
-    @PrimaryKey(autoGenerate = true)
-    var id : Int? = null
-}
+    val status : String,
+    val flag :  Boolean
+)
 
 @Entity(tableName = "multiple_alarm_table")
+    /*foreignKeys = [
+        ForeignKey(
+            entity = AlarmTime::class,
+            parentColumns = ["calenderTime"],
+            childColumns = ["fk_id"],
+            onDelete = CASCADE
+        )])*/
  data class MultipleAlarm(
 
     val time: String,
     val calenderTime : Long,
-    val title : String,
+    val fk_id : Long,
     val day : String,
     val requestCode : Int,
  ) {
@@ -33,8 +38,8 @@ data class AlarmTime(
  data class AlarmTimeAndMultipleAlarm(
      @Embedded val alarmTime: AlarmTime,
      @Relation (
-         parentColumn = "id",
-         entityColumn = "day"
+         parentColumn = "calenderTime",
+         entityColumn = "fk_id"
              )
      val alarmLists: List<MultipleAlarm>
  )

@@ -67,15 +67,26 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
             list.addAll(timeList)
             adapter.setData(list)
         }
+
+    }
+
+
+
+    private fun initRecyclerView() {
+        val mRecyclerView = binding.recyclerview
+        mRecyclerView.adapter = adapter
+        mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        swipeToDelete(mRecyclerView)
     }
 
     override fun onItemCancel(position: Int) {
 
         val item = list[position]
-
+        val id = item.id
         lifecycleScope.launch {
            val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
-           val multipleAlarmList = db.getAlarmRequestCode(item.time)
+           val multipleAlarmList = db.getAlarmRequestCode(id)
+            db.updateSwitchButtonState(false,id)
            multipleAlarm.addAll(multipleAlarmList)
        }
 
@@ -139,10 +150,12 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
     override fun onAlarm(position: Int) {
         val item = list[position]
         val time = item.calenderTime
+        val id = item.id
 
         lifecycleScope.launch {
             val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
-            val multipleAlarmList = db.getAlarmRequestCode(item.time)
+            val multipleAlarmList = db.getAlarmRequestCode(id)
+            db.updateSwitchButtonState(true, id)
             multipleAlarm.addAll(multipleAlarmList)
         }
 
@@ -237,14 +250,6 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
             Toast.makeText(this,"alarm on again!!",Toast.LENGTH_SHORT).show()
         }
 
-    }
-
-
-    private fun initRecyclerView() {
-        val mRecyclerView = binding.recyclerview
-        mRecyclerView.adapter = adapter
-        mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-        swipeToDelete(mRecyclerView)
     }
 
     private fun swipeToDelete(recyclerView: RecyclerView) {

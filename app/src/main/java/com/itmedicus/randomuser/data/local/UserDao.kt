@@ -41,6 +41,9 @@ interface UserDao {
             "email =:email,nat=:nat,picture=:picture,location=:location  WHERE id = :id")
     fun updateQuantity(name: String,phone : String,gender : String,email : String,nat : String,picture: String,location: String,id:Int)
 
+    @Query("UPDATE alarm_table SET flag =:flag WHERE id =:id")
+    fun updateSwitchButtonState(flag:Boolean,id: Long)
+
     @Query("SELECT * FROM user_table WHERE name LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): MutableList<Result>
 
@@ -57,6 +60,9 @@ interface UserDao {
     @Query("SELECT * FROM alarm_table WHERE time = :time")
     fun getAlarmWithMultipleAlarm(time : String): List<AlarmTimeAndMultipleAlarm>
 
-    @Query("SELECT * FROM multiple_alarm_table WHERE time = :time")
-    fun getAlarmRequestCode(time : String): List<RequestCode>
+    @Query("SELECT * FROM multiple_alarm_table WHERE fk_id = :fk_id")
+    fun getAlarmRequestCode(fk_id : Long): List<RequestCode>
+
+    @Query("SELECT * FROM multiple_alarm_table ORDER BY id DESC")
+    fun getAlarmId(): MutableList<RequestCode>
 }

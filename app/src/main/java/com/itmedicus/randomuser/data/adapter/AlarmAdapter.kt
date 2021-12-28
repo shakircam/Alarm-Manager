@@ -21,6 +21,7 @@ import android.content.Context.MODE_PRIVATE
 
 import android.content.SharedPreferences
 import android.widget.*
+import com.google.android.material.chip.Chip
 
 
 class AlarmAdapter(private val context: Context,private val clickListener: ClickListener): RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> () {
@@ -34,46 +35,27 @@ class AlarmAdapter(private val context: Context,private val clickListener: Click
 
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
         val currentItem = list[position]
-        val sharedPreferences = context.getSharedPreferences("my_sharedPreference",0)
-        val editor = sharedPreferences.edit()
+
 
         holder.title.text = currentItem.title
         holder.time.text = currentItem.time
         holder.status.text = currentItem.status
 
-        holder.button.isChecked = sharedPreferences.getBoolean("on",true)
+        holder.button.isChecked = currentItem.flag
 
         holder.editBt.setOnClickListener {
             //clickListener.onAlarm(position)
 
         }
-      /*    holder.button.setOnClickListener {
+
+         holder.button.setOnClickListener {
 
               if(holder.button.isChecked){
-                  editor.putBoolean("on",true)
-                  editor.apply()
                   clickListener.onAlarm(position)
               }else{
-
-                  editor.putBoolean("on",false)
-                  editor.apply()
                   clickListener.onItemCancel(position)
-
               }
-          }*/
-
-
-        holder.button.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                editor.putBoolean("on",true)
-                editor.apply()
-                clickListener.onAlarm(position)
-            } else {
-                editor.putBoolean("on",false)
-                editor.apply()
-                clickListener.onItemCancel(position)
-            }
-        }
+          }
 
     }
 
@@ -84,7 +66,7 @@ class AlarmAdapter(private val context: Context,private val clickListener: Click
     class AlarmViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
         val time = itemView.findViewById(R.id.showTime) as TextView
         val title = itemView.findViewById(R.id.titleTv) as TextView
-        val status = itemView.findViewById(R.id.statusTv) as TextView
+        val status = itemView.findViewById(R.id.statusTv) as Chip
         val button = itemView.findViewById(R.id.startBn) as SwitchCompat
         val editBt = itemView.findViewById(R.id.editBt) as ImageView
     }

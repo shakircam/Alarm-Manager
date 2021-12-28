@@ -32,6 +32,10 @@ import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
 import com.itmedicus.randomuser.ui.fragment.WeekDialogFragment
 import kotlinx.coroutines.launch
 import java.util.*
+import java.util.UUID
+
+
+
 
 class AlarmCreateActivity : AppCompatActivity() {
 
@@ -81,11 +85,16 @@ class AlarmCreateActivity : AppCompatActivity() {
 
 
         //.....
-
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val editor = sharedPreferences.edit()
+        val fk_id : Long = Calendar.getInstance().timeInMillis +2
+        editor.putLong("id",fk_id)
+        editor.apply()
         binding.saveBt.setOnClickListener {
 
 
             if (binding.selectBt.isChecked){
+
 
                 if (sat == "1"){
                     setRepeatingSaturdayAlarm()
@@ -138,14 +147,19 @@ class AlarmCreateActivity : AppCompatActivity() {
             }
 
             Toast.makeText(this,"alarm set successfully", Toast.LENGTH_SHORT).show()
-             title = binding.titleTv.text.toString()
-            val alarmTime= AlarmTime(time,calenderTime,title,repReqCode,stringBuilder.toString())
+            title = binding.titleTv.text.toString()
+            val calenderTime = calender.timeInMillis
 
+            val id = sharedPreferences.getLong("id",fk_id)
+            val alarmTime= AlarmTime(time,id,calenderTime,title,repReqCode,stringBuilder.toString(),true)
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
                 db.insertAlarmTime(alarmTime)
             }
+            editor.clear()
+            editor.commit()
+
         }
 
     }
@@ -169,11 +183,14 @@ class AlarmCreateActivity : AppCompatActivity() {
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
 
+
     // saturday
     private fun setRepeatingSaturdayAlarm(){
         calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +1
          repReqCode = thuReq.toInt()
+
+
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY)
         val day = "Saturday"
@@ -191,8 +208,10 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
 
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,day,repReqCode)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -206,6 +225,7 @@ class AlarmCreateActivity : AppCompatActivity() {
         calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +2
          repReqCode = thuReq.toInt()
+
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY)
         val day = "Sunday"
@@ -223,7 +243,9 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,day,repReqCode)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -254,7 +276,9 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,day,repReqCode)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -285,7 +309,9 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,day,repReqCode)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -318,7 +344,9 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,day,repReqCode)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -350,7 +378,9 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,day,repReqCode)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -383,7 +413,9 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,day,repReqCode)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,day,repReqCode)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)

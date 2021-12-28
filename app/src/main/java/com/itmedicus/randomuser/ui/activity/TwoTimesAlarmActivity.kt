@@ -59,6 +59,12 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
         binding.secondAlarm.setOnClickListener {
             showSecondTimePicker()
         }
+
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val editor = sharedPreferences.edit()
+        val fk_id : Long = Calendar.getInstance().timeInMillis +2
+        editor.putLong("id",fk_id)
+        editor.apply()
         binding.saveBt.setOnClickListener {
 
             request_code++
@@ -75,13 +81,15 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             Toast.makeText(this, "alarm set successfully", Toast.LENGTH_SHORT).show()
             val title = binding.titleTv.text.toString()
             val addTime= "$time,$second_time"
-
-            val alarmTime = AlarmTime(addTime, calenderTime ,title, request_code,status)
+            val id = sharedPreferences.getLong("id",fk_id)
+            val alarmTime = AlarmTime(addTime,id,calenderTime ,title, request_code,status,true)
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
                 db.insertAlarmTime(alarmTime)
             }
+            editor.clear()
+            editor.commit()
         }
 
     }
@@ -101,7 +109,9 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             calender.timeInMillis,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,"",request_code)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,"",request_code)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -123,7 +133,9 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             sec_calender.timeInMillis,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,"",request_code)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(second_time,calenderTime,id,"",request_code)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -144,7 +156,9 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             24*60*60*1000,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,"",request_code)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(time,calenderTime,id,"",request_code)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -167,7 +181,9 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             24*60*60*1000,
             pendingIntent
         )
-        val multipleAlarm = MultipleAlarm(time,calenderTime,title,"",request_code)
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val id = sharedPreferences.getLong("id",-1)
+        val multipleAlarm = MultipleAlarm(second_time,calenderTime,id,"",request_code)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
