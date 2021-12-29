@@ -94,6 +94,7 @@ dependencies {
 
     //ImageSlider
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
-
-
+    // Work manager
+    def work_version = "2.7.1"
+    implementation("androidx.work:work-runtime-ktx:$work_version")
 }

@@ -86,10 +86,12 @@ class AlarmActivity : AppCompatActivity() {
         picker.addOnPositiveButtonClickListener {
             if (picker.hour > 12){
 
-                binding.showTime.text = String.format("%02d",picker.hour -12)+ " : "+String.format("%02d",picker.minute) + "PM"
+                val time = String.format("%02d",picker.hour -12)+ " : "+String.format("%02d",picker.minute) + "PM"
+                binding.showTime.text = time
 
             }else{
-                String.format("%02d",picker.hour )+ " : "+String.format("%02d",picker.minute) + "AM"
+                val time = String.format("%02d",picker.hour )+ " : "+String.format("%02d",picker.minute) + "AM"
+                binding.showTime.text = time
             }
             calender = Calendar.getInstance()
             calender[Calendar.HOUR_OF_DAY] =  picker.hour

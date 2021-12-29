@@ -15,6 +15,10 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings.System.getString
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.EXTRA_NOTIFICATION_ID
@@ -37,7 +41,7 @@ import java.util.UUID
 
 
 
-class AlarmCreateActivity : AppCompatActivity() {
+class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: ActivityAlarmCreateBinding
     lateinit var context: Context
@@ -52,6 +56,8 @@ class AlarmCreateActivity : AppCompatActivity() {
     private var calenderTime = 0L
     var alarmList = mutableListOf<AlarmTime>()
     val stringBuilder = StringBuilder()
+    var titleList = arrayOf("Napa", "Ciprocin", "Emcil", "Filmet", "Imotin", "Flazil")
+    val NEW_SPINNER_ID = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,8 +96,17 @@ class AlarmCreateActivity : AppCompatActivity() {
         val fk_id : Long = Calendar.getInstance().timeInMillis +2
         editor.putLong("id",fk_id)
         editor.apply()
-        binding.saveBt.setOnClickListener {
 
+
+        val spinner: Spinner = findViewById(R.id.titleTv)
+        spinner.onItemSelectedListener = this
+        ArrayAdapter(this,android.R.layout.simple_spinner_item,titleList
+        ).also {adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
+
+        binding.saveBt.setOnClickListener {
 
             if (binding.selectBt.isChecked){
 
@@ -147,7 +162,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             }
 
             Toast.makeText(this,"alarm set successfully", Toast.LENGTH_SHORT).show()
-            title = binding.titleTv.text.toString()
+           // title = binding.titleTv.text.toString()
             val calenderTime = calender.timeInMillis
 
             val id = sharedPreferences.getLong("id",fk_id)
@@ -159,7 +174,8 @@ class AlarmCreateActivity : AppCompatActivity() {
             }
             editor.clear()
             editor.commit()
-
+            val intent = Intent(this,ShowAlarmActivity::class.java)
+            startActivity(intent)
         }
 
     }
@@ -179,7 +195,10 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000,
             pendingIntent
         )
-        Log.d("this", "alarm create :::$repReqCode.toString()")
+
+        Log.d("this", "When alarm will ring...$calenderTime")
+        Log.d("this", "Current time when alarm create"+System.currentTimeMillis().toString())
+        Log.d("this", "alarm create :::request code::$repReqCode")
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
 
@@ -208,6 +227,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
+        Log.d("this", "alarm created")
         val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
         val id = sharedPreferences.getLong("id",-1)
 
@@ -243,6 +263,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             24*60*60*1000 * 7,
             pendingIntent
         )
+        Log.d("this", "alarm created")
         val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
         val id = sharedPreferences.getLong("id",-1)
         val multipleAlarm = MultipleAlarm(time,calenderTime,id,day,repReqCode)
@@ -484,8 +505,9 @@ class AlarmCreateActivity : AppCompatActivity() {
 
     class AlarmReceiver : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
+            val time = System.currentTimeMillis()
+            Log.d("this", "Receive alarm:::" +Date().toString()+"::: current time::: $time" )
 
-            Log.d("this", "Receive alarm: " + Date().toString())
             // Set the alarm here.
             val vibrator = context?.getSystemService(VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -524,6 +546,14 @@ class AlarmCreateActivity : AppCompatActivity() {
             notificationManager.notify(111, builder.build())
 
         }
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+          title = titleList[pos]
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+       // TODO("Not yet implemented")
     }
 
 

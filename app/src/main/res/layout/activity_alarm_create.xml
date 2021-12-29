@@ -7,15 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.AlarmCreateActivity">
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <Spinner
         android:id="@+id/titleTv"
-        android:text="Title "
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:spinnerMode="dialog"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/showTime"
@@ -23,17 +26,17 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="12:05 PM"
         android:textSize="22sp"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.chip.Chip
         android:id="@+id/timeTv"
-        android:text="One Time"
+        android:text="One time in a day"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/showTime"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <View
@@ -46,12 +49,12 @@
         />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.chip.Chip
         android:id="@+id/weekTv"
         app:layout_constraintTop_toBottomOf="@id/view"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="20sp"
-        android:text="Select day"
+        android:text="Select custom day"
         android:layout_marginStart="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -62,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@id/weekTv"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="18sp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -72,11 +75,12 @@
         app:layout_constraintTop_toBottomOf="@id/selectBt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:text="Save"
+        android:background="@drawable/custom_button"
         android:textSize="20sp"
         android:textAllCaps="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="220dp"
+        android:layout_height="50dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

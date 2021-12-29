@@ -151,14 +151,13 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
         val item = list[position]
         val time = item.calenderTime
         val id = item.id
-
+        val currentTime = System.currentTimeMillis()
         lifecycleScope.launch {
             val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
             val multipleAlarmList = db.getAlarmRequestCode(id)
             db.updateSwitchButtonState(true, id)
             multipleAlarm.addAll(multipleAlarmList)
         }
-
 
         if (multipleAlarm.size > 1){
             multipleAlarm[0].requestCode
@@ -247,6 +246,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                 24*60*60*1000 ,
                 pendingIntent)
             Log.d("this", "on alarm again.."+item.requestCode)
+            Log.d("this", "current time..$currentTime")
             Toast.makeText(this,"alarm on again!!",Toast.LENGTH_SHORT).show()
         }
 

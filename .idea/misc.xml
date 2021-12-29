@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.40925925925925927" />
+        <entry key="../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.2850877192982456" />
+        <entry key="../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.2850877192982456" />
         <entry key="app/src/main/res/drawable/add_alarm_24.xml" value="0.30219298245614035" />
+        <entry key="app/src/main/res/drawable/custom_button.xml" value="0.2972389991371872" />
+        <entry key="app/src/main/res/drawable/custom_edit_text.xml" value="0.2972389991371872" />
         <entry key="app/src/main/res/drawable/deck.xml" value="0.269140625" />
         <entry key="app/src/main/res/drawable/family.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/favorite.xml" value="0.269140625" />
@@ -31,6 +35,7 @@
         <entry key="app/src/main/res/layout/fragment_week_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/user_item.xml" value="0.16397578203834512" />
         <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.25390625" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2972389991371872" />
       </map>
     </option>
   </component>

@@ -2,6 +2,17 @@
 <resources>
     <string name="state">state</string>
     <string name="title_alarm">Alarm repeat times</string>
-    <string name="week_alarm">Choose Days</string>
+    <string name="week_alarm">Choose Days For Alarm</string>
     <string name="cancel">Cancel</string>
+
+    <string-array name="title_array">
+        <item>Napa</item>
+        <item>Ciprocin</item>
+        <item>Emcil</item>
+        <item>Filmet</item>
+        <item>Imotin</item>
+        <item>Flazil</item>
+        <item>Tafnil</item>
+        <item>N Zith</item>
+    </string-array>
 </resources>
