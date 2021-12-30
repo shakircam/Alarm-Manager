@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ui.activity.AlarmCreateActivity$AlarmReceiver"/>
+        <receiver android:name=".AlarmReceiver"/>
 
     </application>
 

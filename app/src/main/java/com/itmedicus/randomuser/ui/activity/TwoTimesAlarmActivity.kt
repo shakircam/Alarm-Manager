@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.itmedicus.randomuser.AlarmReceiver
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.data.local.UserDatabase
 import com.itmedicus.randomuser.databinding.ActivityTwoTimesAlarmBinding
@@ -98,7 +99,9 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
         calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +1
         request_code = thuReq.toInt()
-        val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
+        val intent = Intent(context, AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val pendingIntent = PendingIntent.getBroadcast(
             context, request_code, intent,
             PendingIntent.FLAG_UPDATE_CURRENT
@@ -122,7 +125,9 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
         calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +2
         request_code = thuReq.toInt()
-        val intent = Intent(context, AlarmCreateActivity.AlarmReceiver::class.java)
+        val intent = Intent(context,AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val pendingIntent = PendingIntent.getBroadcast(
             context, request_code, intent,
             PendingIntent.FLAG_UPDATE_CURRENT
@@ -146,7 +151,8 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
         calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +3
         request_code = thuReq.toInt()
-        val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+        val intent = Intent(this, AlarmReceiver::class.java)
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,request_code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
@@ -171,7 +177,9 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
         calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +4
         request_code = thuReq.toInt()
-        val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+        val intent = Intent(this, AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,request_code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(

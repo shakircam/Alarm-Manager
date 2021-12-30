@@ -13,6 +13,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.itmedicus.randomuser.AlarmReceiver
 import com.itmedicus.randomuser.databinding.ActivityAlarmBinding
 import java.nio.file.attribute.AclEntry
 import java.util.*
@@ -50,7 +51,7 @@ class AlarmActivity : AppCompatActivity() {
 
     private fun cancelAlarm() {
 
-        val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+        val intent = Intent(this, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
         alarmManager.cancel(pendingIntent)
         Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
@@ -61,7 +62,7 @@ class AlarmActivity : AppCompatActivity() {
     private fun setAlarm(){
         val thuReq : Long = Calendar.getInstance().timeInMillis +1
         repReqCode = thuReq.toInt()
-         val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+         val intent = Intent(this, AlarmReceiver::class.java)
          val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
 
         alarmManager.setRepeating(

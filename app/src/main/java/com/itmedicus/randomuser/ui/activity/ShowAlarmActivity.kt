@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.itmedicus.randomuser.AlarmReceiver
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.data.adapter.AlarmAdapter
 import com.itmedicus.randomuser.data.adapter.ItemClickListener
@@ -95,7 +96,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                 multipleAlarm[0].requestCode
                 multipleAlarm[1].requestCode
 
-                val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+                val intent = Intent(this, AlarmReceiver::class.java)
                 val pending = PendingIntent.getBroadcast(this,multipleAlarm[0].requestCode,intent,0)
                 alarmManager.cancel(pending)
                 Log.d("this", "cancel multiple"+multipleAlarm[0].requestCode.toString())
@@ -136,11 +137,11 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
 
         }else{
 
-            val intent = Intent(this, AlarmCreateActivity.AlarmReceiver::class.java)
+            val intent = Intent(this, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
             alarmManager.cancel(pendingIntent)
 
-            Toast.makeText(this,"alarm cancel!!",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"alarm off!!",Toast.LENGTH_SHORT).show()
             Log.d("this", "cancel alarm..")
             Log.d("this", "${item.requestCode}")
         }
@@ -163,7 +164,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
             multipleAlarm[0].requestCode
             multipleAlarm[1].requestCode
 
-            val intent = Intent(this,AlarmCreateActivity.AlarmReceiver::class.java)
+            val intent = Intent(this,AlarmReceiver::class.java)
             val pending = PendingIntent.getBroadcast(this,multipleAlarm[0].requestCode,intent,0)
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
@@ -238,14 +239,14 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                 Toast.makeText(this,"alarm on again!!",Toast.LENGTH_SHORT).show()
             }
         }else{
-            val intent = Intent(this,AlarmCreateActivity.AlarmReceiver::class.java)
+            val intent = Intent(this, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 time,
                 24*60*60*1000 ,
                 pendingIntent)
-            Log.d("this", "on alarm again.."+item.requestCode)
+            Log.d("this", "Alarm on again.."+item.requestCode)
             Log.d("this", "current time..$currentTime")
             Toast.makeText(this,"alarm on again!!",Toast.LENGTH_SHORT).show()
         }

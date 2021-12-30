@@ -27,6 +27,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.itmedicus.randomuser.AlarmReceiver
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.data.local.UserDatabase
 import com.itmedicus.randomuser.databinding.ActivityAlarmCreateBinding
@@ -55,9 +56,9 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     private var title = ""
     private var calenderTime = 0L
     var alarmList = mutableListOf<AlarmTime>()
-    val stringBuilder = StringBuilder()
+    private val stringBuilder = StringBuilder()
     var titleList = arrayOf("Napa", "Ciprocin", "Emcil", "Filmet", "Imotin", "Flazil")
-    val NEW_SPINNER_ID = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,6 +187,8 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
          repReqCode = thuReq.toInt()
 
         val intent = Intent(this, AlarmReceiver::class.java)
+         intent.action = "okay"
+         intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
 
         alarmManager.setRepeating(
@@ -218,6 +221,8 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         val intent = Intent(this,AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
@@ -254,6 +259,8 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         val intent = Intent(this,AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
@@ -288,6 +295,8 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         val intent = Intent(this,AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
@@ -321,6 +330,8 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         val intent = Intent(this,AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
@@ -356,12 +367,13 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         val intent = Intent(this,AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calender.timeInMillis,
-            //AlarmManager.INTERVAL_DAY * 7,
             24*60*60*1000 * 7,
             pendingIntent
         )
@@ -390,6 +402,8 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         val intent = Intent(this,AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.setRepeating(
@@ -424,13 +438,14 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             calender.add(Calendar.DAY_OF_YEAR, 7)
         }
 
-        val intent = Intent(this,AlarmReceiver::class.java)
+        val intent = Intent(this, AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
         val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,0)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calender.timeInMillis,
-            //AlarmManager.INTERVAL_DAY * 7,
             24*60*60*1000 * 7,
             pendingIntent
         )
@@ -460,6 +475,15 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
 
         dialogFragment.show(supportFragmentManager, "create_alarm")
+    }
+
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        title = titleList[pos]
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // TODO("Not yet implemented")
     }
 
     private fun showTimePicker() {
@@ -502,59 +526,5 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             notificationManager.createNotificationChannel(channel)
         }
     }
-
-    class AlarmReceiver : BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val time = System.currentTimeMillis()
-            Log.d("this", "Receive alarm:::" +Date().toString()+"::: current time::: $time" )
-
-            // Set the alarm here.
-            val vibrator = context?.getSystemService(VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        5000,
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
-            } else {
-                vibrator.vibrate(5000)
-            }
-            val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-            val r = RingtoneManager.getRingtone(context, notification)
-            r.play()
-
-            val intent = Intent(context, ShowAlarmActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                action = "Cancel"
-                putExtra(EXTRA_NOTIFICATION_ID, 0)
-            }
-            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-
-            val builder = NotificationCompat.Builder(context!!, "1000")
-                .setSmallIcon(R.drawable.ic_history)
-                .setContentTitle("Alarm Clock")
-                .setContentText("Time to take your medicine")
-                .setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .addAction(R.drawable.ic_cancel, "Cancel",
-                    pendingIntent)
-
-            val notificationManager = NotificationManagerCompat.from(context)
-            notificationManager.notify(111, builder.build())
-
-        }
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-          title = titleList[pos]
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-       // TODO("Not yet implemented")
-    }
-
 
 }
