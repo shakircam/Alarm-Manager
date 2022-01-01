@@ -1,96 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.WeekDialogFragment">
 
-   <CheckBox
-       android:id="@+id/saturday"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       android:layout_margin="10dp"
-       android:text="Saturday"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"/>
-    <CheckBox
-        android:id="@+id/sunday"
-        app:layout_constraintTop_toBottomOf="@id/saturday"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"
-        android:text="Sunday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+ <androidx.constraintlayout.widget.ConstraintLayout
+     android:id="@+id/cons"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     app:layout_constraintTop_toTopOf="parent">
 
-    <CheckBox
-        android:id="@+id/monday"
-        app:layout_constraintTop_toBottomOf="@id/sunday"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"
-        android:text="Monday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:text="Select Specific day"
+      android:textColor="@color/colorPrimary"
+      android:textSize="24dp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/tuesday"
-        app:layout_constraintTop_toBottomOf="@id/monday"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"
-        android:text="Tuesday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
-    <CheckBox
-        android:id="@+id/wednesday"
-        app:layout_constraintTop_toBottomOf="@id/tuesday"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"
-        android:text="Wednesday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <CheckBox
-        android:id="@+id/thursday"
-        app:layout_constraintTop_toBottomOf="@id/wednesday"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"
-        android:text="Thursday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <CheckBox
-        android:id="@+id/friday"
-        app:layout_constraintTop_toBottomOf="@id/thursday"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"
-        android:text="Friday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+  <CheckBox
+      android:id="@+id/saturday"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="15dp"
+      android:text="Saturday"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/text" />
 
- <com.google.android.material.button.MaterialButton
-     android:id="@+id/saveBn"
-     android:text="Save"
-     android:textSize="20sp"
-     android:textAllCaps="false"
-     app:layout_constraintTop_toBottomOf="@id/friday"
-     app:layout_constraintEnd_toEndOf="parent"
-     android:layout_marginEnd="40dp"
-     android:layout_marginTop="20dp"
-     android:backgroundTint="@color/purple_500"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"/>
+  <CheckBox
+      android:id="@+id/sunday"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="15dp"
+      android:text="Sunday"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/saturday" />
 
- <com.google.android.material.button.MaterialButton
-     android:id="@+id/cancelBn"
-     android:text="Cancel"
-     android:textSize="20sp"
-     android:textAllCaps="false"
-     app:layout_constraintTop_toBottomOf="@id/friday"
-     app:layout_constraintStart_toStartOf="parent"
-     android:backgroundTint="@color/purple_500"
-     android:layout_marginTop="20dp"
-     android:layout_marginStart="40dp"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"/>
+  <CheckBox
+      android:id="@+id/monday"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="15dp"
+      android:text="Monday"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/sunday" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+  <CheckBox
+      android:id="@+id/tuesday"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="15dp"
+      android:text="Tuesday"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/monday" />
+
+  <CheckBox
+      android:id="@+id/wednesday"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="15dp"
+      android:text="Wednesday"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tuesday" />
+
+  <CheckBox
+      android:id="@+id/thursday"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="15dp"
+      android:text="Thursday"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/wednesday" />
+
+  <CheckBox
+      android:id="@+id/friday"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="15dp"
+      android:text="Friday"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/thursday" />
+
+  <Button
+      android:id="@+id/saveBn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="40dp"
+      android:background="@drawable/button_bg"
+      android:text="Save"
+      android:textAllCaps="false"
+      android:textColor="@color/colorPrimary"
+      android:textSize="20sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/friday" />
+
+  <Button
+      android:id="@+id/cancelBn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="20dp"
+      android:background="@drawable/button_bg"
+      android:text="Cancel"
+      android:textAllCaps="false"
+      android:textColor="@color/colorPrimary"
+      android:textSize="20sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/friday" />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="15dp"
+      app:layout_constraintTop_toBottomOf="@id/cancelBn" />
+ </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

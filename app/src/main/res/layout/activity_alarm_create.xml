@@ -7,17 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.AlarmCreateActivity">
 
-    <Spinner
-        android:id="@+id/titleTv"
-        android:textSize="20sp"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:text=" Alarm Title"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/titleTv"
+        android:textSize="20sp"
+        android:hint="Enter Alarm Title"
+        android:background="@drawable/button_bg"
+        android:paddingStart="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:spinnerMode="dialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="45dp"/>
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -32,7 +47,7 @@
 
     <com.google.android.material.chip.Chip
         android:id="@+id/timeTv"
-        android:text="One time in a day"
+        android:text="Once a day"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/showTime"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@id/view"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="20sp"
-        android:text="Select custom day"
+        android:text="Specific day of week"
         android:layout_marginStart="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

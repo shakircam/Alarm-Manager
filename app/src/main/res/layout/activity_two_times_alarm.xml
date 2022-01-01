@@ -7,15 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.TwoTimesAlarmActivity">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/titleTv"
-        android:hint="Enter alarm title"
-        android:textSize="20sp"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/custom_edit_text"
+        android:text=" Alarm Title"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/titleTv"
+        android:textSize="20sp"
+        android:background="@drawable/button_bg"
+        android:hint="Enter Alarm Title"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:paddingStart="10dp"
         android:layout_width="match_parent"
@@ -46,11 +59,12 @@
 
     <com.google.android.material.chip.Chip
         android:id="@+id/timeTv"
-        android:text="Two times in a day"
+        android:text="Twice a day"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/secondAlarm"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

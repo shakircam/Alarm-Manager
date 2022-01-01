@@ -39,8 +39,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.card4.setOnClickListener {
-            val intent = Intent(this,AlarmActivity::class.java)
-            startActivity(intent)
+            //
         }
 
         binding.card5.setOnClickListener {

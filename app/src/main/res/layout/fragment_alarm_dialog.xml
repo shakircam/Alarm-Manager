@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/custom"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.AlarmDialogFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/oneTv"
-        app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="One Times"
         android:textSize="18sp"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -23,23 +24,13 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Two Times"
         android:textSize="18sp"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/threeTv"
-        app:layout_constraintTop_toBottomOf="@id/twoTv"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Three Times"
-        android:textSize="18sp"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <View
         android:id="@+id/view"
-        app:layout_constraintTop_toBottomOf="@id/threeTv"
+        app:layout_constraintTop_toBottomOf="@id/twoTv"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="50dp"/>

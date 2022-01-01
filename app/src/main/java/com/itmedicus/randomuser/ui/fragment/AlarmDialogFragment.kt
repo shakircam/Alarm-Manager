@@ -23,25 +23,24 @@ class AlarmDialogFragment : DialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentAlarmDialogBinding.inflate(inflater, container, false)
+
         binding.oneTv.setOnClickListener {
-            val intent = Intent(activity,AlarmCreateActivity::class.java)
-            startActivity(intent)
+            dismiss()
         }
         binding.twoTv.setOnClickListener {
             val intent = Intent(activity, TwoTimesAlarmActivity::class.java)
             startActivity(intent)
+            // finish activity & dialog
+            requireActivity().finish()
         }
-        binding.threeTv.setOnClickListener {
-            val intent = Intent(activity,AlarmCreateActivity::class.java)
-            startActivity(intent)
-        }
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setTitle(getString(R.string.title_alarm))
-
     }
     override fun onStart() {
         super.onStart()

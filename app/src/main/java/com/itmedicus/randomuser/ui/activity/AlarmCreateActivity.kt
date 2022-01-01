@@ -1,12 +1,11 @@
 package com.itmedicus.randomuser.ui.activity
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -16,15 +15,16 @@ import android.os.Vibrator
 import android.provider.Settings.System.getString
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.EXTRA_NOTIFICATION_ID
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.itmedicus.randomuser.AlarmReceiver
@@ -49,15 +49,24 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     lateinit var alarmManager: AlarmManager
     private val CHANNEL_ID = "1000"
     var repReqCode = 0
+    var flag = 0
     private lateinit var picker : MaterialTimePicker
     private lateinit var calender : Calendar
     private var time = ""
     private var status = ""
     private var title = ""
     private var calenderTime = 0L
+    private var sat = ""
+    private var sun = ""
+    private var mon = ""
+    private var tue = ""
+    private var wed = ""
+    private var thu = ""
+    private var fri = ""
     var alarmList = mutableListOf<AlarmTime>()
     private val stringBuilder = StringBuilder()
-    var titleList = arrayOf("Napa", "Ciprocin", "Emcil", "Filmet", "Imotin", "Flazil")
+    private val stringBuffer = StringBuilder()
+    var titleList = arrayOf("Napa", "Ciprocin", "Emcil", "Filmet", "Imotil","Insulin", "Flazil","T Cef","R- Penem","R-Pil")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +81,9 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         binding.weekTv.setOnClickListener {
-            showAlarmWeekDialog()
+           // showAlarmWeekDialog()
+
+            openDialog()
         }
 
         createNotificationChannel()
@@ -81,7 +92,7 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             showTimePicker()
         }
 
-            val intent = intent
+        /*    val intent = intent
             val sat = intent.getStringExtra("saturday")
             val sun = intent.getStringExtra("sunday")
             val mon = intent.getStringExtra("monday")
@@ -90,6 +101,27 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             val thu = intent.getStringExtra("thursday")
             val fri = intent.getStringExtra("friday")
 
+            if (sat != null){
+                stringBuilder.append("Saturday ")
+            }
+            if (sun != null){
+                stringBuilder.append("Sunday ")
+            }
+            if (mon != null){
+                stringBuilder.append("Monday ")
+            }
+            if (tue != null){
+                stringBuilder.append("Tuesday ")
+            }
+            if (wed != null){
+                stringBuilder.append("Wednesday ")
+            }
+            if (thu != null){
+                stringBuilder.append("Thursday ")
+            }
+            if (fri != null){
+                stringBuilder.append("Friday ")
+            }*/
 
         //.....
         val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
@@ -99,13 +131,13 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         editor.apply()
 
 
-        val spinner: Spinner = findViewById(R.id.titleTv)
+     /*   val spinner: Spinner = findViewById(R.id.titleTv)
         spinner.onItemSelectedListener = this
         ArrayAdapter(this,android.R.layout.simple_spinner_item,titleList
         ).also {adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
-        }
+        }*/
 
         binding.saveBt.setOnClickListener {
 
@@ -114,43 +146,43 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
                 if (sat == "1"){
                     setRepeatingSaturdayAlarm()
-                    status = "Saturday"
+                    status = "Sat"
                     stringBuilder.append(status+" ")
                     Log.d("tag","saturday")
                 }
                 if (sun == "2"){
                     setRepeatingSundayAlarm()
-                    status = "Sunday"
+                    status = "Sun"
                     stringBuilder.append(status+" ")
                     Log.d("tag","sunday")
                 }
                 if (mon == "3"){
                     setRepeatingMondayAlarm()
-                    status = "Monday"
+                    status = "Mon"
                     stringBuilder.append(status+" ")
                     Log.d("tag","monday")
                 }
                 if (tue == "4"){
                     setRepeatingTuesdayAlarm()
-                    status = "Tuesday"
+                    status = "Tue"
                     stringBuilder.append(" $status")
                     Log.d("tag","tuesday")
                 }
                 if (wed == "5"){
                     setRepeatingWednesdayAlarm()
-                    status = "Wednesday"
+                    status = "Wed"
                     stringBuilder.append(status+" ")
                     Log.d("tag","wednesday")
                 }
                 if (thu == "6"){
                     setRepeatingThursdayAlarm()
-                    status = "Thursday"
+                    status = "Thu"
                     stringBuilder.append(status+" ")
                     Log.d("tag","thursday")
                 }
                 if (fri == "7"){
                     setRepeatingFridayAlarm()
-                    status = "Friday"
+                    status = "Fri"
                     stringBuilder.append(status)
                     Log.d("tag","friday")
                 }
@@ -161,9 +193,8 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
                 stringBuilder.append(status+"")
                 Log.d("tag","repeating alarm")
             }
-
+            title = binding.titleTv.text.toString()
             Toast.makeText(this,"alarm set successfully", Toast.LENGTH_SHORT).show()
-           // title = binding.titleTv.text.toString()
             val calenderTime = calender.timeInMillis
 
             val id = sharedPreferences.getLong("id",fk_id)
@@ -177,6 +208,7 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             editor.commit()
             val intent = Intent(this,ShowAlarmActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
     }
@@ -211,7 +243,6 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +1
          repReqCode = thuReq.toInt()
-
 
         calender = Calendar.getInstance()
         calender.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY)
@@ -465,7 +496,6 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         val dialogFragment = AlarmDialogFragment()
         dialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
-
         dialogFragment.show(supportFragmentManager, "create_note")
     }
 
@@ -479,7 +509,7 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        title = titleList[pos]
+       // title = titleList[pos]
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -525,6 +555,125 @@ class AlarmCreateActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun openDialog() {
+
+        val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
+        val editor = sharedPreferences.edit()
+            val dialog = Dialog(this)
+            dialog.setTitle("Select Day")
+            dialog.setCancelable(true)
+            dialog.setContentView(R.layout.item_dialog)
+            dialog.context.setTheme(R.style.CustomDialog)
+            val width = ViewGroup.LayoutParams.MATCH_PARENT
+            val height = ViewGroup.LayoutParams.WRAP_CONTENT
+            dialog.window?.setLayout(width, height)
+
+            val dialogSat= dialog.findViewById<CheckBox>(R.id.saturday)
+            val dialogSun= dialog.findViewById<CheckBox>(R.id.sunday)
+            val dialogMon= dialog.findViewById<CheckBox>(R.id.monday)
+            val dialogTue= dialog.findViewById<CheckBox>(R.id.tuesday)
+            val dialogWed= dialog.findViewById<CheckBox>(R.id.wednesday)
+            val dialogThu= dialog.findViewById<CheckBox>(R.id.thursday)
+            val dialogFri= dialog.findViewById<CheckBox>(R.id.friday)
+            val saveBtn= dialog.findViewById<Button>(R.id.saveBn)
+            val cancelBtn= dialog.findViewById<Button>(R.id.cancelBn)
+             dialog.show()
+
+            cancelBtn.setOnClickListener {
+                dialog.dismiss()
+            }
+
+        if (flag>0){
+            val satu = sharedPreferences.getBoolean("sat",true)
+            dialogSat.isChecked = satu
+            val sund = sharedPreferences.getBoolean("sun",true)
+            dialogSun.isChecked = sund
+            val mond = sharedPreferences.getBoolean("mon",true)
+            dialogMon.isChecked = mond
+            val tues = sharedPreferences.getBoolean("tue",true)
+            dialogTue.isChecked = tues
+            val wedn = sharedPreferences.getBoolean("wed",true)
+            dialogWed.isChecked = wedn
+            val thus = sharedPreferences.getBoolean("thu",true)
+            dialogThu.isChecked = thus
+            val frid = sharedPreferences.getBoolean("fri",true)
+            dialogFri.isChecked = frid
+        }
+
+            saveBtn.setOnClickListener {
+
+                if (dialogSat.isChecked){
+                    sat = "1"
+                    editor.putBoolean("sat",true)
+                    editor.apply()
+                    stringBuffer.append("Saturday ")
+                }else{
+                    editor.putBoolean("sat",false)
+                    editor.apply()
+                }
+                if (dialogSun.isChecked){
+                    sun = "2"
+                    editor.putBoolean("sun",true)
+                    editor.apply()
+                    stringBuffer.append("Sunday ")
+                }else{
+                    editor.putBoolean("sun",false)
+                    editor.apply()
+                }
+                if (dialogMon.isChecked){
+                    mon = "3"
+                    editor.putBoolean("mon",true)
+                    editor.apply()
+                    stringBuffer.append("Monday ")
+                }else{
+                    editor.putBoolean("mon",false)
+                    editor.apply()
+                }
+                if (dialogTue.isChecked){
+                    tue = "4"
+                    editor.putBoolean("tue",true)
+                    editor.apply()
+                    stringBuffer.append("Tuesday ")
+                }else{
+                    editor.putBoolean("tue",false)
+                    editor.apply()
+                }
+                if (dialogWed.isChecked){
+                    wed = "5"
+                    editor.putBoolean("wed",true)
+                    editor.apply()
+                    stringBuffer.append("Wednesday ")
+                }else{
+                    editor.putBoolean("wed",false)
+                    editor.apply()
+                }
+                if (dialogThu.isChecked){
+                    thu = "6"
+                    editor.putBoolean("thu",true)
+                    editor.apply()
+                    stringBuffer.append("Thursday ")
+                }else{
+                    editor.putBoolean("thu",false)
+                    editor.apply()
+                }
+
+                if (dialogFri.isChecked){
+                    fri = "7"
+                    editor.putBoolean("fri",true)
+                    editor.apply()
+                    stringBuffer.append("Friday ")
+                }else{
+                    editor.putBoolean("fri",false)
+                    editor.apply()
+
+                }
+                flag ++
+                binding.weekTv.text = stringBuffer.toString()
+                stringBuffer.setLength(0)
+                dialog.dismiss()
+            }
     }
 
 }

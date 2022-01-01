@@ -13,14 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RandomUser">
+
         <activity
             android:name=".ui.activity.TwoTimesAlarmActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.ShowAlarmActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.AlarmActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.HistoryActivity"
@@ -47,8 +45,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmReceiver"/>
-
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

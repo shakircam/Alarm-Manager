@@ -10,6 +10,10 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +29,7 @@ import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
 import kotlinx.coroutines.launch
 import java.util.*
 
-class TwoTimesAlarmActivity : AppCompatActivity() {
+class TwoTimesAlarmActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: ActivityTwoTimesAlarmBinding
     lateinit var context: Context
     lateinit var alarmManager: AlarmManager
@@ -40,6 +44,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
     private var status = ""
     private var calenderTime = 0L
     var alarmList = mutableListOf<AlarmTime>()
+    var titleList = arrayOf("Napa", "Ciprocin", "Emcil", "Filmet", "Imotil","Insulin", "Flazil","T Cef","R- Penem","R-Pil")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,21 +71,29 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
         val fk_id : Long = Calendar.getInstance().timeInMillis +2
         editor.putLong("id",fk_id)
         editor.apply()
+
+      /*  val spinner: Spinner = findViewById(R.id.titleTv)
+        spinner.onItemSelectedListener = this
+        ArrayAdapter(this,android.R.layout.simple_spinner_item,titleList
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }*/
+
         binding.saveBt.setOnClickListener {
 
-            request_code++
             if (binding.check.isChecked){
                 setFirstRepeatingAlarm()
                 setSecondRepeatingAlarm()
-                status = "The Alarm will continue"
+                status = "Alarm will be repeated"
             }else{
                 firstAlarm()
                 secondAlarm()
-                status = ""
+                status = "Alarm will ring once"
             }
 
             Toast.makeText(this, "alarm set successfully", Toast.LENGTH_SHORT).show()
-            val title = binding.titleTv.text.toString()
+            title = binding.titleTv.text.toString()
             val addTime= "$time,$second_time"
             val id = sharedPreferences.getLong("id",fk_id)
             val alarmTime = AlarmTime(addTime,id,calenderTime ,title, request_code,status,true)
@@ -91,6 +104,9 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
             }
             editor.clear()
             editor.commit()
+            val intent = Intent(this,ShowAlarmActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
     }
@@ -99,6 +115,7 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
         calenderTime = calender.timeInMillis
         val thuReq : Long = Calendar.getInstance().timeInMillis +1
         request_code = thuReq.toInt()
+
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.action = "okay"
         intent.putExtra("time", time)
@@ -292,5 +309,13 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+      //  title = titleList[pos]
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        //
     }
 }
