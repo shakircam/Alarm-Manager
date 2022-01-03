@@ -46,6 +46,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <View
+        android:id="@+id/view1"
+        app:layout_constraintTop_toBottomOf="@id/firstAlarm"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="#F0F0F0"
+        android:layout_width="match_parent"
+        />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/secondAlarm"

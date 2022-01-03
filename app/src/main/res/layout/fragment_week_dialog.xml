@@ -34,7 +34,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="15dp"
-      android:text="Saturday"
+      android:text="Every Saturday"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/text" />
 
@@ -43,7 +43,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="15dp"
-      android:text="Sunday"
+      android:text="Every Sunday"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/saturday" />
 
@@ -52,7 +52,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="15dp"
-      android:text="Monday"
+      android:text="Every Monday"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/sunday" />
 
@@ -61,7 +61,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="15dp"
-      android:text="Tuesday"
+      android:text="Every Tuesday"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/monday" />
 
@@ -70,7 +70,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="15dp"
-      android:text="Wednesday"
+      android:text="Every Wednesday"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/tuesday" />
 
@@ -79,7 +79,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="15dp"
-      android:text="Thursday"
+      android:text="Every Thursday"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/wednesday" />
 
@@ -88,7 +88,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="15dp"
-      android:text="Friday"
+      android:text="Every Friday"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/thursday" />
 

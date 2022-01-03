@@ -25,7 +25,7 @@ class HistoryAdapter(private val itemClickListener: ItemClickListener) : Recycle
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentItem = userList[position]
 
-        holder.nat.text = "Nationality: "+currentItem.nat
+       // holder.nat.text = "Nationality: "+currentItem.nat
         holder.phone.text = "Phone: "+currentItem.phone
         holder.gender.text = "Gender: "+currentItem.gender
         holder.name.text = "Name: "+currentItem.name
@@ -48,7 +48,7 @@ class HistoryAdapter(private val itemClickListener: ItemClickListener) : Recycle
     class UserViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val name = itemView.findViewById(R.id.name) as TextView
-        val nat = itemView.findViewById(R.id.nationality) as TextView
+//        val nat = itemView.findViewById(R.id.nationality) as TextView
         val phone = itemView.findViewById(R.id.phone) as TextView
         val gender = itemView.findViewById(R.id.gender) as TextView
         val image = itemView.findViewById(R.id.image) as ImageView

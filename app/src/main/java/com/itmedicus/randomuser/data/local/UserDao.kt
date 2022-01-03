@@ -19,6 +19,9 @@ interface UserDao {
     @Query("SELECT * FROM alarm_table ORDER BY id ASC  ")
     fun getAllAlarmTime(): MutableList<AlarmTime>
 
+    @Query("SELECT * FROM alarm_table ORDER BY id ASC  ")
+    fun getAllAlarm(): LiveData<MutableList<AlarmTime>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertToLocal(userData: MutableList<Result>)
 
@@ -55,6 +58,9 @@ interface UserDao {
 
     @Delete
     suspend fun deleteAlarm(alarmTime: AlarmTime)
+
+    @Query("DELETE FROM alarm_table WHERE id=:id")
+    suspend fun deleteSingleAlarm(id: Int)
 
     @Transaction
     @Query("SELECT * FROM alarm_table WHERE time = :time")

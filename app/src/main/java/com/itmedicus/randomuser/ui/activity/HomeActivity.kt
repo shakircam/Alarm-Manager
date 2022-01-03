@@ -3,6 +3,8 @@ package com.itmedicus.randomuser.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.NavController
 import com.denzcoskun.imageslider.models.SlideModel
 import com.itmedicus.randomuser.R
@@ -46,5 +48,22 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this,ShowAlarmActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Close?")
+        builder.setMessage("Do you want to close the app?")
+        builder.setCancelable(false)
+        builder.setPositiveButton("Yes") { _, _ ->
+            finish()
+            Toast.makeText(this,"successfully close the app",Toast.LENGTH_SHORT).show()
+        }
+        builder.setNegativeButton("No") { _, _ ->
+            Toast.makeText(this,"Not Closed the app",Toast.LENGTH_SHORT).show()
+        }
+
+        val alertDialog : AlertDialog = builder.create()
+        alertDialog.show()
     }
 }

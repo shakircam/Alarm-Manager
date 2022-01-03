@@ -24,7 +24,7 @@ import android.widget.*
 import com.google.android.material.chip.Chip
 
 
-class AlarmAdapter(private val context: Context,private val clickListener: ClickListener): RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> () {
+class AlarmAdapter(private val clickListener: ClickListener): RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> () {
     var list = mutableListOf<AlarmTime>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
@@ -41,16 +41,15 @@ class AlarmAdapter(private val context: Context,private val clickListener: Click
         holder.time.text = currentItem.time
         holder.status.text = currentItem.status
 
-        holder.button.isChecked = currentItem.flag
+        holder.switchButton.isChecked = currentItem.flag
 
-        holder.editBt.setOnClickListener {
-            //clickListener.onAlarm(position)
-
+        holder.deleteBt.setOnClickListener {
+            clickListener.deleteAlarm(currentItem,position)
         }
 
-         holder.button.setOnClickListener {
+         holder.switchButton.setOnClickListener {
 
-              if(holder.button.isChecked){
+              if(holder.switchButton.isChecked){
                   clickListener.onAlarm(position)
               }else{
                   clickListener.onItemCancel(position)
@@ -67,8 +66,8 @@ class AlarmAdapter(private val context: Context,private val clickListener: Click
         val time = itemView.findViewById(R.id.showTime) as TextView
         val title = itemView.findViewById(R.id.titleTv) as TextView
         val status = itemView.findViewById(R.id.statusTv) as Chip
-        val button = itemView.findViewById(R.id.startBn) as SwitchCompat
-        val editBt = itemView.findViewById(R.id.editBt) as ImageView
+        val switchButton = itemView.findViewById(R.id.startBn) as SwitchCompat
+        val deleteBt = itemView.findViewById(R.id.editBt) as ImageView
     }
 
     fun setData(userList: MutableList<AlarmTime>){

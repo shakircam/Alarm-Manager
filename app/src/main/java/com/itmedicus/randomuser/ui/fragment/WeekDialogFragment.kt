@@ -29,7 +29,7 @@ class WeekDialogFragment : DialogFragment() {
         binding.saveBn.setOnClickListener {
 
             val intent= Intent(activity,AlarmCreateActivity::class.java)
-            //val intent= Intent(activity, WeekendAlarmActivity::class.java)
+
             if (binding.saturday.isChecked){
                 val saturday = "1"
 

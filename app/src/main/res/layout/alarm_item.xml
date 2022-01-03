@@ -24,6 +24,8 @@
             app:layout_constraintTop_toBottomOf="@id/titleTv"
             app:layout_constraintStart_toStartOf="parent"
             android:text="12:05 PM"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginStart="15dp"
             android:layout_width="wrap_content"
@@ -51,7 +53,7 @@
             android:id="@+id/editBt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/startBn"
-            android:src="@drawable/edit"
+            android:src="@drawable/delete_24"
             android:layout_marginEnd="10dp"
             android:layout_width="wrap_content"
             android:layout_height="40dp"/>

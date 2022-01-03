@@ -18,15 +18,13 @@ import java.util.*
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
-           /* val serviceIntent = Intent(context,AlarmService::class.java)
-              context?.startService(serviceIntent)*/
+            val title = intent?.getStringExtra("time")
 
-            val title= intent?.getStringExtra("time")
             // Set the alarm here.
             val time = System.currentTimeMillis()
             Log.d("this", "Receive alarm:::" + Date().toString()+":::$title"+"::: current time::: $time" )
-
             val vibrator = context?.getSystemService(AppCompatActivity.VIBRATOR_SERVICE) as Vibrator
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator.vibrate(
                     VibrationEffect.createOneShot(

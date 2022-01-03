@@ -22,8 +22,8 @@ class DetailsActivity : AppCompatActivity() {
         val intent = intent
 
         val name = intent.getStringExtra("name")
-        val gender = intent.getStringExtra("gender")
-        val email = intent.getStringExtra("email")
+        val email = intent.getStringExtra("gender")
+        val gender = intent.getStringExtra("email")
         val nat= intent.getStringExtra("nat")
         val phone= intent.getStringExtra("phone")
         val image = intent.getStringExtra("pic")
@@ -32,12 +32,9 @@ class DetailsActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             onBackPressed()
         }
-        binding.fabButton.setOnClickListener {
-            binding.fabButton.setImageResource(R.drawable.colorstar)
 
-        }
 
-        binding.gender.text = "Gender: "+gender
+        binding.gender.text = "Email: "+gender
         binding.email.text = email
         binding.nationality.text = "Nationality: "+nat
         binding.name.text = name

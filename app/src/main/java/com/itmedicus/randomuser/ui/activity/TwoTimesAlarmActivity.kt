@@ -29,7 +29,7 @@ import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
 import kotlinx.coroutines.launch
 import java.util.*
 
-class TwoTimesAlarmActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class TwoTimesAlarmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTwoTimesAlarmBinding
     lateinit var context: Context
     lateinit var alarmManager: AlarmManager
@@ -311,11 +311,5 @@ class TwoTimesAlarmActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         }
     }
 
-    override fun onItemSelected(p0: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-      //  title = titleList[pos]
-    }
 
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-        //
-    }
 }

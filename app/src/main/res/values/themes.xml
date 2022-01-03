@@ -31,4 +31,14 @@
         <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
         <item name="android:windowIsFloating">true</item>
     </style>
+
+    <style name="Divider">
+        <item name="android:background">?android:attr/listDivider</item>
+        //you can give your color here. that will change all divider color in your app.
+    </style>
+
+    <style name="Divider.Vertical" parent="Divider">
+        <item name="android:layout_width">3dp</item>
+        <item name="android:layout_height">25dp</item>
+    </style>
 </resources>

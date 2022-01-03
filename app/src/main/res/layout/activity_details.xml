@@ -8,195 +8,197 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.DetailsActivity">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/cons"
-    app:layout_constraintTop_toTopOf="parent"
-    android:background="@drawable/gradeient_background"
-    android:layout_width="match_parent"
-    android:layout_height="325dp">
-
-    <ImageView
-        android:id="@+id/backButton"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/arrow_back_24"
-        android:layout_marginStart="5dp"
-        android:layout_width="55dp"
-        android:layout_height="30dp"/>
+        android:background="@color/purple_500"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
 
-    <ImageView
-        android:id="@+id/fabButton"
+        <ImageView
+            android:id="@+id/backButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/back"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="55dp"
+            android:layout_height="30dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/backButton"
+            android:text="Back"
+            android:textSize="20sp"
+           android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/consta"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/star_rate_24"
-        android:layout_marginStart="5dp"
-        android:layout_width="55dp"
-        android:layout_height="40dp"/>
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="20dp"
+        app:cardCornerRadius="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/pic"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"
-        android:layout_width="155dp"
-        android:layout_height="155dp"
-        app:cardCornerRadius="250dp"
-        app:cardBackgroundColor="@color/white">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:cardCornerRadius="250dp"
-            android:layout_gravity="center">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/imageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:src="@drawable/user"
                 android:scaleType="centerCrop"/>
 
-        </androidx.cardview.widget.CardView>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/name"
-        android:text="@string/name"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pic"
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/email"
-        android:text="Bd@gmail.com"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:drawablePadding="10dp"
-        android:drawableLeft="@drawable/email_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/location"
-        android:text="location"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:drawableLeft="@drawable/location"
-        android:drawablePadding="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="18dp"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/cons"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/phone"
-                android:text="phone"
-                android:textSize="20sp"
-                android:drawableLeft="@drawable/call_24"
-                android:drawablePadding="12dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/name"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/nationality"
-                android:text="Bd"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:drawableLeft="@drawable/flag_24"
-                android:drawablePadding="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phone"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/gender"
-                android:text="Male"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:drawableLeft="@drawable/gender"
-                android:drawablePadding="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nationality"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/state"
-                android:text="@string/state"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:drawableLeft="@drawable/city_24"
-                android:drawablePadding="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/gender"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text"
-                android:text="About"
-                android:textSize="24sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-               app:layout_constraintTop_toBottomOf="@+id/state"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/about"
-                android:text="@string/text"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/text"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/name"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                android:padding="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/email"
+                android:text="Bd"
+                android:textSize="16sp"
+                android:drawablePadding="10dp"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/location"
+                android:text="location"
+                android:textSize="17sp"
+                android:drawableLeft="@drawable/location_24"
+                android:drawablePadding="12dp"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/email"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </com.google.android.material.card.MaterialCardView>
 
-    </androidx.cardview.widget.CardView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/bio"
+        android:text="Biography"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:drawablePadding="12dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/consta"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/phone"
+        android:text="phone"
+        android:textSize="16sp"
+        android:drawableLeft="@drawable/call_24"
+        android:drawablePadding="12dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bio"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/nationality"
+        android:text="Bd"
+        android:textSize="16sp"
+        android:layout_marginStart="15dp"
+        android:drawableLeft="@drawable/flag_24"
+        android:drawablePadding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/gender"
+        android:text="Male"
+        android:textSize="16sp"
+        android:layout_marginStart="15dp"
+        android:drawableLeft="@drawable/email_241"
+        android:drawablePadding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nationality"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/state"
+        android:text="@string/state"
+        android:textSize="16sp"
+        android:layout_marginStart="15dp"
+        android:drawableLeft="@drawable/city_24"
+        android:drawablePadding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gender"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@+id/state"
+        android:layout_width="match_parent"
+        android:background="#F0F0F0"
+        android:layout_marginTop="8dp"
+        android:layout_height="2dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text"
+        android:text="About"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/state"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/about"
+        android:text="@string/text"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="15dp"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

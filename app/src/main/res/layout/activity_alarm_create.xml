@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text=" Alarm Title"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginStart="15dp"
@@ -39,19 +40,56 @@
         android:id="@+id/showTime"
         app:layout_constraintTop_toBottomOf="@id/titleTv"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="12:05 PM"
+        android:text="08:05 AM"
+        android:textStyle="bold"
         android:textSize="22sp"
-        android:layout_margin="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:id="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@id/titleTv"
+        app:layout_constraintStart_toEndOf="@+id/showTime"
+        app:layout_constraintEnd_toStartOf="@+id/showTime2"
+        android:layout_marginTop="15dp"
+        android:background="#64B5F6"
+        android:visibility="invisible"
+        style="@style/Divider.Vertical"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/showTime2"
+        app:layout_constraintTop_toBottomOf="@id/titleTv"
+        app:layout_constraintStart_toEndOf="@+id/showTime"
+        android:text="02:05 PM"
+        android:visibility="invisible"
+        android:textSize="22sp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.chip.Chip
         android:id="@+id/timeTv"
-        android:text="Once a day"
-        android:textSize="20sp"
+        android:text="Ring Once"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/showTime"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/custom"
+        android:text="Ring Twice"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/showTime"
+        app:layout_constraintStart_toEndOf="@+id/timeTv"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <View
@@ -63,23 +101,34 @@
         android:layout_width="match_parent"
         />
 
-
     <com.google.android.material.chip.Chip
         android:id="@+id/weekTv"
         app:layout_constraintTop_toBottomOf="@id/view"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:text="Specific day of week"
         android:layout_marginStart="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/weekTv2"
+        app:layout_constraintTop_toBottomOf="@id/weekTv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <CheckBox
         android:id="@+id/selectBt"
         android:text="Want alarm in the selected day"
-        app:layout_constraintTop_toBottomOf="@id/weekTv"
+        app:layout_constraintTop_toBottomOf="@id/weekTv2"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="18sp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
