@@ -7,14 +7,44 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.AlarmCreateActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
+
+    <ImageView
+        android:id="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text=" Alarm Title"
+        android:src="@drawable/back_ios_24"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="55dp"
+        android:layout_height="30dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/pill"
+        android:text="Add Pills"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/backButton"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/pill"
+        android:layout_marginTop="15dp"
+        android:layout_width="150dp"
+        android:layout_height="100dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/pill"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text=" Pills Name"
+        android:textSize="18sp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
@@ -23,7 +53,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/titleTv"
         android:textSize="20sp"
-        android:hint="Enter Alarm Title"
+        android:hint="Achinacea, 100mg"
         android:background="@drawable/button_bg"
         android:paddingStart="10dp"
         app:layout_constraintTop_toBottomOf="@+id/title"
@@ -35,66 +65,173 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/amount"
+        android:text="Amount"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/showTime"
-        app:layout_constraintTop_toBottomOf="@id/titleTv"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="08:05 AM"
-        android:textStyle="bold"
-        android:textSize="22sp"
+        android:id="@+id/type"
+        android:text="Type"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <View
-        android:id="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@id/titleTv"
-        app:layout_constraintStart_toEndOf="@+id/showTime"
-        app:layout_constraintEnd_toStartOf="@+id/showTime2"
-        android:layout_marginTop="15dp"
-        android:background="#64B5F6"
-        android:visibility="invisible"
-        style="@style/Divider.Vertical"
-        />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/showTime2"
-        app:layout_constraintTop_toBottomOf="@id/titleTv"
-        app:layout_constraintStart_toEndOf="@+id/showTime"
-        android:text="02:05 PM"
-        android:visibility="invisible"
-        android:textSize="22sp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/timeTv"
-        android:text="Ring Once"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/showTime"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/custom"
-        android:text="Ring Twice"
-        android:textSize="16sp"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/showTime"
-        app:layout_constraintStart_toEndOf="@+id/timeTv"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/spinner"
+        app:layout_constraintTop_toBottomOf="@+id/type"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:hint="Pills"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/spinnerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="none"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons1"
+        android:background="@drawable/button_bg"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_width="140dp"
+        android:layout_height="50dp">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/minus"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/minusBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="14dp"
+            android:text="1"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/plusBt"
+            app:layout_constraintStart_toEndOf="@+id/minusBt"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/plus"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/plusBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons2"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/showTime"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="08:05 AM"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:drawableStart="@drawable/bell"
+            android:drawablePadding="7dp"
+            android:background="@drawable/custom_time"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/showTime2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custom_time"
+            android:drawableStart="@drawable/bell"
+            android:drawablePadding="7dp"
+            android:padding="10dp"
+            android:text="02:05 PM"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/showTime"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/showTime3"
+            app:layout_constraintTop_toBottomOf="@id/showTime"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="06:05 PM"
+            android:visibility="invisible"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:drawableStart="@drawable/bell"
+            android:drawablePadding="7dp"
+            android:background="@drawable/custom_time"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/timeTv"
+            android:text="Ring Once"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/showTime3"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <View
         android:id="@+id/view"
-        app:layout_constraintTop_toBottomOf="@id/timeTv"
+        app:layout_constraintTop_toBottomOf="@id/cons2"
         android:layout_height="2dp"
         android:layout_marginTop="8dp"
         android:background="#F0F0F0"
@@ -107,7 +244,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="16sp"
         android:text="Specific day of week"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -127,20 +264,19 @@
         android:text="Want alarm in the selected day"
         app:layout_constraintTop_toBottomOf="@id/weekTv2"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveBt"
         app:layout_constraintTop_toBottomOf="@id/selectBt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"
-        android:text="Save"
+        android:layout_marginTop="10dp"
+        android:text="Add to Schedule"
         android:background="@drawable/custom_button"
         android:textSize="20sp"
         android:textAllCaps="false"

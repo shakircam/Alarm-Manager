@@ -40,7 +40,7 @@ class AlarmAdapter(private val clickListener: ClickListener): RecyclerView.Adapt
         holder.title.text = currentItem.title
         holder.time.text = currentItem.time
         holder.status.text = currentItem.status
-
+        holder.type.text = currentItem.amount.toString()+" "+currentItem.type
         holder.switchButton.isChecked = currentItem.flag
 
         holder.deleteBt.setOnClickListener {
@@ -68,6 +68,7 @@ class AlarmAdapter(private val clickListener: ClickListener): RecyclerView.Adapt
         val status = itemView.findViewById(R.id.statusTv) as Chip
         val switchButton = itemView.findViewById(R.id.startBn) as SwitchCompat
         val deleteBt = itemView.findViewById(R.id.editBt) as ImageView
+        val type = itemView.findViewById(R.id.type) as TextView
     }
 
     fun setData(userList: MutableList<AlarmTime>){

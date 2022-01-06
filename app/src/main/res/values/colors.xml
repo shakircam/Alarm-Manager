@@ -11,4 +11,7 @@
     <color name="yellow">#EEDE4E</color>
     <color name="custom">#4578D0C4</color>
     <color name="colorPrimary">@color/teal_700</color>
+    <color name="grey">#E0E0E0</color>
+    <color name="colorPrimaryDark">#FF018786</color>
+    <color name="blue">#1C86DC</color>
 </resources>

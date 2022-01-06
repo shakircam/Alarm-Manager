@@ -34,13 +34,13 @@ class DetailsActivity : AppCompatActivity() {
         }
 
 
-        binding.gender.text = "Email: "+gender
+        binding.gender.text = gender
         binding.email.text = email
-        binding.nationality.text = "Nationality: "+nat
+        binding.nationality.text = nat
         binding.name.text = name
         binding.location.text = location
-        binding.phone.text = "Phone: "+phone
-        binding.state.text = "State: "+state
+        binding.phone.text = phone
+        binding.state.text = state
 
         Glide.with(this)
             .load(image)

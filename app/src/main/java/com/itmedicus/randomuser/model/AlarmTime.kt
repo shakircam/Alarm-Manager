@@ -6,6 +6,8 @@ import androidx.room.ForeignKey.CASCADE
 @Entity(tableName = "alarm_table")
 data class AlarmTime(
     val time: String,
+    val type : String,
+    val amount : Int,
     @PrimaryKey(autoGenerate = false)
     val id: Long,
     val calenderTime : Long,

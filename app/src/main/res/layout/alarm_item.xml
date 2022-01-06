@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="8dp"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="12dp"
     android:layout_margin="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -13,28 +13,58 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatImageView
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="match_parent"
-            android:background="#EBEEEE"
-            android:layout_height="10dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/image"
+            android:src="@drawable/pills2"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleTv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            android:text="Napa"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/type"
+            app:layout_constraintTop_toBottomOf="@id/titleTv"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            android:text="1 Capsule"
+            android:textSize="16sp"
+            android:textColor="@color/blue"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/showTime"
-            app:layout_constraintTop_toBottomOf="@id/titleTv"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/type"
+            app:layout_constraintStart_toEndOf="@+id/image"
             android:text="12:05 PM"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/statusTv"
             app:layout_constraintTop_toBottomOf="@id/showTime"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image"
             android:text="Sunday"
             app:chipIcon="@drawable/ic_history"
             android:layout_marginStart="15dp"
@@ -58,16 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/titleTv"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="Alarm"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

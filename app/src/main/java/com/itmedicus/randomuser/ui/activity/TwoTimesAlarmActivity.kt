@@ -94,9 +94,11 @@ class TwoTimesAlarmActivity : AppCompatActivity() {
 
             Toast.makeText(this, "alarm set successfully", Toast.LENGTH_SHORT).show()
             title = binding.titleTv.text.toString()
+            val pills = ""
+            val number = 1
             val addTime= "$time,$second_time"
             val id = sharedPreferences.getLong("id",fk_id)
-            val alarmTime = AlarmTime(addTime,id,calenderTime ,title, request_code,status,true)
+            val alarmTime = AlarmTime(addTime,pills,number,id,calenderTime ,title, request_code,status,true)
             alarmList.add(alarmTime)
             val db = UserDatabase.getDatabase(this).userDao()
             lifecycleScope.launch {
