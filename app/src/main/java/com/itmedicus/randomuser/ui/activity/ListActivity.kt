@@ -1,11 +1,19 @@
 package com.itmedicus.randomuser.ui.activity
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
+import androidx.appcompat.app.ActionBar
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.itmedicus.randomuser.data.adapter.ItemClickListener
 import com.itmedicus.randomuser.data.adapter.UserAdapter
 import com.itmedicus.randomuser.data.local.UserDatabase
@@ -29,6 +37,7 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
     var list = mutableListOf<Dami.Results>()
     var allUser = mutableListOf<Result>()
     var flag = 1
+    private lateinit var shimmerFrameLayout: ShimmerFrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +45,18 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
         setContentView(binding.root)
         getData()
         initRecyclerView()
+        shimmerFrameLayout = binding.shimmerLayout
 
+    }
 
+    override fun onResume() {
+        super.onResume()
+        shimmerFrameLayout.startShimmer()
+    }
+
+    override fun onPause() {
+        shimmerFrameLayout.stopShimmer()
+        super.onPause()
     }
 
     private fun initRecyclerView() {
@@ -58,8 +77,10 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
             ) {
                 response.body()?.let {
                     list.addAll(it.results)
-                    adapter.setData(list)
 
+                    shimmerFrameLayout.isVisible = false
+                    adapter.setData(list)
+                    binding.recyclerview.isVisible = true
 
                 }
             }
@@ -168,3 +189,5 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
         startActivity(intent)
     }
 }
+
+

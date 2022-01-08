@@ -195,11 +195,11 @@ class AlarmCreateActivity : AppCompatActivity() {
                     repeatingAlarm()
                     setSecondRepeatingAlarm()
                     time = "$time,$second_time"
-                    status = "Repeated Alarm"
+                    status = "Every Day"
                     stringBuilder.append(status + "")
                 }else{
                     repeatingAlarm()
-                    status = "Repeated Alarm"
+                    status = "Every Day"
                     stringBuilder.append(status + "")
                     Log.d("this", "repeating alarm")
                 }

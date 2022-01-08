@@ -16,7 +16,7 @@ class AlarmRepository(private val alarmDao: UserDao) {
         alarmDao.insertAlarmTime(alarmTime)
     }
 
-    suspend fun deleteSingleAlarm(id: Int){
-        alarmDao.deleteSingleAlarm(id)
+    suspend fun deleteMultipleAlarm(id: Long){
+        alarmDao.deleteMultipleAlarm(id)
     }
 }

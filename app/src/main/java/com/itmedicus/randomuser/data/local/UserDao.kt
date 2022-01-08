@@ -47,6 +47,16 @@ interface UserDao {
     @Query("UPDATE alarm_table SET flag =:flag WHERE id =:id")
     fun updateSwitchButtonState(flag:Boolean,id: Long)
 
+
+    @Query("UPDATE alarm_table SET calenderTime =:time WHERE id =:id")
+    fun updateAlarmTime(time:Long,id: Long)
+
+    @Query("UPDATE multiple_alarm_table SET calenderTime =:time WHERE fk_id =:id")
+    fun updateAlarmTimeInSpecificDay(time:Long,id: Long)
+
+    @Query("UPDATE multiple_alarm_table SET calenderTime =:time WHERE id =:id")
+    fun updateAlarmTimeInMultipleDay(time:Long,id: Int)
+
     @Query("SELECT * FROM user_table WHERE name LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): MutableList<Result>
 
@@ -59,8 +69,8 @@ interface UserDao {
     @Delete
     suspend fun deleteAlarm(alarmTime: AlarmTime)
 
-    @Query("DELETE FROM alarm_table WHERE id=:id")
-    suspend fun deleteSingleAlarm(id: Int)
+    @Query("DELETE FROM multiple_alarm_table WHERE fk_id = :fk_id")
+    suspend fun deleteMultipleAlarm(fk_id : Long)
 
     @Transaction
     @Query("SELECT * FROM alarm_table WHERE time = :time")

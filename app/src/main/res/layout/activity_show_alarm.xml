@@ -9,8 +9,39 @@
     tools:context=".ui.activity.ShowAlarmActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cons"
+        android:id="@+id/cons1"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/purple_700"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/back_ios_24"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="55dp"
+            android:layout_height="30dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Pills Alarm"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons"
+        app:layout_constraintTop_toBottomOf="@id/cons1"
         android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -44,18 +75,19 @@
         android:layout_height="0dp"
         android:layout_margin="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cons1"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/alarm_item" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:text="Add Alarm"
         android:layout_margin="16dp"
-        android:src="@drawable/add"
+        app:icon="@drawable/add"
         android:contentDescription="TODO" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
