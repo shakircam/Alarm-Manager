@@ -3,6 +3,8 @@ package com.itmedicus.randomuser.model
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 
+
+
 @Entity(tableName = "alarm_table")
 data class AlarmTime(
     val time: String,
