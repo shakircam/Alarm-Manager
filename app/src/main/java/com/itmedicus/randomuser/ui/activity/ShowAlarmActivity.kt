@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.itmedicus.randomuser.AlarmReceiver
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.data.adapter.AlarmAdapter
@@ -70,8 +71,31 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
         mRecyclerView.adapter = adapter
         mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
 
-    }
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
 
+                // if the recycler view is scrolled
+                // above shrink the FAB
+                if (dy > 5 && binding.fab.isExtended) {
+                    binding.fab.shrink()
+                }
+
+                // if the recycler view is scrolled
+                // above extend the FAB
+                if (dy < -5 && !binding.fab.isExtended) {
+                    binding.fab.extend()
+                }
+
+                // of the recycler view is at the first
+                // item always extend the FAB
+                if (!recyclerView.canScrollVertically(-1)) {
+                    binding.fab.extend()
+                }
+            }
+        })
+
+    }
     override fun onItemCancel(position: Int) {
         cancelAlarm(position)
     }

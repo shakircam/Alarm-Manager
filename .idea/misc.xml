@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/drawable/gradeient_spinner.xml" value="0.269140625" />
         <entry key="app/src/main/res/drawable/gradent_bg.xml" value="0.3388888888888889" />
         <entry key="app/src/main/res/drawable/gradient_recycler.xml" value="0.35188968335035753" />
+        <entry key="app/src/main/res/drawable/ic_add24.xml" value="0.2453125" />
         <entry key="app/src/main/res/drawable/ic_cancel.xml" value="0.3189814814814815" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/location.xml" value="0.3189814814814815" />
@@ -53,6 +54,7 @@
         <entry key="app/src/main/res/layout/fragment_third_screen.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/fragment_view_pager.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/fragment_week_dialog.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/interval_dialog.xml" value="0.15710382513661203" />
         <entry key="app/src/main/res/layout/item_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_empty.xml" value="0.25390625" />
         <entry key="app/src/main/res/layout/shimmer_layout.xml" value="0.25390625" />

@@ -93,9 +93,21 @@ class AlarmCreateActivity : AppCompatActivity() {
             customDialog()
 
         }
+        binding.everyDay.setOnClickListener {
+            binding.weekTv2.isVisible = false
+            binding.intervalDays.isVisible = false
+        }
 
-        binding.weekTv.setOnClickListener {
+        binding.everyDay1.setOnClickListener {
             openDialog()
+            binding.weekTv2.isVisible = true
+            binding.intervalDays.isVisible = false
+        }
+
+        binding.everyDay2.setOnClickListener {
+            intervalDialog()
+            binding.intervalDays.isVisible = true
+            binding.weekTv2.isVisible = false
         }
 
         binding.plusBt.setOnClickListener {
@@ -146,7 +158,7 @@ class AlarmCreateActivity : AppCompatActivity() {
                 }
             }
 
-            if (binding.selectBt.isChecked) {
+            if (binding.everyDay1.isChecked) {
 
                 if (sat == "1") {
                     setRepeatingSaturdayAlarm()
@@ -198,6 +210,7 @@ class AlarmCreateActivity : AppCompatActivity() {
                     status = "Every Day"
                     stringBuilder.append(status + "")
                 }else{
+
                     repeatingAlarm()
                     status = "Every Day"
                     stringBuilder.append(status + "")
@@ -679,6 +692,50 @@ class AlarmCreateActivity : AppCompatActivity() {
             }
         }
 
+
+    private fun intervalDialog(){
+        val dialog = Dialog(this)
+        dialog.setTitle("Select Day")
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.interval_dialog)
+        dialog.context.setTheme(R.style.CustomDialog)
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.WRAP_CONTENT
+        dialog.window?.setLayout(width, height)
+
+        val minusBt = dialog.findViewById<ImageView>(R.id.minusBt)
+        val number_text = dialog.findViewById<TextView>(R.id.number)
+        val plusBt = dialog.findViewById<ImageView>(R.id.plusBt)
+        val cancel = dialog.findViewById<Button>(R.id.cancel)
+        val save = dialog.findViewById<Button>(R.id.save)
+        var counter = 1
+        var number = 1
+        plusBt.setOnClickListener {
+            if (counter>=1){
+                counter ++
+            }
+            number = counter * 1
+            number_text.text = number.toString()
+        }
+
+        minusBt.setOnClickListener {
+            if (counter>1){
+                counter--
+            }
+            number = counter / 1
+            number_text.text = number.toString()
+        }
+
+        save.setOnClickListener {
+           binding.intervalDays.text = "Alarm will repeat after $number days"
+            dialog.dismiss()
+        }
+        cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
 
         private fun customDialog(){
             val dialog = Dialog(this)

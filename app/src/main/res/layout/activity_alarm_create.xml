@@ -238,41 +238,90 @@
         android:layout_width="match_parent"
         />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/weekTv"
-        app:layout_constraintTop_toBottomOf="@id/view"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons3"
+        app:layout_constraintTop_toBottomOf="@+id/view"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="16sp"
-        android:text="Specific day of week"
-        android:layout_marginStart="25dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:background="@drawable/button_bg"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/weekTv2"
-        app:layout_constraintTop_toBottomOf="@id/weekTv"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <RadioGroup
+            android:id="@+id/radioGp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <CheckBox
-        android:id="@+id/selectBt"
-        android:text="Want alarm in the selected day"
-        app:layout_constraintTop_toBottomOf="@id/weekTv2"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/every_day"
+                android:text="Every Day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/every_day1"
+                android:text="Specific Day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/every_day2"
+                android:text="Day Interval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".46"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".43"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/weekTv2"
+            app:layout_constraintTop_toTopOf="@id/guideline1"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="13sp"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:lines="2"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".73"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/interval_days"
+            app:layout_constraintTop_toTopOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveBt"
-        app:layout_constraintTop_toBottomOf="@id/selectBt"
+        app:layout_constraintTop_toBottomOf="@id/cons3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
