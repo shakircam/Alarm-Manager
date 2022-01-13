@@ -51,6 +51,7 @@ class AlarmCreateActivity : AppCompatActivity() {
     lateinit var context: Context
     lateinit var alarmManager: AlarmManager
     private val CHANNEL_ID = "1000"
+    private val NOTIFICATIONID = 111
     var repReqCode = 0
     var flag = 0
     var flag1 = 0
@@ -62,6 +63,7 @@ class AlarmCreateActivity : AppCompatActivity() {
     private var status = ""
     private var title = ""
     private var calenderTime = 0L
+    private var secCalenderTime = 0L
     private var sat = ""
     private var sun = ""
     private var mon = ""
@@ -76,6 +78,7 @@ class AlarmCreateActivity : AppCompatActivity() {
     var counter = 1
     var number = 1
     var pills = ""
+    var intervalnumber = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,13 +101,13 @@ class AlarmCreateActivity : AppCompatActivity() {
             binding.intervalDays.isVisible = false
         }
 
-        binding.everyDay1.setOnClickListener {
+        binding.specificDay.setOnClickListener {
             openDialog()
             binding.weekTv2.isVisible = true
             binding.intervalDays.isVisible = false
         }
 
-        binding.everyDay2.setOnClickListener {
+        binding.intervalDay.setOnClickListener {
             intervalDialog()
             binding.intervalDays.isVisible = true
             binding.weekTv2.isVisible = false
@@ -158,66 +161,76 @@ class AlarmCreateActivity : AppCompatActivity() {
                 }
             }
 
-            if (binding.everyDay1.isChecked) {
+            if (binding.intervalDay.isChecked){
+                repeatingAlarm(intervalnumber.toLong())
+                status = "Alarm will repeat after $intervalnumber days"
+                stringBuilder.append(status + "")
+                Log.d("this", "interval alarm")
 
-                if (sat == "1") {
-                    setRepeatingSaturdayAlarm()
-                    status = "Sat"
-                    stringBuilder.append(status + " ")
-                    Log.d("tag", "saturday")
-                }
-                if (sun == "2") {
-                    setRepeatingSundayAlarm()
-                    status = "Sun"
-                    stringBuilder.append(status + " ")
-                    Log.d("tag", "sunday")
-                }
-                if (mon == "3") {
-                    setRepeatingMondayAlarm()
-                    status = "Mon"
-                    stringBuilder.append(status + " ")
-                    Log.d("tag", "monday")
-                }
-                if (tue == "4") {
-                    setRepeatingTuesdayAlarm()
-                    status = "Tue"
-                    stringBuilder.append(" $status")
-                    Log.d("tag", "tuesday")
-                }
-                if (wed == "5") {
-                    setRepeatingWednesdayAlarm()
-                    status = "Wed"
-                    stringBuilder.append(status + " ")
-                    Log.d("tag", "wednesday")
-                }
-                if (thu == "6") {
-                    setRepeatingThursdayAlarm()
-                    status = "Thu"
-                    stringBuilder.append(status + " ")
-                    Log.d("tag", "thursday")
-                }
-                if (fri == "7") {
-                    setRepeatingFridayAlarm()
-                    status = "Fri"
-                    stringBuilder.append(status)
-                    Log.d("tag", "friday")
-                }
-            } else {
-                if (flag1 == 10){
-                    repeatingAlarm()
-                    setSecondRepeatingAlarm()
-                    time = "$time,$second_time"
-                    status = "Every Day"
-                    stringBuilder.append(status + "")
-                }else{
+            }else{
 
-                    repeatingAlarm()
-                    status = "Every Day"
-                    stringBuilder.append(status + "")
-                    Log.d("this", "repeating alarm")
-                }
+                if (binding.specificDay.isChecked) {
 
+                    if (sat == "1") {
+                        setRepeatingSaturdayAlarm()
+                        status = "Sat"
+                        stringBuilder.append(status + " ")
+                        Log.d("tag", "saturday")
+                    }
+                    if (sun == "2") {
+                        setRepeatingSundayAlarm()
+                        status = "Sun"
+                        stringBuilder.append(status + " ")
+                        Log.d("tag", "sunday")
+                    }
+                    if (mon == "3") {
+                        setRepeatingMondayAlarm()
+                        status = "Mon"
+                        stringBuilder.append(status + " ")
+                        Log.d("tag", "monday")
+                    }
+                    if (tue == "4") {
+                        setRepeatingTuesdayAlarm()
+                        status = "Tue"
+                        stringBuilder.append(" $status")
+                        Log.d("tag", "tuesday")
+                    }
+                    if (wed == "5") {
+                        setRepeatingWednesdayAlarm()
+                        status = "Wed"
+                        stringBuilder.append(status + " ")
+                        Log.d("tag", "wednesday")
+                    }
+                    if (thu == "6") {
+                        setRepeatingThursdayAlarm()
+                        status = "Thu"
+                        stringBuilder.append(status + " ")
+                        Log.d("tag", "thursday")
+                    }
+                    if (fri == "7") {
+                        setRepeatingFridayAlarm()
+                        status = "Fri"
+                        stringBuilder.append(status)
+                        Log.d("tag", "friday")
+                    }
+                } else {
+                    if (flag1 == 10){
+                        Log.d("this","two alarm")
+                        repeatingAlarm()
+                        setSecondRepeatingAlarm()
+                        time = "$time,$second_time"
+                        Log.d("this",time)
+                        status = "Every Day"
+                        stringBuilder.append(status + "")
+                    }else{
+                        repeatingAlarm()
+                        status = "Every Day"
+                        stringBuilder.append(status + "")
+                        Log.d("this", "repeating alarm")
+                    }
+                }
             }
+
 
             Toast.makeText(this, "alarm set successfully", Toast.LENGTH_SHORT).show()
              calenderTime = calender.timeInMillis
@@ -239,24 +252,26 @@ class AlarmCreateActivity : AppCompatActivity() {
         }
     }
 
-        private fun repeatingAlarm() {
-            calenderTime = calender.timeInMillis
+        private fun repeatingAlarm(day:Long) {
+            val  calenderTime = calender.timeInMillis
             val thuReq: Long = Calendar.getInstance().timeInMillis + 1
             repReqCode = thuReq.toInt()
 
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
+           // intent.putExtra("notification_id",NOTIFICATIONID)
             val pendingIntent = PendingIntent.getBroadcast(this, repReqCode, intent, 0)
 
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calenderTime,
                 // Interval one day
-                24 * 60 * 60 * 1000,
+                day*(24*60*60*1000),
                 pendingIntent
             )
 
+            Log.d("thiss", (day*(24*60*60*1000)).toString())
             Log.d("this", "When alarm will ring::: $calenderTime")
             Log.d("this", "Current time when alarm create::  " + System.currentTimeMillis().toString())
             Log.d("this", "alarm create :::request code::$repReqCode")
@@ -264,10 +279,36 @@ class AlarmCreateActivity : AppCompatActivity() {
             Toast.makeText(this, "alarm set successfully", Toast.LENGTH_SHORT).show()
         }
 
-    private fun setSecondRepeatingAlarm(){
-        flag1 = 10
+    private fun repeatingAlarm() {
         calenderTime = calender.timeInMillis
-       // sec_calender = Calendar.getInstance()
+        val thuReq: Long = Calendar.getInstance().timeInMillis + 1
+        repReqCode = thuReq.toInt()
+
+        val intent = Intent(this, AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", time)
+
+        val pendingIntent = PendingIntent.getBroadcast(this, repReqCode, intent, 0)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calenderTime,
+            // Interval one day
+            24*60*60*1000,
+            pendingIntent
+        )
+
+        Log.d("this", "When alarm will ring::: $calenderTime")
+        Log.d("this", "Current time when alarm create::  " + System.currentTimeMillis().toString())
+        Log.d("this", "alarm create :::request code::$repReqCode")
+
+        Toast.makeText(this, "alarm set successfully", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setSecondRepeatingAlarm(){
+
+        secCalenderTime = sec_calender.timeInMillis
+
         val thuReq : Long = Calendar.getInstance().timeInMillis +4
         repReqCode = thuReq.toInt()
         val intent = Intent(this, AlarmReceiver::class.java)
@@ -277,14 +318,14 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            sec_calender.timeInMillis,
+            secCalenderTime,
             // Interval one day
             24*60*60*1000,
             pendingIntent
         )
         val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
         val id = sharedPreferences.getLong("id",-1)
-        val multipleAlarm = MultipleAlarm(second_time,calenderTime,id,"",repReqCode)
+        val multipleAlarm = MultipleAlarm(second_time,secCalenderTime,id,"",repReqCode)
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
             db.insertMultipleAlarm(multipleAlarm)
@@ -295,7 +336,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         // saturday
         private fun setRepeatingSaturdayAlarm() {
-            calenderTime = calender.timeInMillis
+
             val thuReq: Long = Calendar.getInstance().timeInMillis + 1
             repReqCode = thuReq.toInt()
 
@@ -305,7 +346,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             if (calender.timeInMillis < System.currentTimeMillis()) {
                 calender.add(Calendar.DAY_OF_YEAR, 7)
             }
-
+            calenderTime = calender.timeInMillis
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
@@ -338,7 +379,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         // sunday
         private fun setRepeatingSundayAlarm() {
-            calenderTime = calender.timeInMillis
+
             val thuReq: Long = Calendar.getInstance().timeInMillis + 2
             repReqCode = thuReq.toInt()
 
@@ -348,7 +389,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             if (calender.timeInMillis < System.currentTimeMillis()) {
                 calender.add(Calendar.DAY_OF_YEAR, 7)
             }
-
+            calenderTime = calender.timeInMillis
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
@@ -380,7 +421,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         // monday
         private fun setRepeatingMondayAlarm() {
-            calenderTime = calender.timeInMillis
+
             val thuReq: Long = Calendar.getInstance().timeInMillis + 3
             repReqCode = thuReq.toInt()
             calender = Calendar.getInstance()
@@ -389,7 +430,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             if (calender.timeInMillis < System.currentTimeMillis()) {
                 calender.add(Calendar.DAY_OF_YEAR, 7)
             }
-
+            calenderTime = calender.timeInMillis
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
@@ -420,7 +461,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         // tuesday
         private fun setRepeatingTuesdayAlarm() {
-            calenderTime = calender.timeInMillis
+
             val thuReq: Long = Calendar.getInstance().timeInMillis + 4
             repReqCode = thuReq.toInt()
             calender = Calendar.getInstance()
@@ -429,7 +470,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             if (calender.timeInMillis < System.currentTimeMillis()) {
                 calender.add(Calendar.DAY_OF_YEAR, 7)
             }
-
+            calenderTime = calender.timeInMillis
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
@@ -461,7 +502,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         // wednesday
         private fun setRepeatingWednesdayAlarm() {
-            calenderTime = calender.timeInMillis
+
             val thuReq: Long = Calendar.getInstance().timeInMillis + 5
             repReqCode = thuReq.toInt()
             calenderTime = calender.timeInMillis
@@ -471,7 +512,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             if (calender.timeInMillis < System.currentTimeMillis()) {
                 calender.add(Calendar.DAY_OF_YEAR, 7)
             }
-
+            calenderTime = calender.timeInMillis
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
@@ -496,7 +537,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         // thursday
         private fun setRepeatingThursdayAlarm() {
-            calenderTime = calender.timeInMillis
+
             val thuReq: Long = Calendar.getInstance().timeInMillis + 6
             repReqCode = thuReq.toInt()
 
@@ -506,7 +547,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             if (calender.timeInMillis < System.currentTimeMillis()) {
                 calender.add(Calendar.DAY_OF_YEAR, 7)
             }
-
+            calenderTime = calender.timeInMillis
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
@@ -538,7 +579,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         // friday
         private fun setRepeatingFridayAlarm() {
-            calenderTime = calender.timeInMillis
+
             val thuReq: Long = Calendar.getInstance().timeInMillis + 7
             repReqCode = thuReq.toInt()
 
@@ -548,7 +589,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             if (calender.timeInMillis < System.currentTimeMillis()) {
                 calender.add(Calendar.DAY_OF_YEAR, 7)
             }
-
+            calenderTime = calender.timeInMillis
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
@@ -674,6 +715,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             sec_calender[Calendar.SECOND] = 0
             sec_calender[Calendar.MILLISECOND] = 0
 
+            flag1 = 10
         }
     }
 
@@ -709,27 +751,28 @@ class AlarmCreateActivity : AppCompatActivity() {
         val cancel = dialog.findViewById<Button>(R.id.cancel)
         val save = dialog.findViewById<Button>(R.id.save)
         var counter = 1
-        var number = 1
+
         plusBt.setOnClickListener {
-            if (counter>=1){
+            if (counter<10){
                 counter ++
             }
-            number = counter * 1
-            number_text.text = number.toString()
+            intervalnumber = counter
+            number_text.text = intervalnumber.toString()
         }
 
         minusBt.setOnClickListener {
             if (counter>1){
                 counter--
             }
-            number = counter / 1
-            number_text.text = number.toString()
+            intervalnumber = counter / 1
+            number_text.text = intervalnumber.toString()
         }
 
         save.setOnClickListener {
-           binding.intervalDays.text = "Alarm will repeat after $number days"
+           binding.intervalDays.text = "Alarm will repeat after $intervalnumber days"
             dialog.dismiss()
         }
+
         cancel.setOnClickListener {
             dialog.dismiss()
         }

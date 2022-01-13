@@ -5,27 +5,27 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Set interval days"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view1"
-        app:layout_constraintTop_toBottomOf="@id/text"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="#9E9E9E"
-        android:layout_width="match_parent"
-        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cons1"
@@ -33,7 +33,6 @@
         app:layout_constraintTop_toBottomOf="@+id/text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -80,7 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button_background"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/button_bg"
         android:text="Cancel"
         android:textAllCaps="false"
         android:textSize="20sp"
@@ -96,8 +96,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button_background"
-        android:layout_width="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/button_bg"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"/>
     <View
         android:id="@+id/view"

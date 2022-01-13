@@ -30,8 +30,10 @@ class SplashFragment : Fragment() {
         Handler().postDelayed({
             if(onBoardingFinished()){
                 findNavController().navigate(R.id.action_splashFragment_to_homeActivity)
+                activity?.finish()
             }else{
                 findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
+                //activity?.finish()
             }
         }, 3000)
 

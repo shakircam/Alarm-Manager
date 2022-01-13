@@ -4,7 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/custom">
+    android:background="@color/white">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text"
@@ -12,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Select reminder type"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/white"
         android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,8 +33,8 @@
         android:id="@+id/oneTv"
         app:layout_constraintTop_toBottomOf="@+id/text"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="One Times"
-        android:textSize="18sp"
+        android:text="Daily One Times"
+        android:textSize="16sp"
         android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -33,8 +43,8 @@
         android:id="@+id/twoTv"
         app:layout_constraintTop_toBottomOf="@id/oneTv"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Two Times"
-        android:textSize="18sp"
+        android:text="Daily Two Times"
+        android:textSize="16sp"
         android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -43,8 +53,8 @@
         android:id="@+id/threeTv"
         app:layout_constraintTop_toBottomOf="@id/twoTv"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Three Times"
-        android:textSize="18sp"
+        android:text="Daily Three Times"
+        android:textSize="16sp"
         android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

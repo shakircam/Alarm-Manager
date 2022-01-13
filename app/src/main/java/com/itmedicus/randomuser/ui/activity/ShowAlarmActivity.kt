@@ -116,13 +116,11 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
             multipleAlarm.addAll(multipleAlarmList)
         }
 
-        val intent = Intent(this, AlarmReceiver::class.java)
-        intent.action = "okay"
-        intent.putExtra("time", time)
-
         if (multipleAlarm.size >= 1) {
 
-            multipleAlarm[0].requestCode
+            val intent = Intent(this, AlarmReceiver::class.java)
+            intent.action = "okay"
+            intent.putExtra("time", time)
             var listOneTime = multipleAlarm[0].calenderTime
 
             GlobalScope.launch(Dispatchers.IO) {
@@ -133,22 +131,23 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                 val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
                 db.updateAlarmTimeInMultipleDay(listOneTime,multipleAlarm[0].id)
                 db.updateAlarmTime(listOneTime,id)
+
+                val pending = PendingIntent.getBroadcast(context, multipleAlarm[0].requestCode, intent, 0)
+                Log.d("this", " time after increment[1]::$listOneTime")
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    listOneTime,
+                    24 * 60 * 60 * 1000 * 7,
+                    pending
+                )
+                Log.d("this", "on alarm again[1].." + multipleAlarm[0].requestCode)
+
             }
 
-            val pending = PendingIntent.getBroadcast(this, multipleAlarm[0].requestCode, intent, 0)
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                listOneTime,
-                24 * 60 * 60 * 1000 * 7,
-                pending
-            )
-            Log.d("this", "on alarm again[1].." + multipleAlarm[0].requestCode)
-            Log.d("this", " time after increment[1]::$listOneTime")
-
-
-            multipleAlarm[1].requestCode
             var listTwoTime = multipleAlarm[1].calenderTime
+
             GlobalScope.launch(Dispatchers.IO) {
+
                 while (listTwoTime<currentTime){
                     listTwoTime += 86400000*7
                     Log.d("this", " time is incrementing[2]::$listTwoTime")
@@ -156,18 +155,17 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
 
                 val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
                 db.updateAlarmTimeInMultipleDay(listTwoTime,multipleAlarm[1].id)
-            }
+                val pen = PendingIntent.getBroadcast(context, multipleAlarm[1].requestCode, intent, 0)
+                Log.d("this", " time after increment[2]::$listTwoTime")
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    listTwoTime,
+                    24 * 60 * 60 * 1000 * 7,
+                    pen
+                )
+                Log.d("this", "on alarm again.." + multipleAlarm[1].requestCode)
 
-            val pen = PendingIntent.getBroadcast(this, multipleAlarm[1].requestCode, intent, 0)
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                listTwoTime,
-                24 * 60 * 60 * 1000 * 7,
-                pen
-            )
-            Log.d("this", "on alarm again.." + multipleAlarm[1].requestCode)
-            Log.d("this", " time after increment[2]::$listTwoTime")
-            Toast.makeText(this, "alarm on again!!", Toast.LENGTH_SHORT).show()
+            }
 
             if (multipleAlarm.size > 2) {
 

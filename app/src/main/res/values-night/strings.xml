@@ -4,6 +4,12 @@
     <string name="title_alarm">Alarm repeat times</string>
     <string name="week_alarm">Choose Days For Alarm</string>
     <string name="cancel">Cancel</string>
+    <string name="already_taken">Already Taken</string>
+    <string name="email">ib.shakir@gmail.com</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="no_internet">Oops, No internet connection!</string>
+    <string name="no_internet_text">Make sure wifi or celular data is turned on and try again</string>
 
     <string-array name="title_array">
         <item>Napa</item>

@@ -12,6 +12,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.itmedicus.randomuser.ui.activity.NotificationShowActivity
 import com.itmedicus.randomuser.ui.activity.ShowAlarmActivity
 import java.util.*
 
@@ -19,6 +20,7 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
             val title = intent?.getStringExtra("time")
+           // val id = intent?.getIntExtra("notification_id",1)
 
             // Set the alarm here.
             val time = System.currentTimeMillis()
@@ -28,22 +30,28 @@ class AlarmReceiver : BroadcastReceiver() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator.vibrate(
                     VibrationEffect.createOneShot(
-                        5000,
+                        8000,
                         VibrationEffect.DEFAULT_AMPLITUDE
                     )
                 )
             } else {
-                vibrator.vibrate(5000)
+                vibrator.vibrate(8000)
             }
             val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
             val r = RingtoneManager.getRingtone(context, notification)
             r.play()
 
-            val intent = Intent(context, ShowAlarmActivity::class.java).apply {
+            val intent = Intent(context, NotificationShowActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 action = "Cancel"
                 putExtra(NotificationCompat.EXTRA_NOTIFICATION_ID, 0)
+                putExtra("time",title)
             }
+
+            val timeIntent = Intent(context,NotificationShowActivity::class.java)
+                timeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                timeIntent.putExtra("time",title)
+
 
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
@@ -60,6 +68,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
             val notificationManager = NotificationManagerCompat.from(context)
             notificationManager.notify(111, builder.build())
+            //notificationManager.cancel(id!!)
 
     }
 }

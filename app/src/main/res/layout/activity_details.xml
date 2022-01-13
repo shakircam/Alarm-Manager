@@ -38,69 +38,29 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.card.MaterialCardView
+    <com.wajahatkarim3.easyflipview.EasyFlipView
         android:id="@+id/consta"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="60dp"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="20dp"
-        app:cardCornerRadius="25dp"
+        app:flipOnTouch="true"
+        app:flipEnabled="true"
+        app:flipDuration="400"
+        app:flipType="horizontal"
+        app:flipFrom="front"
+        app:autoFlipBack="false"
+        app:autoFlipBackTime="1000"
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <include layout="@layout/card_back"/>
+        <!-- Front Layout Goes Here -->
+        <include
+            android:id="@+id/front_layout"
+            layout="@layout/card_front"/>
 
-            <ImageView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/user"
-                android:scaleType="centerCrop"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/name"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/name"
-                android:textStyle="bold"
-                android:textSize="17sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/email"
-                android:text="Bd"
-                android:textSize="16sp"
-                android:drawablePadding="10dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/name"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/location"
-                android:text="location"
-                android:textSize="17sp"
-                android:drawableLeft="@drawable/location_24"
-                android:drawablePadding="12dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+    </com.wajahatkarim3.easyflipview.EasyFlipView>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bio"
@@ -126,6 +86,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bio"
         android:layout_marginTop="10dp"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -136,6 +97,7 @@
         android:layout_marginStart="15dp"
         android:drawableLeft="@drawable/flag_24"
         android:drawablePadding="12dp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phone"
         android:layout_marginTop="10dp"
@@ -152,6 +114,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nationality"
         android:layout_marginTop="10dp"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -166,6 +129,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gender"
         android:layout_marginTop="10dp"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -193,6 +157,7 @@
         android:id="@+id/about"
         android:text="@string/text"
         android:textSize="16sp"
+        android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@+id/text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -201,4 +166,49 @@
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/arrow_down"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/downarrow"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:id="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/about"
+        android:layout_width="match_parent"
+        android:background="#F0F0F0"
+        android:layout_marginTop="20dp"
+        android:layout_height="2dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/extra_text"
+        android:text="@string/text"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/arrow_down"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="15dp"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/arrow_up"
+        app:layout_constraintTop_toBottomOf="@+id/extra_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/uparrow"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

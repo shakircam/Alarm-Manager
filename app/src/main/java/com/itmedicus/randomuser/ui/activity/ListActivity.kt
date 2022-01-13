@@ -1,5 +1,7 @@
 package com.itmedicus.randomuser.ui.activity
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +31,22 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.net.Network
+
+import androidx.annotation.NonNull
+
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.NetworkCallback
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import java.lang.Exception
+import com.itmedicus.randomuser.MainActivity
+
+import android.widget.Toast
+import com.itmedicus.randomuser.R
+
 
 class ListActivity : AppCompatActivity(),ItemClickListener {
 
@@ -38,6 +56,8 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
     var allUser = mutableListOf<Result>()
     var flag = 1
     private lateinit var shimmerFrameLayout: ShimmerFrameLayout
+    var isConnected = false
+    var connectivityManager: ConnectivityManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +72,7 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
     override fun onResume() {
         super.onResume()
         shimmerFrameLayout.startShimmer()
+
     }
 
     override fun onPause() {
@@ -88,6 +109,53 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
                 Log.d("dd",t.localizedMessage)
             }
         })
+    }
+
+
+    private fun registerNetworkCallback() {
+        try {
+            connectivityManager =
+                applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            connectivityManager!!.registerDefaultNetworkCallback(object : NetworkCallback() {
+
+                override fun onAvailable(network: Network) {
+                    isConnected = true
+                }
+
+                override fun onLost(network: Network) {
+                    isConnected = false
+                    networkDialog()
+                }
+            })
+        } catch (e: Exception) {
+            isConnected = false
+        }
+    }
+
+    private fun unregisterNetworkCallback() {
+        connectivityManager!!.unregisterNetworkCallback(NetworkCallback())
+    }
+
+
+    private fun networkDialog(){
+        val dialog = Dialog(this)
+        dialog.setTitle("Select Day")
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.network_dialog)
+        dialog.context.setTheme(R.style.CustomDialog)
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.WRAP_CONTENT
+        dialog.window?.setLayout(width, height)
+
+        val tryBt = dialog.findViewById<Button>(R.id.tryBt)
+        tryBt.setOnClickListener {
+            if (isConnected){
+                dialog.dismiss()
+            }else{
+                Toast.makeText(this,"Not Connected",Toast.LENGTH_SHORT).show()
+            }
+        }
+        dialog.show()
     }
 
 

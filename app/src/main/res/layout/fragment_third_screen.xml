@@ -44,7 +44,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:gravity="center"
-        android:text="Fill Alarm"
+        android:text="Pill Alarm"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -12,7 +12,7 @@
         android:id="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/back_ios_24"
+        android:src="@drawable/back"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_width="55dp"
@@ -123,7 +123,7 @@
     <ImageView
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/minus"
+        android:src="@drawable/ic_minus"
         android:layout_marginTop="14dp"
         android:layout_marginStart="10dp"
         android:id="@+id/minusBt"
@@ -138,7 +138,6 @@
             android:layout_marginTop="14dp"
             android:text="1"
             android:textSize="18sp"
-            android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/plusBt"
             app:layout_constraintStart_toEndOf="@+id/minusBt"
             app:layout_constraintTop_toTopOf="parent" />
@@ -146,7 +145,7 @@
         <ImageView
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/plus"
+            android:src="@drawable/ic_plus"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="10dp"
             android:id="@+id/plusBt"
@@ -171,10 +170,9 @@
             android:textStyle="bold"
             android:textSize="16sp"
             android:padding="10dp"
-            android:drawableStart="@drawable/bell"
+            android:drawableStart="@drawable/ic_bell"
             android:drawablePadding="7dp"
             android:background="@drawable/custom_time"
-            android:textColor="@color/black"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
@@ -258,15 +256,16 @@
             <RadioButton
                 android:id="@+id/every_day"
                 android:text="Every Day"
+                android:checked="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <RadioButton
-                android:id="@+id/every_day1"
+                android:id="@+id/specificDay"
                 android:text="Specific Day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <RadioButton
-                android:id="@+id/every_day2"
+                android:id="@+id/intervalDay"
                 android:text="Day Interval"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

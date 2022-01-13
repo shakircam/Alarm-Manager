@@ -100,4 +100,6 @@ dependencies {
 
     //Shimmer Effect
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    // card flip
+    implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:3.0.0'
 }
