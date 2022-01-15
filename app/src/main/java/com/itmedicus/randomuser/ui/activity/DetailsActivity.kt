@@ -54,12 +54,9 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.gender.text = gender
         binding.frontLayout.email.text = email
-       // binding.email.text = email
         binding.nationality.text = nat
         binding.frontLayout.name.text = name
-       // binding.name.text = name
         binding.frontLayout.location.text = location
-       // binding.location.text = location
         binding.phone.text = phone
         binding.state.text = state
 

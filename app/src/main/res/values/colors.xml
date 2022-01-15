@@ -15,4 +15,9 @@
     <color name="colorPrimaryDark">#FF018786</color>
     <color name="blue">#1C86DC</color>
     <color name="shimmerColor">#dddddd</color>
+    <color name="colorNegative">#008911</color>
+    <color name="colorPositive">#FF7B00</color>
+    <color name="colorDeath">#A9002B</color>
+    <color name="colorBackgroundShade">#EBEEF6</color>
+    <color name="colorSelectedBackground">@color/colorPrimary</color>
 </resources>

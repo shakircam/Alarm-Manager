@@ -79,6 +79,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    // Robinhood library
+    implementation 'com.robinhood.spark:spark:1.2.0'
+    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
+    implementation 'com.robinhood.ticker:ticker:2.0.2'
+
     // Room components
     implementation "androidx.room:room-runtime:2.3.0"
     kapt "androidx.room:room-compiler:2.3.0"

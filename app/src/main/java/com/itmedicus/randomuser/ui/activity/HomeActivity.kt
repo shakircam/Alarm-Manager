@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import com.denzcoskun.imageslider.models.SlideModel
@@ -32,6 +33,15 @@ class HomeActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val menuItem = binding.navigationView.menu.findItem(R.id.theme)
+        val switch_id = menuItem.actionView as SwitchCompat
+        switch_id.setOnClickListener {
+          if (switch_id.isChecked){
+              AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+          }else{
+              AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+          }
+        }
 
         val imageList = ArrayList<SlideModel>()
         imageList.add(SlideModel(
@@ -61,11 +71,6 @@ class HomeActivity : AppCompatActivity() {
                 R.id.login -> Toast.makeText(applicationContext,"Login",Toast.LENGTH_SHORT).show()
             }
 
-            when(it.itemId){
-                R.id.theme ->
-                    openThemeDialog()
-            }
-
             true
         }
 
@@ -81,13 +86,25 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.card4.setOnClickListener {
-            //
+            val intent = Intent(this,CovidActivity::class.java)
+            startActivity(intent)
         }
 
         binding.card5.setOnClickListener {
             val intent = Intent(this,ShowAlarmActivity::class.java)
             startActivity(intent)
         }
+
+        binding.card6.setOnClickListener {
+            val intent = Intent(this,NewsActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.card7.setOnClickListener {
+            val intent = Intent(this,BmiActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
