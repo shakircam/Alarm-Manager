@@ -36,7 +36,7 @@
         <entry key="app/src/main/res/drawable/user.xml" value="0.26520400307929176" />
         <entry key="app/src/main/res/layout/activity_alarm.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_alarm_create.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_bmi.xml" value="0.17" />
+        <entry key="app/src/main/res/layout/activity_bmi.xml" value="0.21" />
         <entry key="app/src/main/res/layout/activity_covid.xml" value="0.11231884057971014" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_history.xml" value="0.13968579234972678" />
@@ -66,6 +66,7 @@
         <entry key="app/src/main/res/layout/fragment_view_pager.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/fragment_week_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/interval_dialog.xml" value="0.15710382513661203" />
+        <entry key="app/src/main/res/layout/item_bmi.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_empty.xml" value="0.25390625" />
         <entry key="app/src/main/res/layout/network_dialog.xml" value="0.21" />

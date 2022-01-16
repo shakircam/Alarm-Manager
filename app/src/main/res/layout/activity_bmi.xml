@@ -7,59 +7,80 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.BmiActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/bmi_chart"
+            android:layout_width="330dp"
+            android:layout_height="190dp"/>
 
-            <TextView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/status"
-                android:text="Under Weight"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <com.github.anastr.speedviewlib.SpeedView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/speedView"
+            android:layout_marginTop="80dp"
+            app:sv_withTremble="false"
+            app:sv_unitUnderSpeedText="false"
+            android:layout_width="150dp"
+            android:layout_height="180dp" />
 
-            <TextView
-                app:layout_constraintTop_toBottomOf="@+id/status"
-                app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/status1"
-                android:text="Under Weight"
-                android:layout_marginStart="10dp"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".80"/>
 
-            <TextView
-                app:layout_constraintTop_toBottomOf="@+id/status1"
-                app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/status2"
-                android:text="Under Weight"
-                android:layout_marginStart="10dp"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".35"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/bmi"
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            android:text="Bmi: 24.17"
+            android:background="@color/white"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"/>
 
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biryani_extralight"
+        android:text="Status"
+        android:textSize="20sp"
+        app:fontFamily="@font/biryani_extralight"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cons" />
 
     <LinearLayout
         android:id="@+id/linear"
-        app:layout_constraintTop_toBottomOf="@+id/card"
+        app:layout_constraintTop_toBottomOf="@+id/status"
         android:orientation="horizontal"
         android:weightSum="5"
         android:layout_width="match_parent"
@@ -69,14 +90,14 @@
             android:id="@+id/height"
             android:text="Height:"
             android:textSize="20sp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/height_Feet"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="30dp"
             android:inputType="number"
             android:background="@drawable/button_bg"
@@ -87,7 +108,7 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/height_inche"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
             android:background="@drawable/button_bg"
             android:hint="7 inch"
@@ -117,17 +138,18 @@
         android:hint="170 cm"
         android:paddingStart="20dp"
         android:visibility="gone"
+        android:inputType="number"
         android:background="@drawable/button_bg"
         android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
-        android:layout_width="80dp"
+        android:layout_width="130dp"
         android:layout_height="45dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/weightText"
         app:layout_constraintTop_toBottomOf="@+id/cintemeterText"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="20dp"
         android:text="Weight:"
         android:textSize="20sp"
@@ -140,8 +162,8 @@
         android:id="@+id/weightEd"
         app:layout_constraintTop_toBottomOf="@+id/cintemeterText"
         app:layout_constraintStart_toEndOf="@+id/weightText"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
         android:background="@drawable/button_bg"
         android:hint="70 kg"
         android:inputType="number"
@@ -152,14 +174,15 @@
     <RadioGroup
         android:id="@+id/radio"
         android:layout_margin="20dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/weightText"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/radioFoot"
-            android:text="Foot"
+            android:id="@+id/radioFeet"
+            android:text="Feet"
             android:checked="true"
             android:textSize="16sp"
             android:layout_width="wrap_content"
@@ -168,32 +191,6 @@
         <RadioButton
             android:id="@+id/radioCinte"
             android:text="Centimeter"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </RadioGroup>
-
-    <RadioGroup
-        android:id="@+id/radio1"
-        android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/weightText"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/male"
-            android:text="Male"
-            android:checked="true"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <RadioButton
-            android:id="@+id/female"
-            android:text="Female"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -210,28 +207,5 @@
         android:textAllCaps="false"
         android:layout_width="200dp"
         android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/result"
-        app:layout_constraintTop_toBottomOf="@+id/calculateBt"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="150dp"
-        android:text="BMI:"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/resultTx"
-        app:layout_constraintTop_toBottomOf="@+id/calculateBt"
-        app:layout_constraintStart_toEndOf="@+id/result"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="10dp"
-        android:text=" 20.15"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,4 +107,6 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     // card flip
     implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:3.0.0'
+    //Speed Meter
+    implementation 'com.github.anastr:speedviewlib:1.6.0'
 }
