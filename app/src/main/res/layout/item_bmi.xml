@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
-    app:cardMaxElevation="8dp"
-    android:layout_margin="10dp"
+    app:cardMaxElevation="15dp"
+    android:layout_margin="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,31 +16,19 @@
             android:id="@+id/text1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Very Severely Underweight"
+            android:text="Underweight"
             android:textSize="16sp"
             app:fontFamily="@font/biryani_extralight"
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text2"
-            app:layout_constraintTop_toBottomOf="@+id/text1"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="Severely Underweight"
-            android:textSize="16sp"
-            app:fontFamily="@font/biryani_extralight"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text3"
-            app:layout_constraintTop_toBottomOf="@+id/text2"
+            app:layout_constraintTop_toBottomOf="@+id/text1"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Underweight"
+            android:text="Normal"
             android:textSize="16sp"
             app:fontFamily="@font/biryani_extralight"
             android:layout_marginStart="10dp"
@@ -51,7 +40,7 @@
             android:id="@+id/text4"
             app:layout_constraintTop_toBottomOf="@+id/text3"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Normal"
+            android:text="Overweight"
             android:layout_marginStart="10dp"
             android:textSize="16sp"
             app:fontFamily="@font/biryani_extralight"
@@ -63,7 +52,7 @@
             android:id="@+id/text5"
             app:layout_constraintTop_toBottomOf="@+id/text4"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Overweight"
+            android:text="Obese"
             app:fontFamily="@font/biryani_extralight"
             android:layout_marginStart="10dp"
             android:textSize="16sp"
@@ -80,63 +69,55 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text6"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            android:text="<16.0"
-            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="16.0 - 16.9"
             android:textSize="16sp"
             app:fontFamily="@font/biryani_extralight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text7"
-            app:layout_constraintTop_toBottomOf="@id/text6"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline"
-            android:text="<16.0"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            android:textSize="16sp"
-            app:fontFamily="@font/biryani_extralight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text8"
-            app:layout_constraintTop_toBottomOf="@id/text7"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            android:text="<16.0"
-            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="18.5 - 24.9"
             android:textSize="16sp"
             app:fontFamily="@font/biryani_extralight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/text6" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text9"
-            app:layout_constraintTop_toBottomOf="@id/text8"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            android:text="<16.0"
-            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="25.0 - 29.9"
             android:textSize="16sp"
             app:fontFamily="@font/biryani_extralight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/text8" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text10"
-            app:layout_constraintTop_toBottomOf="@id/text9"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            android:text="<16.0"
-            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="30.0 - 34.9"
             android:textSize="16sp"
             app:fontFamily="@font/biryani_extralight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/text9" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

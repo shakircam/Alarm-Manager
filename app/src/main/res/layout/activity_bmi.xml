@@ -173,7 +173,8 @@
 
     <RadioGroup
         android:id="@+id/radio"
-        android:layout_margin="20dp"
+       android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/weightText"
         app:layout_constraintStart_toStartOf="parent"
@@ -197,15 +198,40 @@
 
     </RadioGroup>
 
+    <com.google.android.material.chip.Chip
+        android:id="@+id/details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Show Chart"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radio"
+        app:layout_constraintTop_toBottomOf="@+id/weightEd" />
+
     <Button
         android:id="@+id/calculateBt"
         app:layout_constraintTop_toBottomOf="@+id/radio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:text="Calculate"
         android:textAllCaps="false"
         android:layout_width="200dp"
         android:layout_height="wrap_content"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/calculateBt">
+
+        <include
+            android:id="@+id/card"
+            layout="@layout/item_bmi"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
