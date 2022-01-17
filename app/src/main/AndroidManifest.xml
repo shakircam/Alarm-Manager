@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RandomUser">
         <activity
+            android:name=".ui.activity.BmiListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.BmiActivity"
             android:exported="false" />
         <activity

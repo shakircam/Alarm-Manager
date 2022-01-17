@@ -11,6 +11,9 @@ interface UserDao {
     suspend fun insertData(userData: Result)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertBmiData(bmiRecord: BmiRecord)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAlarmTime(alarmTime: AlarmTime)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -18,6 +21,9 @@ interface UserDao {
 
     @Query("SELECT * FROM alarm_table ORDER BY id ASC  ")
     fun getAllAlarmTime(): MutableList<AlarmTime>
+
+    @Query("SELECT * FROM bmi_table ORDER BY id DESC  ")
+    fun getAllBmiResult(): LiveData<MutableList<BmiRecord>>
 
     @Query("SELECT * FROM alarm_table ORDER BY id ASC  ")
     fun getAllAlarm(): LiveData<MutableList<AlarmTime>>
@@ -30,6 +36,9 @@ interface UserDao {
 
    @Query("SELECT * FROM user_table ORDER BY id DESC LIMIT 10 ")
     fun getAllUserData(): List<Result>
+
+    @Query("SELECT bmiScore FROM bmi_table ")
+    fun getBmiChartResult(): List<BmiRecord>
 
     @Query("SELECT * FROM user_table ORDER BY id ASC  ")
     fun getAllUser(): List<Result>
@@ -68,6 +77,9 @@ interface UserDao {
 
     @Delete
     suspend fun deleteAlarm(alarmTime: AlarmTime)
+
+    @Delete
+    suspend fun deleteBmiData(bmiRecord: BmiRecord)
 
     @Query("DELETE FROM multiple_alarm_table WHERE fk_id = :fk_id")
     suspend fun deleteMultipleAlarm(fk_id : Long)
