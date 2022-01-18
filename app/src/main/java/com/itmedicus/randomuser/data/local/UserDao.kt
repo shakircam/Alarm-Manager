@@ -38,7 +38,7 @@ interface UserDao {
     fun getAllUserData(): List<Result>
 
     @Query("SELECT bmiScore FROM bmi_table ")
-    fun getBmiChartResult(): List<BmiRecord>
+    fun getBmiChartResult(): List<BmiScore>
 
     @Query("SELECT * FROM user_table ORDER BY id ASC  ")
     fun getAllUser(): List<Result>

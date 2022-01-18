@@ -138,7 +138,7 @@ class BmiActivity : AppCompatActivity() {
                     bmi = (BMI+8).toFloat()
                     binding.speedView.speedTo(bmi)
                     binding.status.isVisible = true
-                    status = "Under Weight"
+                    status = "Underweight"
                     binding.status.text = status
                     binding.status.setTextColor(Color.parseColor("#EEDE4E"))
 

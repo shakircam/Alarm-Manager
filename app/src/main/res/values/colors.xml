@@ -9,16 +9,20 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F0CA53</color>
     <color name="yellow">#EEDE4E</color>
+    <color name="yellow1">#EED7B5</color>
     <color name="custom">#4578D0C4</color>
     <color name="colorPrimary">@color/teal_700</color>
     <color name="grey">#E0E0E0</color>
     <color name="colorPrimaryDark">#FF018786</color>
     <color name="blue">#1C86DC</color>
+    <color name="blue1">#87B9E1</color>
     <color name="shimmerColor">#dddddd</color>
     <color name="colorNegative">#008911</color>
+    <color name="colorNegative1">#96E4A0</color>
     <color name="colorPositive">#FF7B00</color>
     <color name="red1">#FF0000</color>
     <color name="colorDeath">#A9002B</color>
+    <color name="colorPink">#EEBBC8</color>
     <color name="colorBackgroundShade">#EBEEF6</color>
     <color name="colorSelectedBackground">@color/colorPrimary</color>
 </resources>

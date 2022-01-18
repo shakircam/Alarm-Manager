@@ -51,6 +51,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
     //cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
@@ -109,6 +110,8 @@ dependencies {
     implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:3.0.0'
     //Speed Meter
     implementation 'com.github.anastr:speedviewlib:1.6.0'
+    //Chart
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
     implementation("androidx.multidex:multidex:2.0.1")
+
 }

@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.activity.NutritionActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/purple_700"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/nutrients"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        app:cardCornerRadius="35dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Serving Size"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="500gm" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Milimeter" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:background="#F0F0F0"
+                app:layout_constraintTop_toBottomOf="@+id/chipGp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/foodSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Food Summary"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card1"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="15dp"
+                app:cardMaxElevation="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/foodSummary">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/sub"
+                    android:layout_width="80dp"
+                    android:layout_height="70dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/red1"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/calories"
+                            android:text="Calories"
+                            android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear2"
+                        app:layout_constraintTop_toBottomOf="@+id/linear"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/colorPink"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/caloriesNumber"
+                            android:text="500kcal"
+                            android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card2"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="15dp"
+                app:cardMaxElevation="10dp"
+                app:layout_constraintStart_toEndOf="@+id/card1"
+                app:layout_constraintTop_toBottomOf="@+id/foodSummary">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/sub1"
+                    android:layout_width="80dp"
+                    android:layout_height="70dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/colorPositive"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/carbs"
+                            android:text="Carbs"
+                            android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear4"
+                        app:layout_constraintTop_toBottomOf="@+id/linear3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/yellow1"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/carbsNumber"
+                            android:text="53g"
+                            android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card3"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="15dp"
+                app:cardMaxElevation="10dp"
+                app:layout_constraintStart_toEndOf="@+id/card2"
+                app:layout_constraintTop_toBottomOf="@+id/foodSummary">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/sub3"
+                    android:layout_width="80dp"
+                    android:layout_height="70dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear6"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/colorNegative"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/protin"
+                            android:text="Protin"
+                            android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear5"
+                        app:layout_constraintTop_toBottomOf="@+id/linear6"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/colorNegative1"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/protinNumber"
+                            android:text="53g"
+                            android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card4"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="15dp"
+                app:cardMaxElevation="10dp"
+                app:layout_constraintStart_toEndOf="@+id/card3"
+                app:layout_constraintTop_toBottomOf="@+id/foodSummary">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/sub4"
+                    android:layout_width="80dp"
+                    android:layout_height="70dp">
+
+                    <LinearLayout
+                        android:id="@+id/linear8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/blue"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fat"
+                            android:text="Fat"
+                            android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear7"
+                        app:layout_constraintTop_toBottomOf="@+id/linear8"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/blue1"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fatNumber"
+                            android:text="53g"
+                            android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:id="@+id/view1"
+                app:layout_constraintTop_toBottomOf="@+id/card1"
+                android:layout_width="match_parent"
+                android:background="#F0F0F0"
+                android:layout_marginTop="15dp"
+                android:layout_height="2dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/nutratinoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nutration Information"
+                android:textSize="18sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1"/>
+
+            <androidx.cardview.widget.CardView
+                app:layout_constraintTop_toBottomOf="@+id/nutratinoTitle"
+                app:cardCornerRadius="10dp"
+                app:cardMaxElevation="10dp"
+                android:layout_margin="20dp"
+                app:cardBackgroundColor="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/nutText1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="Total Fat 30%"
+                        android:textSize="18sp"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/nutText2"
+                       app:layout_constraintTop_toBottomOf="@+id/nutText1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="Total Protin 30%"
+                        android:textSize="18sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/nutText3"
+                        app:layout_constraintTop_toBottomOf="@+id/nutText2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="Sault 30%"
+                        android:textSize="18sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

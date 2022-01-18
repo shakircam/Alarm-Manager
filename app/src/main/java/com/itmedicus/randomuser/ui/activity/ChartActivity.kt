@@ -2,6 +2,7 @@ package com.itmedicus.randomuser.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
@@ -17,14 +18,15 @@ import kotlinx.coroutines.launch
 
 class ChartActivity : AppCompatActivity() {
 
-
-    private var bmiList = intArrayOf(0,0,0,5)
+    private var chart: AnyChartView? = null
+    private var bmiList = mutableListOf<Double>(0.0,0.0,0.0,0.0)
     private val bmiStatus = listOf("Underweight","Normalweight","Overweight","Obese")
     private lateinit var binding: ActivityChartBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChartBinding.inflate(layoutInflater)
+        chart = binding.pieChart
         setContentView(binding.root)
         addDataTOList()
         configChartView()
@@ -35,27 +37,28 @@ class ChartActivity : AppCompatActivity() {
             val db = UserDatabase.getDatabase(this@ChartActivity).userDao()
             val bmi = db.getBmiChartResult()
             for ( i in bmi.indices){
+                Log.d("this", bmi[i].bmiScore.toString())
                 when {
-                    i<18.5 -> {
+                    bmi[i].bmiScore!! <18.5 -> {
 
-                        bmiList[0] = i
-                    }
-                    i>18.5 && i<24.9 -> {
-                        bmiList[1] = i
-                    }
-                    i>25.0 &&i<34.9 -> {
-                        bmiList[2] = i
-                    }
-                    i>34.9 -> {
-                        bmiList[3] = i
+                        bmiList[0] += 10.0
 
+                    }
+                    bmi[i].bmiScore!!>18.5 && bmi[i].bmiScore!!<24.9 -> {
+                        bmiList[1] += 10.0
+                    }
+                    bmi[i].bmiScore!!>25.0 &&bmi[i].bmiScore!!<34.9 -> {
+                        bmiList[2] += 10.0
+                    }
+                    bmi[i].bmiScore!!>34.9 -> {
+                        bmiList[3] += 10.0
                     }
                 }
+                Log.d("this",bmiList.toString())
             }
+
         }
     }
-
-
 
     private fun configChartView() {
         val pie : Pie = AnyChart.pie()
@@ -67,8 +70,8 @@ class ChartActivity : AppCompatActivity() {
         }
 
         pie.data(dataPieChart)
-        pie.title("BMI Overview")
-        binding.pieChart.setChart(pie)
+        pie.title("All Users Bmi Overview")
+        chart!!.setChart(pie)
 
     }
 }

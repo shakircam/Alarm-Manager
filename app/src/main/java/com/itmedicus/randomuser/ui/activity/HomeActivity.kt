@@ -12,13 +12,14 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.itmedicus.randomuser.R
 import com.itmedicus.randomuser.databinding.ActivityDetailsBinding
 import com.itmedicus.randomuser.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var navController : NavController
+
     lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +76,30 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+
+            when(it.itemId){
+                R.id.nutrition -> {
+                    val intent = Intent(this,NutritionActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            when(it.itemId){
+                R.id.office -> {
+                    Toast.makeText(applicationContext,"office is clicked",Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            when(it.itemId){
+                R.id.shop -> {
+                    Toast.makeText(applicationContext,"Shop is clicked",Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            true
+        }
+
+
         binding.card2.setOnClickListener{
             val intent = Intent(this,ListActivity::class.java)
             startActivity(intent)
@@ -117,26 +142,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
      logout()
-    }
-
-
-    private fun openThemeDialog(){
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Apply Theme?")
-        builder.setMessage("Do you want to apply dark mode?")
-        builder.setCancelable(false)
-        builder.setPositiveButton("Yes") { _, _ ->
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
-        }
-        builder.setNegativeButton("No") { _, _ ->
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-
-        val alertDialog : AlertDialog = builder.create()
-        alertDialog.show()
-
     }
 
     private fun logout(){
