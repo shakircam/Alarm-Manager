@@ -31,6 +31,7 @@ class DetailsActivity : AppCompatActivity() {
         val image = intent.getStringExtra("pic")
         val location = intent.getStringExtra("location")
         val state = intent.getStringExtra("state")
+
         binding.backButton.setOnClickListener {
             onBackPressed()
         }

@@ -41,8 +41,8 @@ class BmiAdapter: RecyclerView.Adapter<BmiAdapter.BmiViewHolder> () {
         val height = itemView.findViewById(R.id.heightText) as TextView
         val weight = itemView.findViewById(R.id.weightText) as TextView
 
-
     }
+
     fun setData(list: MutableList<BmiRecord>){
         this.list = list
         notifyDataSetChanged()

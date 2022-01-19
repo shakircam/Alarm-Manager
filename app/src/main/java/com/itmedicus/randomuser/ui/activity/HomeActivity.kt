@@ -80,13 +80,13 @@ class HomeActivity : AppCompatActivity() {
 
             when(it.itemId){
                 R.id.nutrition -> {
-                    val intent = Intent(this,NutritionActivity::class.java)
+                    val intent = Intent(this,MealPlanActivity::class.java)
                     startActivity(intent)
                 }
             }
             when(it.itemId){
                 R.id.office -> {
-                    Toast.makeText(applicationContext,"office is clicked",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext,"Shop is clicked",Toast.LENGTH_SHORT).show()
                 }
             }
 

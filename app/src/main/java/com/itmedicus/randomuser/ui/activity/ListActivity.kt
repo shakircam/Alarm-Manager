@@ -213,46 +213,6 @@ class ListActivity : AppCompatActivity(),ItemClickListener {
                 }
             }
 
-
-
-
-          /*  val listSize = db.getAllUser().size
-            val userName = db.allUserNameList()
-            val userId = db.getUserId(name)
-            val nameList = mutableListOf<Name>()
-            nameList.addAll(userName)
-
-            for (i in nameList){
-                if (name == i.name){
-                    flag = 2
-                    break
-                }
-            }
-
-            if (flag == 2){
-
-                db.deleteItem(userId)
-               // Log.d("tag","delete item when match:: $name,list size-> $listSize")
-                db.insertData(user)
-                Log.d("tag","Item match go to up-> $name ::: list size-> $listSize")
-                flag = 1
-            }else{
-                if (listSize == 10){
-                    val userList = db.getAllUser()
-                    val id = userList.first().id!!
-
-                    db.deleteItem(id)
-                   // Log.d("tag","delete-> $name ::: list size-> $listSize")
-                    db.insertData(user)
-                    Log.d("tag","list size-> $listSize already, insert -> $name ::: move to up ")
-
-                }else{
-                    if(listSize<10)
-                    db.insertData(user)
-                    Log.d("tag","insert-> $name ::: list size->  $listSize")
-                }
-            }*/
-
         }
         startActivity(intent)
     }

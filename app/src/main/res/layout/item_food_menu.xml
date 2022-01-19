@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/materialcard"
+    app:cardMaxElevation="10dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/item_nutr"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/burger"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Salad With Wheat"
+                    android:textSize="18sp"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintStart_toEndOf="@id/image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/kcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="30dp"
+                    android:text=" 100kcal"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@id/image"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+                <ImageView
+                    android:id="@+id/protinImage"
+                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    app:layout_constraintStart_toEndOf="@id/kcal"
+                    android:src="@drawable/reddot"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="20dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/protinText"
+                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    app:layout_constraintStart_toEndOf="@id/protinImage"
+                    android:text="20g"
+                    android:textSize="16sp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="24dp"/>
+
+                <ImageView
+                    android:id="@+id/fatImage"
+                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    app:layout_constraintStart_toEndOf="@id/protinText"
+                    android:src="@drawable/bluedot"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="20dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/fatText"
+                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    app:layout_constraintStart_toEndOf="@id/fatImage"
+                    android:text="30g"
+                    android:textSize="16sp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="24dp"/>
+
+                <ImageView
+                    android:id="@+id/carbsImage"
+                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    app:layout_constraintStart_toEndOf="@id/fatText"
+                    android:src="@drawable/yellowdot"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="20dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/carbsText"
+                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    app:layout_constraintStart_toEndOf="@id/carbsImage"
+                    android:text="30g"
+                    android:layout_marginStart="5dp"
+                    android:textSize="16sp"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+
+                <ImageView
+                    android:id="@+id/image1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/bookmark"
+                    android:layout_width="35dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
