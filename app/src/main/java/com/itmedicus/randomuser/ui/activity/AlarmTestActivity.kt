@@ -32,6 +32,10 @@ class AlarmTestActivity : AppCompatActivity() {
         }
 
         binding.setexactandAllow.setOnClickListener {
+            setInExactRepeatingAlarm()
+        }
+
+        binding.setexactandAllow.setOnClickListener {
             setExactAndAllowWhileIdleAlarm()
         }
 
@@ -71,6 +75,23 @@ class AlarmTestActivity : AppCompatActivity() {
         )
         Toast.makeText(this,"click",Toast.LENGTH_SHORT).show()
     }
+
+
+    private fun setInExactRepeatingAlarm(){
+
+        val intent = Intent(this, AlarmReceiver::class.java)
+        intent.action = "okay"
+        intent.putExtra("time", "time")
+        val  pendingIntent = PendingIntent.getBroadcast(this,1,intent, 0)
+        alarmManager.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis() + 360000,
+            AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+            pendingIntent
+        )
+        Toast.makeText(this,"click",Toast.LENGTH_SHORT).show()
+    }
+
 
     private fun setExactAndAllowWhileIdleAlarm(){
 
