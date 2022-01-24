@@ -14,8 +14,6 @@ class NotificationShowActivity : AppCompatActivity() {
         binding = ActivityNotificationShowBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.imageView.animation = AnimationUtils.loadAnimation(this, R.anim.shake_image)
-        val intent = intent
-       // binding.time.text = intent.getStringExtra("time")
 
         binding.cancel.setOnClickListener {
             Intent(this,ShowAlarmActivity::class.java).apply {

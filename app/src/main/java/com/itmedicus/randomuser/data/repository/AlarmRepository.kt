@@ -33,4 +33,8 @@ class AlarmRepository(private val alarmDao: UserDao) {
     suspend fun deleteMultipleAlarm(id: Long){
         alarmDao.deleteMultipleAlarm(id)
     }
+
+    suspend fun deleteTwoTimesAlarm(id: Long){
+        alarmDao.deleteTwoTimesAlarm(id)
+    }
 }

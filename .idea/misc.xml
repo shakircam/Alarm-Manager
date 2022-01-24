@@ -44,6 +44,7 @@
         <entry key="app/src/main/res/drawable/user.xml" value="0.26520400307929176" />
         <entry key="app/src/main/res/layout/activity_alarm.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_alarm_create.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_alarm_test.xml" value="0.2587962962962963" />
         <entry key="app/src/main/res/layout/activity_bmi.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_bmi_list.xml" value="0.30081716036772216" />
         <entry key="app/src/main/res/layout/activity_chart.xml" value="0.3067708333333333" />
@@ -53,6 +54,7 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_list.xml" value="0.1437841530054645" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16397578203834512" />
+        <entry key="app/src/main/res/layout/activity_meal_history.xml" value="0.2726851851851852" />
         <entry key="app/src/main/res/layout/activity_meal_plan.xml" value="0.19646430953969313" />
         <entry key="app/src/main/res/layout/activity_news.xml" value="0.12192622950819672" />
         <entry key="app/src/main/res/layout/activity_news_details.xml" value="0.11231884057971014" />

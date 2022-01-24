@@ -86,7 +86,8 @@ class HomeActivity : AppCompatActivity() {
             }
             when(it.itemId){
                 R.id.office -> {
-                    Toast.makeText(applicationContext,"Shop is clicked",Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this,AlarmTestActivity::class.java)
+                    startActivity(intent)
                 }
             }
 

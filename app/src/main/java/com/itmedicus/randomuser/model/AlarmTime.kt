@@ -39,6 +39,20 @@ data class AlarmTime(
     var id : Int? = null
 }
 
+@Entity(tableName = "two_times_table")
+data class TwoTimesAlarm(
+
+    val time: String,
+    val calenderTime : Long,
+    val fk_id : Long,
+    val day : String,
+    val requestCode : Int,
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id : Int? = null
+}
+
+
  data class AlarmTimeAndMultipleAlarm(
      @Embedded val alarmTime: AlarmTime,
      @Relation (

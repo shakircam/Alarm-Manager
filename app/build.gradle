@@ -113,5 +113,6 @@ dependencies {
     //Chart
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
     implementation("androidx.multidex:multidex:2.0.1")
+    implementation 'com.michalsvec:single-row-calednar:1.0.0'
 
 }

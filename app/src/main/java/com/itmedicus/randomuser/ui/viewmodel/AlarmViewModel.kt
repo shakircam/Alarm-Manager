@@ -52,4 +52,10 @@ class AlarmViewModel(application: Application) : AndroidViewModel(application) {
             repository.deleteMultipleAlarm(id)
         }
     }
+
+    fun deleteTwoTimesAlarm(id: Long){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteTwoTimesAlarm(id)
+        }
+    }
 }

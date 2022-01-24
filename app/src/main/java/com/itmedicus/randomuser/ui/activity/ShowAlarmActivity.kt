@@ -35,6 +35,8 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
     private val adapter by lazy { AlarmAdapter(this) }
     var list = mutableListOf<AlarmTime>()
     private var multipleAlarm = mutableListOf<RequestCode>()
+
+
     private var dbTime = 0L
 
 
@@ -54,6 +56,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
         binding.fab.setOnClickListener {
             val intent = Intent(this,AlarmCreateActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         myViewModel.getAllData.observe(this,{
@@ -108,16 +111,20 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
         dbTime = time
         val id = item.id
         val currentTime = System.currentTimeMillis()
-
+         var twoTimesAlarm = mutableListOf<RequestCode>()
         lifecycleScope.launch {
             val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
-            val multipleAlarmList = db.getAlarmRequestCode(id)
+            val multipleAlarmList = db.getAlarmRequestCodeFromMultipleTable(id)
+            val twoTimesAlarmList = db.getAlarmRequestCodeFromTwoTimesTable(id)
+            twoTimesAlarm.addAll(twoTimesAlarmList)
             db.updateSwitchButtonState(true, id)
             multipleAlarm.addAll(multipleAlarmList)
+            Log.d("this",twoTimesAlarm.size.toString())
+
         }
 
         if (multipleAlarm.size >= 1) {
-
+            // On the specific day alarm & update their time if alarm time is less than current time when we on the alarm again
             val intent = Intent(this, AlarmReceiver::class.java)
             intent.action = "okay"
             intent.putExtra("time", time)
@@ -134,7 +141,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
 
                 val pending = PendingIntent.getBroadcast(context, multipleAlarm[0].requestCode, intent, 0)
                 Log.d("this", " time after increment[1]::$listOneTime")
-                alarmManager.setRepeating(
+                alarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,
                     listOneTime,
                     24 * 60 * 60 * 1000 * 7,
@@ -157,7 +164,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                 db.updateAlarmTimeInMultipleDay(listTwoTime,multipleAlarm[1].id)
                 val pen = PendingIntent.getBroadcast(context, multipleAlarm[1].requestCode, intent, 0)
                 Log.d("this", " time after increment[2]::$listTwoTime")
-                alarmManager.setRepeating(
+                alarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,
                     listTwoTime,
                     24 * 60 * 60 * 1000 * 7,
@@ -181,7 +188,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                     db.updateAlarmTimeInMultipleDay(listThreeTime,multipleAlarm[2].id)
                 }
                 val pend = PendingIntent.getBroadcast(this, multipleAlarm[2].requestCode, intent, 0)
-                alarmManager.setRepeating(
+                alarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,
                     listThreeTime,
                     24 * 60 * 60 * 1000 * 7,
@@ -205,7 +212,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                     db.updateAlarmTimeInMultipleDay(listFourTime,multipleAlarm[3].id)
                 }
                 val pend = PendingIntent.getBroadcast(this, multipleAlarm[3].requestCode, intent, 0)
-                alarmManager.setRepeating(
+                alarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,
                     listFourTime,
                     24 * 60 * 60 * 1000 * 7,
@@ -229,7 +236,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                     db.updateAlarmTimeInMultipleDay(listFiveTime,multipleAlarm[4].id)
                 }
                 val pend = PendingIntent.getBroadcast(this, multipleAlarm[4].requestCode, intent, 0)
-                alarmManager.setRepeating(
+                alarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,
                     listFiveTime,
                     24 * 60 * 60 * 1000 * 7,
@@ -253,7 +260,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                     db.updateAlarmTimeInMultipleDay(listSixTime,multipleAlarm[5].id)
                 }
                 val pend = PendingIntent.getBroadcast(this, multipleAlarm[5].requestCode, intent, 0)
-                alarmManager.setRepeating(
+                alarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,
                     listSixTime,
                     24 * 60 * 60 * 1000 * 7,
@@ -276,7 +283,7 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                     db.updateAlarmTimeInMultipleDay(listSevenTime,multipleAlarm[6].id)
                 }
                 val pend = PendingIntent.getBroadcast(this, multipleAlarm[6].requestCode, intent, 0)
-                alarmManager.setRepeating(
+                alarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,
                     listSevenTime,
                     24 * 60 * 60 * 1000 * 7,
@@ -288,13 +295,56 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
             }
         } else {
 
-            Log.d("this", "db time before increment::$time")
-            val intent = Intent(context, AlarmReceiver::class.java)
-            intent.action = "okay"
-            intent.putExtra("time", time)
-            val pendingIntent = PendingIntent.getBroadcast(context, item.requestCode, intent, 0)
+            if (twoTimesAlarm.size == 1){
+                // On the two times table alarm & update their time if alarm time is less than current time when we on the alarm again
+                    Log.d("this","two times alarm on")
+                val intent = Intent(context, AlarmReceiver::class.java)
+                intent.action = "okay"
+                intent.putExtra("time", time)
+                var twoTimes = twoTimesAlarm[0].calenderTime
+                val pendingIntent = PendingIntent.getBroadcast(context, item.requestCode, intent, 0)
+                val pending = PendingIntent.getBroadcast(context, item.requestCode, intent, 0)
+                GlobalScope.launch(Dispatchers.IO) {
 
-            GlobalScope.launch(Dispatchers.IO) {
+                    while (twoTimes<currentTime){
+                        twoTimes += 86400000
+                        Log.d("this", " time is incrementing::$twoTimes")
+                    }
+
+                    val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
+                    db.updateAlarmTimeInTwoTimes(twoTimes,twoTimesAlarm[0].id)
+
+                    alarmManager.setInexactRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        twoTimes,
+                        24*60*60*1000,
+                        pendingIntent
+                    )
+                }
+                GlobalScope.launch(Dispatchers.IO) {
+                    while (time<currentTime){
+                        time += 86400000
+                    }
+                    val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
+                    db.updateAlarmTime(time,id)
+                    alarmManager.setInexactRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        time,
+                        24*60*60*1000,
+                        pending
+                    )
+                }
+
+            }else{
+
+               // On the primary table alarm & update their time if alarm time is less than current time when we on the alarm again
+                Log.d("this", "db time before increment::$time")
+                val intent = Intent(context, AlarmReceiver::class.java)
+                intent.action = "okay"
+                intent.putExtra("time", time)
+                val pendingIntent = PendingIntent.getBroadcast(context, item.requestCode, intent, 0)
+
+                GlobalScope.launch(Dispatchers.IO) {
 
                     while (time<currentTime){
                         time += 86400000
@@ -304,19 +354,22 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
                     val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
                     db.updateAlarmTime(time,id)
 
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    time,
-                    24*60*60*1000,
-                    pendingIntent
-                )
+                    alarmManager.setInexactRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        time,
+                        24*60*60*1000,
+                        pendingIntent
+                    )
 
-                Log.d("this", " current time..$currentTime")
-                Log.d("this", " time after increment::$time")
+                    Log.d("this", " current time..$currentTime")
+                    Log.d("this", " time after increment::$time")
+                }
+
+                Log.d("this", "Alarm on again::request code.." + item.requestCode)
+                Toast.makeText(this, "alarm on again!!", Toast.LENGTH_SHORT).show()
+
             }
 
-            Log.d("this", "Alarm on again::request code.." + item.requestCode)
-            Toast.makeText(this, "alarm on again!!", Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -325,6 +378,14 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
 
         val item = list[position]
         val id = item.id
+         val twoTimesAlarm = mutableListOf<RequestCode>()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
+            val twoTimesAlarmList = db.getAlarmRequestCodeFromTwoTimesTable(id)
+            twoTimesAlarm.addAll(twoTimesAlarmList)
+        }
+
+
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Delete Alarm?")
@@ -336,6 +397,9 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
             cancelAlarm(position)
             if (multipleAlarm.size >=1){
                 myViewModel.deleteMultipleAlarm(id)
+            }
+            if (twoTimesAlarm.size == 1){
+                myViewModel.deleteTwoTimesAlarm(id)
             }
             Toast.makeText(this,"successfully delete the alarm",Toast.LENGTH_SHORT).show()
         }
@@ -351,16 +415,20 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
    private fun cancelAlarm(position : Int){
        val item = list[position]
        val id = item.id
-
+        var twoTimesAlarm = mutableListOf<RequestCode>()
        lifecycleScope.launch {
            val db = UserDatabase.getDatabase(this@ShowAlarmActivity).userDao()
-           val multipleAlarmList = db.getAlarmRequestCode(id)
+           val multipleAlarmList = db.getAlarmRequestCodeFromMultipleTable(id)
+           val twoTimesAlarmList = db.getAlarmRequestCodeFromTwoTimesTable(id)
            db.updateSwitchButtonState(false,id)
            multipleAlarm.addAll(multipleAlarmList)
+           twoTimesAlarm.addAll(twoTimesAlarmList)
+           Log.d("this",twoTimesAlarm.size.toString())
        }
 
        if (multipleAlarm.size >= 1){
 
+           // Here specific day alarm are checking first by their index number then it will be cancel...
            multipleAlarm[0].requestCode
            multipleAlarm[1].requestCode
 
@@ -410,17 +478,36 @@ class ShowAlarmActivity : AppCompatActivity(),ClickListener {
            }
 
        }else{
+             // Here Two times alarm will be cancel
+           if (twoTimesAlarm.size == 1){
 
-           val intent = Intent(this, AlarmReceiver::class.java)
-           intent.action = "okay"
-           val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
+               Log.d("this","two times alarm cancel")
 
-           alarmManager.cancel(pendingIntent)
+               val intent = Intent(this, AlarmReceiver::class.java)
+               intent.action = "okay"
+               val pendingIntent = PendingIntent.getBroadcast(this,twoTimesAlarm[0].requestCode,intent,0)
+               Log.d("this", twoTimesAlarm[0].requestCode.toString())
+               alarmManager.cancel(pendingIntent)
+               //off the first alarm from primary table
+               val pending = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
+               alarmManager.cancel(pending)
 
-           Toast.makeText(this,"alarm off!!",Toast.LENGTH_SHORT).show()
-           Log.d("this", "cancel alarm..")
-           Log.d("this", "alarm id::$id")
-           Log.d("this", "request code:::${item.requestCode}")
+           }else{
+               // if non of any statement are true than primary table have single repeating alarm & it will be cancel
+
+               Log.d("this"," main alarm cancel")
+               val intent = Intent(this, AlarmReceiver::class.java)
+               intent.action = "okay"
+               val pendingIntent = PendingIntent.getBroadcast(this,item.requestCode,intent,0)
+
+               alarmManager.cancel(pendingIntent)
+
+               Toast.makeText(this,"alarm off!!",Toast.LENGTH_SHORT).show()
+               Log.d("this", "cancel alarm..")
+               Log.d("this", "alarm id::$id")
+               Log.d("this", "request code:::${item.requestCode}")
+           }
+
        }
    }
 

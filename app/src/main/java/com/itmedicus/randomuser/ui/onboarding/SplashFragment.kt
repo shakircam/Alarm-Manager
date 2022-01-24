@@ -25,7 +25,7 @@ class SplashFragment : Fragment() {
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
 
        val topAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.top_animation)
-       val bottomAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.bottom_animation)
+
         binding.image.animation = topAnim
         Handler().postDelayed({
             if(onBoardingFinished()){

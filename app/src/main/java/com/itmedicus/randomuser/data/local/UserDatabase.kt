@@ -8,9 +8,17 @@ import androidx.room.TypeConverters
 import com.itmedicus.randomuser.model.*
 
 
-@Database(entities = [Result::class,AlarmTime::class,MultipleAlarm::class,BmiRecord::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Result::class, AlarmTime::class,
+        MultipleAlarm::class,
+        TwoTimesAlarm::class,
+        BmiRecord::class],
+    version = 1,
+    exportSchema = false
+)
+
 @TypeConverters(Converters::class)
-abstract class UserDatabase : RoomDatabase(){
+abstract class UserDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
 

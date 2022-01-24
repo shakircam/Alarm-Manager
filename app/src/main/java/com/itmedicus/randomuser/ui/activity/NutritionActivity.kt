@@ -24,17 +24,17 @@ class NutritionActivity : AppCompatActivity() {
         val intent = intent
         val title = intent.getStringExtra("title")
         val image = intent.getStringExtra("image")
-        val kcal = intent.getStringExtra("kcal")
-        val protein = intent.getStringExtra("protein")
-        val fat = intent.getStringExtra("fat")
-        val carbs = intent.getStringExtra("carbs")
+        val kcal = intent.getIntExtra("kcal",0)
+        val protein = intent.getIntExtra("protein",0)
+        val fat = intent.getIntExtra("fat",0)
+        val carbs = intent.getIntExtra("carbs",0)
 
 
         binding.title.text = title
-        binding.caloriesNumber.text = kcal.toString()
-        binding.carbsNumber.text = carbs.toString()
-        binding.protinNumber.text = protein.toString()
-        binding.fatNumber.text = fat.toString()
+        binding.caloriesNumber.text = kcal.toString()+"kcal"
+        binding.carbsNumber.text = carbs.toString()+"g"
+        binding.protinNumber.text = protein.toString()+"g"
+        binding.fatNumber.text = fat.toString()+"g"
         Log.d("this","$kcal: $protein:$fat:$carbs")
 
         Glide.with(this)

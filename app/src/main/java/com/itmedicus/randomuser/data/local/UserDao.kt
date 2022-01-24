@@ -19,6 +19,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMultipleAlarm(multipleAlarm: MultipleAlarm)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertTwoTimesAlarm(twoTimesAlarm: TwoTimesAlarm)
+
     @Query("SELECT * FROM alarm_table ORDER BY id ASC  ")
     fun getAllAlarmTime(): MutableList<AlarmTime>
 
@@ -66,6 +69,9 @@ interface UserDao {
     @Query("UPDATE multiple_alarm_table SET calenderTime =:time WHERE id =:id")
     fun updateAlarmTimeInMultipleDay(time:Long,id: Int)
 
+    @Query("UPDATE two_times_table SET calenderTime =:time WHERE id =:id")
+    fun updateAlarmTimeInTwoTimes(time:Long,id: Int)
+
     @Query("SELECT * FROM user_table WHERE name LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): MutableList<Result>
 
@@ -84,12 +90,18 @@ interface UserDao {
     @Query("DELETE FROM multiple_alarm_table WHERE fk_id = :fk_id")
     suspend fun deleteMultipleAlarm(fk_id : Long)
 
+    @Query("DELETE FROM two_times_table WHERE fk_id = :fk_id")
+    suspend fun deleteTwoTimesAlarm(fk_id : Long)
+
     @Transaction
     @Query("SELECT * FROM alarm_table WHERE time = :time")
     fun getAlarmWithMultipleAlarm(time : String): List<AlarmTimeAndMultipleAlarm>
 
     @Query("SELECT * FROM multiple_alarm_table WHERE fk_id = :fk_id")
-    fun getAlarmRequestCode(fk_id : Long): List<RequestCode>
+    fun getAlarmRequestCodeFromMultipleTable(fk_id : Long): List<RequestCode>
+
+    @Query("SELECT * FROM two_times_table WHERE fk_id = :fk_id")
+    fun getAlarmRequestCodeFromTwoTimesTable(fk_id : Long): List<RequestCode>
 
     @Query("SELECT * FROM multiple_alarm_table ORDER BY id DESC")
     fun getAlarmId(): MutableList<RequestCode>

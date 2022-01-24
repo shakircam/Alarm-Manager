@@ -36,6 +36,7 @@ import com.itmedicus.randomuser.data.local.UserDatabase
 import com.itmedicus.randomuser.databinding.ActivityAlarmCreateBinding
 import com.itmedicus.randomuser.model.AlarmTime
 import com.itmedicus.randomuser.model.MultipleAlarm
+import com.itmedicus.randomuser.model.TwoTimesAlarm
 import com.itmedicus.randomuser.ui.fragment.AlarmDialogFragment
 import com.itmedicus.randomuser.ui.fragment.WeekDialogFragment
 import kotlinx.coroutines.launch
@@ -263,7 +264,7 @@ class AlarmCreateActivity : AppCompatActivity() {
            // intent.putExtra("notification_id",NOTIFICATIONID)
             val pendingIntent = PendingIntent.getBroadcast(this, repReqCode, intent, 0)
 
-            alarmManager.setRepeating(
+            alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calenderTime,
                 // Interval one day
@@ -290,7 +291,7 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         val pendingIntent = PendingIntent.getBroadcast(this, repReqCode, intent, 0)
 
-        alarmManager.setRepeating(
+        alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
             calenderTime,
             // Interval one day
@@ -309,14 +310,14 @@ class AlarmCreateActivity : AppCompatActivity() {
 
         secCalenderTime = sec_calender.timeInMillis
 
-        val thuReq : Long = Calendar.getInstance().timeInMillis +4
+        val thuReq : Long = Calendar.getInstance().timeInMillis +8
         repReqCode = thuReq.toInt()
         val intent = Intent(this, AlarmReceiver::class.java)
         intent.action = "okay"
         intent.putExtra("time", time)
-        val  pendingIntent = PendingIntent.getBroadcast(this,repReqCode,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val  pendingIntent = PendingIntent.getBroadcast(this,thuReq.toInt(),intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
-        alarmManager.setRepeating(
+        alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
             secCalenderTime,
             // Interval one day
@@ -325,10 +326,10 @@ class AlarmCreateActivity : AppCompatActivity() {
         )
         val sharedPreferences = getSharedPreferences("my_sharedPreference",0)
         val id = sharedPreferences.getLong("id",-1)
-        val multipleAlarm = MultipleAlarm(second_time,secCalenderTime,id,"",repReqCode)
+        val twoTimesAlarm = TwoTimesAlarm(second_time,secCalenderTime,id,"everyday",thuReq.toInt())
         val db = UserDatabase.getDatabase(this).userDao()
         lifecycleScope.launch {
-            db.insertMultipleAlarm(multipleAlarm)
+            db.insertTwoTimesAlarm(twoTimesAlarm)
         }
         Toast.makeText(this,"alarm set successfully",Toast.LENGTH_SHORT).show()
     }
@@ -357,7 +358,7 @@ class AlarmCreateActivity : AppCompatActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            alarmManager.setRepeating(
+            alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calender.timeInMillis,
                 //AlarmManager.INTERVAL_DAY * 7,
@@ -400,7 +401,7 @@ class AlarmCreateActivity : AppCompatActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            alarmManager.setRepeating(
+            alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calender.timeInMillis,
                 //AlarmManager.INTERVAL_DAY * 7,
@@ -441,7 +442,7 @@ class AlarmCreateActivity : AppCompatActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            alarmManager.setRepeating(
+            alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calender.timeInMillis,
                 //AlarmManager.INTERVAL_DAY * 7,
@@ -481,7 +482,7 @@ class AlarmCreateActivity : AppCompatActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            alarmManager.setRepeating(
+            alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calender.timeInMillis,
                 //AlarmManager.INTERVAL_DAY * 7,
@@ -518,7 +519,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             intent.putExtra("time", time)
             val pendingIntent = PendingIntent.getBroadcast(this, repReqCode, intent, 0)
 
-            alarmManager.setRepeating(
+            alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calender.timeInMillis,
                 24 * 60 * 60 * 1000 * 7,
@@ -558,7 +559,7 @@ class AlarmCreateActivity : AppCompatActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            alarmManager.setRepeating(
+            alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calender.timeInMillis,
                 //AlarmManager.INTERVAL_DAY * 7,
@@ -595,7 +596,7 @@ class AlarmCreateActivity : AppCompatActivity() {
             intent.putExtra("time", time)
             val pendingIntent = PendingIntent.getBroadcast(this, repReqCode, intent, 0)
 
-            alarmManager.setRepeating(
+            alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calender.timeInMillis,
                 24 * 60 * 60 * 1000 * 7,
