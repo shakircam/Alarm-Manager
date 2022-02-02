@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.VibrationEffect
@@ -41,6 +42,7 @@ class AlarmReceiver : BroadcastReceiver() {
             val r = RingtoneManager.getRingtone(context, notification)
             r.play()
 
+
             val intent = Intent(context, NotificationShowActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 action = "Cancel"
@@ -56,7 +58,8 @@ class AlarmReceiver : BroadcastReceiver() {
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
             val builder = NotificationCompat.Builder(context, "1000")
-                .setSmallIcon(R.drawable.ic_history)
+                .setSmallIcon(R.drawable.notification_icon1)
+                .setColor(Color.BLUE)
                 .setContentTitle(title)
                 .setContentText("Time to take your medicine")
                 .setAutoCancel(true)

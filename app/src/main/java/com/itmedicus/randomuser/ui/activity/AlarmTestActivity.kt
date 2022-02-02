@@ -31,7 +31,7 @@ class AlarmTestActivity : AppCompatActivity() {
             setExactAlarm()
         }
 
-        binding.setexactandAllow.setOnClickListener {
+        binding.setinexactandRepeating.setOnClickListener {
             setInExactRepeatingAlarm()
         }
 

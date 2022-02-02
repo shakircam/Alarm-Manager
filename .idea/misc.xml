@@ -32,11 +32,13 @@
         <entry key="app/src/main/res/drawable/ic_add24.xml" value="0.2453125" />
         <entry key="app/src/main/res/drawable/ic_bell.xml" value="0.2453125" />
         <entry key="app/src/main/res/drawable/ic_cancel.xml" value="0.3189814814814815" />
+        <entry key="app/src/main/res/drawable/ic_history.xml" value="0.2275" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/ic_minus.xml" value="0.2453125" />
         <entry key="app/src/main/res/drawable/item_nutr.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/drawable/location.xml" value="0.3189814814814815" />
         <entry key="app/src/main/res/drawable/note.xml" value="0.269140625" />
+        <entry key="app/src/main/res/drawable/notification_icon.xml" value="0.2045" />
         <entry key="app/src/main/res/drawable/pb_circular_determinative.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/drawable/profile.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/drawable/searchview_background.xml" value="0.269140625" />
